@@ -3,7 +3,7 @@
 <nav class="nav-bar p-2 border-bottom fixed-top">
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <a id="title-link" href="landing_page.php" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+        <a id="title-link" href="{{route("user.home")}}" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
           <h3 id="title-heading">Jobs 4U</h3>
         </a>
   
@@ -11,11 +11,11 @@
         <div class="menu">
           <div class="dropdown">
             <a class="dropdown-toggle btn" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="assets/img/menu.svg" alt="">
+              <img src="img/menu.svg" alt="">
             </a>
   
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="landing_page.php">Home</a></li>
+              <li><a class="dropdown-item" href="{{route("user.home")}}">Home</a></li>
               <li><a class="dropdown-item" href="posts.php">Post</a></li>
               <li><a class="dropdown-item" href="requests.php">Requests</a></li>
               <li><a class="dropdown-item find-jobs">Find Jobs</a></li>
@@ -36,7 +36,7 @@
                 <hr class="dropdown-divider">
               </li>
               <li><a class="dropdown-item" href="#">Settings</a></li>
-              <li><a class="dropdown-item" href="#">Sign out</a></li>
+              <li><a class="dropdown-item" href="{{route("user.signout")}}">Sign out</a></li>
             </ul>
           </div>
         </div>
@@ -44,7 +44,7 @@
         <!-- This will be displayed when the screen size is larger -->
   
         <ul class="nav-link-list nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="landing_page.php" class="nav-link px-2">Home</a></li>
+          <li><a href="{{route("user.home")}}" class="nav-link px-2">Home</a></li>
           <li><a href="job_post.php" class="nav-link px-2">Post</a></li>
           <li><a href="requests.php" class="nav-link px-2">Requests</a></li>
           <li><a style="cursor:pointer;" class="nav-link px-2 find-jobs">Find Jobs</a></li>
@@ -66,7 +66,7 @@
               <hr class="dropdown-divider">
             </li>
             <li><a class="dropdown-item" href="#">Settings</a></li>
-            <li><a class="dropdown-item" href="#">Sign out</a></li>
+            <li><a class="dropdown-item" href="{{route("user.signout")}}">Sign out</a></li>
           </ul>
         </div>
   

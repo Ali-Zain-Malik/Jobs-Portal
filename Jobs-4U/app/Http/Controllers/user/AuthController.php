@@ -96,4 +96,10 @@ class AuthController extends Controller
             }    
     }
 
+
+    public function signout()
+    {
+        Auth::logout();  // Log out the authenticated user
+        return redirect()->route('user.signin'); 
+    }
 }

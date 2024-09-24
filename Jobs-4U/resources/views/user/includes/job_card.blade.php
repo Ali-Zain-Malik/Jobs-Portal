@@ -1,4 +1,4 @@
-@foreach ($users as $user)
+{{-- @foreach ($users as $user) --}}
 <div class="col-lg-6 col-md-12 col-11">
     <div class="job-card mx-2 shadow-lg">
         <div class="d-flex justify-content-between w-100">
@@ -7,7 +7,7 @@
                     <img src="img/demo_image.png" class="w-100 h-100 object-fit-cover" alt="">
                 </div>
                 <div class="d-flex flex-column">
-                    <h4 style="font-size: 12px;" class="m-0">{{$user->name}}</h4>
+                    <h4 style="font-size: 12px;" class="m-0">User Name</h4>
                     <h3 style="font-size: 16px;" class="m-0 fw-bold">Job Title</h3>
                     <div class="d-flex align-items-center">
                         <img src="img/location.svg" style="width: 14px;" alt="">
@@ -45,4 +45,4 @@
         </div>
     </div>
 </div>
-@endforeach
+{{-- @endforeach --}}
