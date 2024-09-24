@@ -1,0 +1,278 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+*
+{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins" , sans-serif;
+}
+
+
+body
+{
+    width: 100%;
+    /* height: 100vh; */
+    /* display: flex; */
+    background-color: rgb(233, 234, 217);
+    /* justify-content: center;
+    align-items: center; */
+    margin: 50px 0;
+}
+
+
+.container
+{
+    width: 50%;
+    /* height: 90%; */
+    background-color: rgb(238, 241, 197);
+    border-radius: 20px;
+    border: 2px solid orange;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+.title h2
+{
+    text-align: center;
+    font-size: 24px;
+    color: red;
+    margin-top: 15px;
+}
+
+
+.inputs-div
+{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+/* */
+.input
+{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+
+
+
+#role
+{
+    border: 1px solid orange;
+    outline: none;
+    border-radius: 5px;
+    padding: 5px 5px;
+    cursor: pointer;
+}
+.name-input
+{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+
+.password-input
+{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+
+.confirm-password-input
+{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+
+#email
+{
+    width: 100%;
+    padding: 8px 0;
+    padding-left: 10px;
+    border: 1px solid orange;
+    border-radius: 5px;
+}
+
+#email:focus
+{
+    outline: 1px solid orangered;
+}
+
+#name
+{
+    width: 100%;
+    padding: 8px 0;
+    padding-left: 10px;
+    border: 1px solid orange;
+    border-radius: 5px;
+}
+
+#name:focus
+{
+    outline: 1px solid orangered;
+}
+
+
+#emp-company
+{
+    width: 100%;
+    padding: 8px 0;
+    padding-left: 10px;
+    border: 1px solid orange;
+    border-radius: 5px;
+}
+
+#emp-company:focus
+{
+    outline: 1px solid orangered;
+}
+
+
+#password
+{
+    width: 100%;
+    padding: 8px 0;
+    padding-left: 10px;
+    border: 1px solid orange;
+    border-radius: 5px;
+}
+
+#password:focus
+{
+    outline: 1px solid orangered;
+}
+
+
+#confirm-password
+{
+    width: 100%;
+    padding: 8px 0;
+    padding-left: 10px;
+    border: 1px solid orange;
+    border-radius: 5px;
+}
+
+#confirm-password:focus
+{
+    outline: 1px solid orangered;
+}
+
+.show-pass
+{
+    width: 60%;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: -6px;
+}
+
+#checkbox, #checkbox-label
+{
+    cursor: pointer;
+}
+
+.signin-button
+{
+    /* margin-top: 20px; */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.signin-button button
+{
+    width: 20%;
+    padding: 8px 0;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    outline: none;
+    background-color: orange;
+    color: white;
+    cursor: pointer;
+    border-radius: 20px;
+}
+
+.signup
+{
+    margin-top: 15px;
+    font-size: 14px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-weight: bold;
+}
+
+.signup a
+{
+    font-weight: bold;
+}
+
+form 
+{
+    width: 100%;
+}
+
+
+#message
+{
+    text-align: center;
+}
+
+
+.error
+{
+    color: red;
+    font-family: "Times New Roman";
+}
+
+
+@media screen and (max-width:1023px)
+{
+    .container
+    {
+        height: 95%;
+    }    
+}
+
+@media screen and (max-width:943px)
+{
+    .signin-button button 
+    {
+        font-size: 14px;
+    }  
+
+    .inputs
+    {
+        gap: 10px;
+    }
+
+    #email-label, #name-label, #password-label, #con-password-label, #checkbox-label
+    {
+        font-size: 14px;
+    }
+}
+
+
+@media screen and (max-width:768px)
+{
+    .container
+    {
+        width: 80%;
+    }    
+}
+
+@media screen and (max-width:425px)
+{
+    .signin-button button
+    {
+        width: 30%;
+    } 
+}

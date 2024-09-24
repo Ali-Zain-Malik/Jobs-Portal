@@ -1,0 +1,34 @@
+/* .job-cards-div
+{
+    width: 100%;
+    background-color: rgb(235, 235, 229);
+    padding: 15px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+} */
+
+
+.job-card
+{
+    padding: 10px 10px;
+    background-color: rgba(244, 244, 226, 0.744);
+    transition: all 0.4s ease;
+}
+
+.job-card:hover
+{
+    scale: 1.02;
+}
+
+
+.view-btn, .apply-btn
+{
+    font-size: 14px; 
+    background-color: #37393A;
+    transition: all 0.4s ease;
+}
+.view-btn:hover, .apply-btn:hover
+{
+    background-color: orange;
+}

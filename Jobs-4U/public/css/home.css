@@ -1,0 +1,311 @@
+.hero-wrapper
+{
+    width: 100%;
+    height: 400px;
+    position: relative;
+    top: 60px;
+}
+
+.hero-image
+{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.over
+{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(42, 46, 50, 0.582);
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.tag-div
+{
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.tag-div p
+{
+    font-size: 32px;
+    font-weight: bolder;
+    color: white;
+    text-align: center;
+    word-spacing: 5px;
+}
+
+
+.categories-div
+{
+    width: 100%;
+    position: relative;
+    top: 60px;
+}
+
+
+
+.heading
+{
+    font-size: 24px;
+    color: black;
+    font-weight: bold;
+}
+
+
+.all-categories-navlink
+{
+    position: relative;
+    display: inline-block;
+    color: orange;
+    padding-bottom: 5px;
+}
+
+
+.all-categories-navlink::before
+{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: orange;
+    transform: scaleX(0);
+    transform-origin: bottom left;
+    transition: transform 0.3s ease-out;
+}
+
+
+
+.all-categories-navlink:hover::before
+{
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+#all-categories
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    color: orange;
+    transition: all 0.4s ease;
+    text-decoration: none;
+}
+
+#all-categories img
+{
+    width: 20px;
+}
+
+
+.cards-div
+{
+    width: 100%;
+    background-color: rgb(235, 235, 229);
+    padding: 15px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+.explore-btn
+{
+    margin-top: 8px;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    background-color: transparent;
+    transition: all 0.4s ease;
+    color: orange;
+}
+
+.explore-btn:hover
+{
+    text-decoration: underline;
+    color: orangered;
+}
+
+.featured-jobs-div
+{
+    width: 100%;
+    position: relative;
+    top: 60px;
+    padding-top: 50px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+.top-employers
+{
+    width: 100%;
+    position: relative;
+    top: 60px;
+    padding-top: 50px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+
+
+
+
+
+/* Search Bar Styling */
+.search-div
+{
+    width: 50%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+}
+
+.search-box
+{
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+}
+
+#search-input
+{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+}
+
+.location-div
+{
+    width: 40%;
+    height: 100%;
+    border: none;
+    /* border-left: 1px solid black; */
+    outline: none;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+}
+
+.location-image
+{
+    display: flex;
+    align-items: center;
+}
+
+.location-icon
+{
+    object-fit: contain;
+    height: 30px;
+}
+
+#city-selector
+{
+    border: none;
+    outline: none;
+    cursor: pointer;
+    width: 80%;
+}
+
+.search-image
+{
+    width: 20%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: orange;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+}
+
+.search-icon
+{
+    width: 30%;
+}
+
+.search-image:hover
+{
+    background-color: rgb(232, 153, 5);
+}
+/* Search Bar Styling ends here */
+
+
+
+
+/* Search Page styling */
+.search-results-div
+{
+    width: 100%;
+}
+/* Search page styling ends */
+
+
+p
+{
+    margin: 0;
+}
+
+@media screen and (max-width:884px)
+{
+    .search-div
+    {
+        width: 70%;
+    }
+}
+
+
+@media screen and (max-width: 590px)
+{
+    .search-div
+    {
+        width: 80%;
+    }
+
+    .cards-div .row .col-11
+    {
+        width: 100%;
+    }
+}
+
+
+@media screen and (max-width: 525px)
+{
+    .search-div
+    {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 450px)
+{
+    .search-div
+    {
+        width: 95%;
+    }
+}

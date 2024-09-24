@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+
+body
+{
+    background-color: rgb(233, 234, 217);
+}
+
+
+
+/* Header CSS */
+
+.nav-bar
+{
+    background-color: #37393A;
+}
+
+#title-link
+{
+    margin-right: 20px;
+}
+
+#title-heading
+{
+    margin-bottom: 0;
+    font-weight: bold;
+    font-size: 24px;
+    color: white;
+}
+
+.nav-link
+{
+    color: orange;
+    font-size: 15px;
+    transition: 0.5s all ease;
+}
+
+.nav-link:hover
+{
+    color: orangered
+}
+.nav-link:focus
+{
+    color: red;
+}
+
+
+
+.dropdown-toggle::after
+{
+    color: white;
+    vertical-align: 0;
+    font-size: 24px;
+    transition: all 0.5s ease;
+}
+
+.menu
+{
+    display: none;
+}
+
+
+
+
+@media screen and (max-width:992px)
+{
+    #title-heading
+    {
+        display: none;
+    }
+
+    .nav-link-list
+    {
+        display: none;  
+    }
+
+    .menu
+    {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .btn::after
+    {
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    .profile
+    {
+        display: none;
+    }
+
+}
+/* Header Css ends here */
+
+
+
+
+/* Footer CSS starts here */
+.footer
+{
+    background-color: rgb(235, 235, 229);
+}
+
+.social-icons li
+{
+    width: 30px;
+}
+
+.social-icons li img
+{
+    filter: grayscale(1);
+    transition: all 0.3s ease;
+}
+
+.social-icons li img:hover
+{
+    filter: grayscale(0);
+}
