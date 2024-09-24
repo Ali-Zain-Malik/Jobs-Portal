@@ -44,7 +44,6 @@
             <div class="row1 d-flex justify-content-between  gap-2 row-gap-3 flex-wrap text-capitalize">
                 {{-- The cards --}}
                 @include('user.includes.categories_card')
-
             </div>
         </div>
         {{-- Div which will conatin cards  ends here--}}
