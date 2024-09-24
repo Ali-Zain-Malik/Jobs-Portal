@@ -149,7 +149,7 @@ body
 }
 
 
-#confirm-password
+#password_confirmation
 {
     width: 100%;
     padding: 8px 0;
@@ -158,7 +158,7 @@ body
     border-radius: 5px;
 }
 
-#confirm-password:focus
+#password_confirmation:focus
 {
     outline: 1px solid orangered;
 }

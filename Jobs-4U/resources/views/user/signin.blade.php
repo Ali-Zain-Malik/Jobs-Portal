@@ -18,6 +18,13 @@
     @include('user.includes.loader')
 
     <div class="container">
+      
+        @if (Session::has("success"))
+          <div class="alert alert-success mt-4">
+            {{Session::get("success")}}
+          </div>
+        @endif
+      
       <form id="signin_form" class="w-100 d-flex align-items-center flex-column">
         <div class="title">
           <h2 class="fw-bold">Sign in</h2>
@@ -52,22 +59,9 @@
           <button type="submit" id="signin-button">Sign in</button>
         </div>
         <div class="signup">
-          <p>Don't have an account? <a href="/signup">Sign up here</a></p>
+          <p>Don't have an account? <a href="{{ route("user.signup") }}">Sign up here</a></p>
         </div>
       </form>
     </div>
   </body>
-  {{-- <script
-    src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-    crossorigin="anonymous"
-  ></script>
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
-    crossorigin="anonymous"
-  ></script>
-  <script src="assets/js/jquery.js"></script>
-  <script src="assets/js/notify.js"></script>
-  <script src="assets/js/sign_in.js"></script> --}}
 </html>

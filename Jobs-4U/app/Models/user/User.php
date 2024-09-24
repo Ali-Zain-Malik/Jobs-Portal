@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\user;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,6 +21,9 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+
+
+    public $timestamps =   false;
 
     /**
      * The attributes that should be hidden for serialization.
