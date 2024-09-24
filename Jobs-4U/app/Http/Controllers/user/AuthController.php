@@ -5,6 +5,7 @@ namespace App\Http\Controllers\user;
 use App\Http\Controllers\Controller;
 use App\Models\user\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use PhpParser\Node\Expr\FuncCall;
@@ -66,4 +67,33 @@ class AuthController extends Controller
             return redirect()->route("user.signup")->withInput()->withErrors($validator);
         }
     }
+
+
+    public function authenticate(Request $request)
+    {
+        $validator      =   Validator::make($request->all(), [
+            "email"     =>  "required|email",
+            "password"  =>  "required"
+        ]);
+
+            if($validator->passes())
+            {
+                $credentials    =   $request->only("email", "password");
+
+                
+                if(Auth::attempt($credentials))
+                {
+                    return redirect()->route("user.home");
+                }
+                else
+                {
+                    return redirect()->route("user.signin")->with("error", "Either email or password is Incorrect. 😥")->withInput();
+                }
+            }
+            else
+            {
+                return redirect()->route("user.signin")->withErrors($validator)->withInput();
+            }    
+    }
+
 }

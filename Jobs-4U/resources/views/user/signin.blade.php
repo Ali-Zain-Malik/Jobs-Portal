@@ -23,9 +23,14 @@
           <div class="alert alert-success mt-4">
             {{Session::get("success")}}
           </div>
+        @elseif(Session::has("error"))
+          <div class="alert alert-danger mt-4">
+            {{Session::get("error")}}
+          </div>
         @endif
       
-      <form id="signin_form" class="w-100 d-flex align-items-center flex-column">
+      <form id="signin_form" method="POST" action="{{route("user.authenticate")}}" class="w-100 d-flex align-items-center flex-column">
+        @csrf
         <div class="title">
           <h2 class="fw-bold">Sign in</h2>
         </div>
@@ -37,8 +42,11 @@
               name="email"
               id="email"
               placeholder="example@example.com"
+              value="{{old("email")}}"
             />
-            <small></small>
+            @error('email')
+              <small class="text-danger">{{$message}}</small>
+            @enderror
           </div>
           <div class="password-input input">
             <label for="password" id="password-label">Enter Password</label>
@@ -48,7 +56,9 @@
               id="password"
               placeholder="********"
             />
-            <small></small>
+            @error('password')
+              <small class="text-danger">{{$message}}</small>
+            @enderror
           </div>
           <div class="show-pass">
             <input type="checkbox" name="checkbox" id="checkbox" />
@@ -65,3 +75,17 @@
     </div>
   </body>
 </html>
+
+
+
+{{-- To show the loader --}}
+<script>
+  const form  = document.querySelector("#signin_form");
+  const loader =  document.querySelector(".loader");
+
+  form.addEventListener("submit", function()
+  {
+    loader.classList.remove("d-none");
+    loader.classList.add("d-flex");
+  });
+</script>
