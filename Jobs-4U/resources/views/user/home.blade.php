@@ -31,7 +31,7 @@
         {{-- Link for all categories --}}
         <div class="d-flex justify-content-end mb-2">
             <div class="all-categories-navlink">
-                <a id="all-categories" href="#">
+                <a id="all-categories" href="{{route("all-categories")}}">
                     All Categories
                     <img src="img/right_arrow.svg" alt="">
                 </a>
