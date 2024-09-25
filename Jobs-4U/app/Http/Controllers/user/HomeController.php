@@ -4,6 +4,7 @@ namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
 use App\Models\user\Category;
+use App\Models\user\City;
 use App\Models\user\Favorite_job;
 use App\Models\user\Job;
 use App\Models\user\User;
@@ -48,11 +49,14 @@ class HomeController extends Controller
                                 ->select('users.*', 'city_name') // In eloquoent when we define join we need to tell that which column is required. 
                                 ->withCount("jobs")
                                 ->get();
+
+        $all_locations  =   City::all();
 // return $jobs;
         return view("user.home", [
             "categories"    =>  $categories,
             "jobs"          =>  $jobs,
-            "top_employers" =>  $top_employers
+            "top_employers" =>  $top_employers,
+            "locations"     =>  $all_locations
         ]);
     }
 
