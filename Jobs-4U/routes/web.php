@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\user\AuthController;
+use App\Http\Controllers\user\categoryController;
+use App\Http\Controllers\user\HomeController;
 use App\Http\Middleware\userRedirect;
+use App\Models\user\Category;
 use Illuminate\Support\Facades\Route;
 
 
@@ -16,5 +19,6 @@ Route::group(["middleware"=> userRedirect::class], function()
 
 
 
-Route::get("/home", function(){return view("user.home");})->name("user.home");
+Route::get("/home", [HomeController::class, "index"])->name("user.home");
 Route::get("/signout", [AuthController::class, "signout"])->name("user.signout");
+Route::post("/toggle-favorite", [HomeController::class, "favorite"])->name("toggleFavorite");
