@@ -1,7 +1,10 @@
+@php
+use App\Models\user\Favorite_job;
+@endphp
 @foreach ($jobs as $job)
 @php
-    // Getting the id of currently logged in user and checking for favorites
-    if (auth()->id() == $job->user_id) 
+    $is_favorite    =   Favorite_job::where("user_id", auth()->id())->where("job_id", $job->jobID)->first();
+    if($is_favorite)
     {
         $favorite   =   "heart-solid.svg";
     }
