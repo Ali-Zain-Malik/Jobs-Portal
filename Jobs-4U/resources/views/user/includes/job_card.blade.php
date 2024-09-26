@@ -1,6 +1,10 @@
 @php
 use App\Models\user\Favorite_job;
 @endphp
+@if (isset($empty))
+    <strong>Nothing in favorites</strong>
+@else
+
 @foreach ($jobs as $job)
 @php
     $is_favorite    =   Favorite_job::where("user_id", auth()->id())->where("job_id", $job->jobID)->first();
@@ -112,3 +116,4 @@ use App\Models\user\Favorite_job;
         })    
     });
 </script>
+@endif

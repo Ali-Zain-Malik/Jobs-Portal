@@ -5,12 +5,9 @@ namespace App\Http\Controllers\user;
 use App\Http\Controllers\Controller;
 use App\Models\user\Category;
 use App\Models\user\City;
-use App\Models\user\Favorite_job;
 use App\Models\user\Job;
 use App\Models\user\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
 {
@@ -55,45 +52,4 @@ class HomeController extends Controller
     }
 
 
-    public function favorite(Request $request)
-    {
-        $validator  =   Validator::make($request->all(),[
-            "job_id" => "required|integer|exists:jobs,id"
-        ]);
-
-        if($validator->passes())
-        {
-            $job_id     =   $request->input("job_id");
-            $user_id    =   Auth::id();
-
-            $favorite_job   =   Favorite_job::where("user_id", $user_id)
-                                            ->where("job_id", $job_id)
-                                            ->first();
-
-            if($favorite_job)
-            {
-                // If it is already there then
-                $favorite_job->delete();
-                return response()->json([
-                    "message"   =>  "Removed from favorites",
-                    "success"   =>  true
-                ]);
-            }
-            else
-            {
-                // If not then we will add it
-                $addFav =   new Favorite_job();
-                $addFav->user_id    =   $user_id;
-                $addFav->job_id     =   $job_id;
-                
-                if($addFav->save())
-                {
-                    return response()->json([
-                        "message"   =>  "Added to favorties",
-                        "success"   =>  true
-                    ]);
-                }
-            }
-        }
-    }
-}
+   }

@@ -31,7 +31,7 @@
             <ul class="dropdown-menu text-small">
               <li><a class="dropdown-item" href="profile_page.php">Profile</a></li>
               <li><a class="dropdown-item" href="posts.php">My Posts</a></li>
-              <li><a class="dropdown-item" href="favorites.php">Favorites</a></li>
+              <li><a class="dropdown-item" href="{{route("user.favorites")}}">Favorites</a></li>
               <li>
                 <hr class="dropdown-divider">
               </li>
@@ -61,7 +61,7 @@
           <ul class="dropdown-menu text-small">
             <li><a class="dropdown-item" href="profile_page.php">Profile</a></li>
             <li><a class="dropdown-item" href="posts.php" target="_blank">My Posts</a></li>
-            <li><a class="dropdown-item" href="favorites.php">Favorites</a></li>
+            <li><a class="dropdown-item" href="{{route("user.favorites")}}">Favorites</a></li>
             <li>
               <hr class="dropdown-divider">
             </li>
