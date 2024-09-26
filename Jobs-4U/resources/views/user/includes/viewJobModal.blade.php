@@ -31,7 +31,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary bg-warning w-100 border-0 " data-bs-target="#staticBackdrop" data-bs-toggle="modal">Apply</button>
+                {{-- <button type="button" class="btn btn-primary bg-warning w-100 border-0"  data-bs-target="#applyModal" data-bs-toggle="modal">Apply</button> --}}
             </div>
         </div>
     </div>

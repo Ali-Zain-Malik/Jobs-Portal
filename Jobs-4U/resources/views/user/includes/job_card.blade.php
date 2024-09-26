@@ -51,7 +51,7 @@ use App\Models\user\Favorite_job;
             @if (!Route::is("user.home")) {{-- Only show these buttons if it is not the home page --}}
                 <div class="view-apply d-flex gap-2">
                     <button type="button" class="view-btn px-3 py-1 rounded-pill text-white border-0" job-id="{{$job->jobID}}" data-bs-toggle="modal" data-bs-target="#viewModal">View</button>
-                    <button type="button" class="apply-btn px-3 py-1 rounded-pill text-white border-0" job-id="{{$job->jobID}}">Apply</button>
+                    <button type="button" class="apply-btn px-3 py-1 rounded-pill text-white border-0" job-id="{{$job->jobID}}" data-bs-target="#applyModal" data-bs-toggle="modal">Apply</button>
                 </div>
             @endif
 
@@ -61,7 +61,7 @@ use App\Models\user\Favorite_job;
 
         <div class="d-flex justify-content-between align-items-center">
             <span class="d-flex salary-span"><span class="currency me-1 text-uppercase">{{$job->currency}}</span><span class="fw-bold amount">{{$job->salary}}</span><p>/</p><span class="period">{{$job->per_period}}</span></span>
-            <span class="d-flex" style="font-size: 10px;"><span class="remaining-days me-1">{{ \Carbon\Carbon::parse(\Carbon\Carbon::now()->format('Y-m-d'))->diffInDays($job->expiry_date) }}</span><span> day(s) left to apply</span></span>
+            <span class="d-flex" style="font-size: 10px;"><span class="remaining-days me-1">{{ \Carbon\Carbon::parse(\Carbon\Carbon::now()->format('Y-m-d'))->diffInDays($job->expiry_date) +1 }}</span><span> day(s) left to apply</span></span>
         </div>
     </div>
 </div>
@@ -72,12 +72,12 @@ use App\Models\user\Favorite_job;
 <script>
     //Toggle favorites
     const heart_btns    =   document.querySelectorAll(".heart-btn");
-
+    var   job_id        =   "";
     heart_btns.forEach(function(btn)
     {
         btn.addEventListener("click", function()
         {
-            const job_id    =   this.getAttribute("job-id");
+            job_id    =   this.getAttribute("job-id");
             const img_src   =   this.getAttribute("src");
 
             // if(img_src === "img/heart-solid.svg")
@@ -120,7 +120,7 @@ use App\Models\user\Favorite_job;
     {
         btn.addEventListener("click", function()
         {
-            const job_id    =   this.getAttribute("job-id");
+            job_id    =   this.getAttribute("job-id");
             $.ajax(
             {
                 url         :   "{{route("viewJob")}}",
@@ -168,5 +168,73 @@ use App\Models\user\Favorite_job;
             });
         })
     });
+    // View Job details ends here
+
+
+    // Apply for jobs starts here
+    document.addEventListener("DOMContentLoaded", function(){
+    const jobs_apply_btns   =   document.querySelectorAll(".apply-btn");
+    jobs_apply_btns.forEach(function(btn)
+    {
+        btn.addEventListener("click", function()
+        {
+            job_id    =   this.getAttribute("job-id");
+            console.log(job_id)
+        })
+    });
+
+    $("#submit-btn").on("click", function()
+    {
+        $.ajax(
+        {
+            url         :   "{{route("applyJob")}}",
+            type        :   "post",
+            dataType    :   "json",
+            timeout     :   10000,
+            data        :
+            {
+                job_id      :   job_id,
+                description :   $("#description").val(),   
+                _token      : '{{ csrf_token() }}'
+            },
+            beforeSend  :   function()
+            {
+                $(".loader").removeClass("d-none");
+                $(".loader").addClass("d-flex");
+            },
+            complete    :   function()
+            {
+                $(".loader").removeClass("d-flex");
+                $(".loader").addClass("d-none");
+            },
+            success     :   function(response)
+            {
+                if(response.success)
+                {
+                    $("#toast-inner").text(response.message);
+                    $("#myToast").fadeIn();
+                    $("#myToast").addClass("d-block");
+                    setTimeout(() => 
+                    {
+                        $("#myToast").fadeOut();
+                        $("#myToast").removeClass("d-block");
+                    }, 1500);
+                }
+            },
+            error       :   function()
+            {
+                $("#toast-inner").text("Some thing went wrong");
+                $("#myToast").fadeIn();
+                $("#myToast").addClass("d-block");
+                setTimeout(() => 
+                {
+                    $("#myToast").fadeOut();
+                    $("#myToast").removeClass("d-block");
+                }, 1500);
+            }
+        });
+    });
+});
+    // Apply for jobs ends here
 </script>
 @endif
