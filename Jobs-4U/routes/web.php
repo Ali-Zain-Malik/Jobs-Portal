@@ -26,3 +26,4 @@ Route::post("/toggle-favorite", [JobController::class, "favorite"])->name("toggl
 Route::get("/all-categories", [CategoryController::class, "index"])->name("all-categories");
 Route::get("/search", [SearchController::class, "index"])->name("search-jobs");
 Route::get("/favorite-jobs", [JobController::class, "index"])->name("user.favorites");
+Route::post("/view-job", [JobController::class, "viewJob"])->name("viewJob");

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\user;
 use App\Http\Controllers\Controller;
 use App\Models\user\Favorite_job;
 use App\Models\user\Job;
+use App\Models\user\Job_skill;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -77,4 +78,28 @@ class JobController extends Controller
         }
     }
 
+
+    public function viewJob(Request $request)
+    {
+        $validator  =   Validator::make($request->all(),[
+            "job_id" => "required|integer|exists:jobs,id"
+        ]);
+
+        if($validator->passes())
+        {
+            $job_id         =   $request->input("job_id");
+            $job_details    =   Job::where("id", $job_id)->first();
+            $job_skills     =   Job_skill::join("skills", "skills.id", "=", "job_skills.skill_id")
+                                        ->where("job_skills.job_id", $job_id)->get();
+
+            if($job_details)
+            {
+                return response()->json([
+                    "success"       =>  true,
+                    "job_details"   =>  $job_details,
+                    "job_skills"    =>  $job_skills
+                ]);
+            }
+        }
+    }
 }

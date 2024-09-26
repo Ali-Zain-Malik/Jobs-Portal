@@ -48,15 +48,10 @@ use App\Models\user\Favorite_job;
                 <span class="px-2 py-1 rounded-pill text-white fw-semibold text-capitalize" style="font-size: 12px; background-color: orange;">{{$job->employment_type}}</span>
                 <span class="px-2 py-1 rounded-pill text-white fw-semibold text-capitalize" style="font-size: 12px; background-color: orange;">{{$job->location_type}}</span>
             </div>
-            @if (Route::is("user.home"))
-                <div class="view-apply d-none gap-2">
-                    <button type="button" class="view-btn px-3 py-1 rounded-pill text-white border-0">View</button>
-                    <button type="button" class="apply-btn px-3 py-1 rounded-pill text-white border-0">Apply</button>
-                </div>
-            @else
+            @if (!Route::is("user.home")) {{-- Only show these buttons if it is not the home page --}}
                 <div class="view-apply d-flex gap-2">
-                    <button type="button" class="view-btn px-3 py-1 rounded-pill text-white border-0">View</button>
-                    <button type="button" class="apply-btn px-3 py-1 rounded-pill text-white border-0">Apply</button>
+                    <button type="button" class="view-btn px-3 py-1 rounded-pill text-white border-0" job-id="{{$job->jobID}}" data-bs-toggle="modal" data-bs-target="#viewModal">View</button>
+                    <button type="button" class="apply-btn px-3 py-1 rounded-pill text-white border-0" job-id="{{$job->jobID}}">Apply</button>
                 </div>
             @endif
 
@@ -75,6 +70,7 @@ use App\Models\user\Favorite_job;
 
 
 <script>
+    //Toggle favorites
     const heart_btns    =   document.querySelectorAll(".heart-btn");
 
     heart_btns.forEach(function(btn)
@@ -114,6 +110,63 @@ use App\Models\user\Favorite_job;
                 }
             });
         })    
+    });
+    // Toggle favorites ends here
+
+
+    // View Job details starts
+    const jobs_view_btns  = document.querySelectorAll(".view-btn");
+    jobs_view_btns.forEach(function(btn)
+    {
+        btn.addEventListener("click", function()
+        {
+            const job_id    =   this.getAttribute("job-id");
+            $.ajax(
+            {
+                url         :   "{{route("viewJob")}}",
+                type        :   "post",
+                dataType    :   "json",
+                timeout     :   10000,
+                data        :
+                {
+                    job_id  :   job_id,
+                    _token  : '{{ csrf_token() }}'
+                },
+                beforeSend  :   function()
+                {
+                    $(".loader").removeClass("d-none");
+                    $(".loader").addClass("d-flex");
+                },
+                complete    :   function()
+                {
+                    $(".loader").removeClass("d-flex");
+                    $(".loader").addClass("d-none");
+                },
+                success     :   function(response)
+                {
+                    if(response.success)
+                    {
+                        $(".job-summary").text(response.job_details.job_description);
+                        $(".required-skills").empty(); // Clearing the previous skill names before entering loop, because append gets duplicated if the code is run again. 
+                        for(let i=0; i< response.job_skills.length; i++)
+                        {
+                            $(".required-skills").append(`<li>${response.job_skills[i].skill_name}</li>`);
+                        }
+                    }
+                },
+                error       :   function()
+                {
+                    $("#toast-inner").text("Some thing went wrong");
+                    $("#myToast").fadeIn();
+                    $("#myToast").addClass("d-block");
+                    setTimeout(() => 
+                    {
+                        $("#myToast").fadeOut();
+                        $("#myToast").removeClass("d-block");
+                    }, 1500);
+                }
+            });
+        })
     });
 </script>
 @endif

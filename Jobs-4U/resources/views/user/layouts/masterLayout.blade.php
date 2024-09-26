@@ -14,19 +14,23 @@
 <body>
     @include('user.includes.header')
 
+    @include("user.includes.loader")
     <main>
         @yield("main")
     </main>
 
 
-
+    {{-- This is the bootstrap toast --}}
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
         <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
           <div class="toast-body text-center" id="toast-inner">
             {{-- Message will be shown here --}}
           </div>
         </div>
-      </div>
+    </div>
+    {{-- Toast ends here --}}
+
+    @include("user.includes.viewJobModal")
 
     @include('user.includes.footer')
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
