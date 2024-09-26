@@ -18,7 +18,7 @@
               <li><a class="dropdown-item" href="{{route("user.home")}}">Home</a></li>
               <li><a class="dropdown-item" href="posts.php">Post</a></li>
               <li><a class="dropdown-item" href="requests.php">Requests</a></li>
-              <li><a class="dropdown-item find-jobs">Find Jobs</a></li>
+              <li><a href="{{route("search-jobs")}}" class="dropdown-item find-jobs">Find Jobs</a></li>
               <li><a class="dropdown-item switch" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#">Switch to Applicant</a></li>
             </ul>
           </div>
@@ -47,7 +47,7 @@
           <li><a href="{{route("user.home")}}" class="nav-link px-2">Home</a></li>
           <li><a href="job_post.php" class="nav-link px-2">Post</a></li>
           <li><a href="requests.php" class="nav-link px-2">Requests</a></li>
-          <li><a style="cursor:pointer;" class="nav-link px-2 find-jobs">Find Jobs</a></li>
+          <li><a href="{{route("search-jobs")}}" style="cursor:pointer;" class="nav-link px-2 find-jobs">Find Jobs</a></li>
           <li><a href="#" class="nav-link px-2 switch" data-bs-toggle="modal" data-bs-target="#exampleModal">Switch to Applicant</a></li>
         </ul>
   

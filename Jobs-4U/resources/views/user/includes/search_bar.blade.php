@@ -13,7 +13,9 @@
                 </div>
                 <select name="city-id" id="city-id">
                     <option value="">All Locations</option>
-
+                    @isset($city_id)
+                        <option selected value="{{$city_id}}">{{$city_name->city_name}}</option>
+                    @endisset
                     @foreach ($locations as $city)
                         <option value="{{$city->id}}">{{$city->city_name}}</option>
                     @endforeach
@@ -24,7 +26,9 @@
             <i class="bx bxs-category fs-4"></i>
             <select name="category" id="category" class="w-100 border-0" role="button" style="height: 100%;">
                 <option value="">All Categories</option>
-
+                @isset($category_id)
+                    <option selected value="{{$category_id}}">{{$category_name->category_name}}</option>
+                @endisset
                 @foreach ($categories as $category)
                         <option value="{{$category->id}}">{{$category->category_name}}</option>
                 @endforeach
