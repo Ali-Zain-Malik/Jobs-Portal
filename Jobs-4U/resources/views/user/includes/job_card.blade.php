@@ -2,7 +2,7 @@
 use App\Models\user\Favorite_job;
 @endphp
 @if (isset($empty))
-    <strong>Nothing in favorites</strong>
+    <strong>No Results Found</strong>
 @else
 
 @foreach ($jobs as $job)

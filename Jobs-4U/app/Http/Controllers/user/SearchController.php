@@ -42,7 +42,7 @@ class SearchController extends Controller
             $query->where('categories.id', $category_id);
         }
 
-        $jobs  =   $query->get();
+        $jobs    =   $query->get();
 
         $all_locations  =   City::all();
         $all_categories =   Category::where("is_active", 1)->get();
@@ -54,6 +54,17 @@ class SearchController extends Controller
         if(isset($category_id))
         {
             $category_name  =   Category::where("id", $category_id)->select("categories.category_name")->first();
+        }
+
+
+        if($jobs->isEmpty())
+        {
+            // return $jobs;
+            return view("user.search_page", [
+                "empty" => "empty",
+                "locations"     =>  $all_locations,
+                "categories"    =>  $all_categories
+            ]);
         }
 
         return view("user.search_page", [

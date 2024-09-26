@@ -24,7 +24,7 @@ class JobController extends Controller
                                 ->select("jobs.*", "jobs.id as jobID", "cities.*", "users.*")
                                 ->first();
         }
-        // return $jobs;
+
         if(empty($jobs))
         {
             return view("user.favorites", ["empty" => "empty"]);
