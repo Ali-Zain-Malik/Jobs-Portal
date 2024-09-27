@@ -109,23 +109,35 @@ class JobController extends Controller
     {
         $job_id         =   $request->input("job_id");
         $description    =   $request->input("description")  ??  NULL;
-        
-        $job_applicant  =   new Job_applicant();
-        $job_applicant->applicant_id    =   Auth::id();
-        $job_applicant->job_id          =   $job_id;
-        $job_applicant->date_applied    =   date("Y-m-d");
-        if($description)
-        {
-            $job_applicant->description =   $description;
-        }
 
-        if($job_applicant->save())
+        $job_applicant  =   Job_applicant::where("applicant_id", Auth::id())
+                                        ->where("job_id", $job_id)->first();
+        
+        if($job_applicant)
         {
             return response()->json([
                 "success"   =>  true,
-                "message"   =>  "Applied for the job"
+                "message"   =>  "You have already applied for this job"
             ]);
         }
-        
+        else
+        {
+            $job_applicant                  =   new Job_applicant();
+            $job_applicant->applicant_id    =   Auth::id();
+            $job_applicant->job_id          =   $job_id;
+            $job_applicant->date_applied    =   date("Y-m-d");
+            if($description)
+            {
+                $job_applicant->description =   $description;
+            }
+    
+            if($job_applicant->save())
+            {
+                return response()->json([
+                    "success"   =>  true,
+                    "message"   =>  "Applied for the job"
+                ]);
+            }
+        }
     }
 }
