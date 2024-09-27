@@ -29,7 +29,7 @@
               <img src="img/demo_image.png" style="object-fit: cover;" alt="Profile Pic" width="45" height="45" class="rounded-circle">
             </a>
             <ul class="dropdown-menu text-small">
-              <li><a class="dropdown-item" href="profile_page.php">Profile</a></li>
+              <li><a class="dropdown-item" href="{{route("user.profile")}}">Profile</a></li>
               <li><a class="dropdown-item" href="posts.php">My Posts</a></li>
               <li><a class="dropdown-item" href="{{route("user.favorites")}}">Favorites</a></li>
               <li>
@@ -59,7 +59,7 @@
             <img src="img/demo_image.png" style="object-fit: cover;" alt="Profiel Pic" width="45" height="45" class="rounded-circle">
           </a>
           <ul class="dropdown-menu text-small">
-            <li><a class="dropdown-item" href="profile_page.php">Profile</a></li>
+            <li><a class="dropdown-item" href="{{route("user.profile")}}">Profile</a></li>
             <li><a class="dropdown-item" href="posts.php" target="_blank">My Posts</a></li>
             <li><a class="dropdown-item" href="{{route("user.favorites")}}">Favorites</a></li>
             <li>

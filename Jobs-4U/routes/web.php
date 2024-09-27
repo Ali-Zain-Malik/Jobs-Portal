@@ -5,6 +5,7 @@ use App\Http\Controllers\user\CategoryController;
 use App\Http\Controllers\user\HomeController;
 use App\Http\Controllers\user\JobController;
 use App\Http\Controllers\user\SearchController;
+use App\Http\Controllers\user\UserController;
 use App\Http\Middleware\userRedirect;
 use Illuminate\Support\Facades\Route;
 
@@ -28,3 +29,4 @@ Route::get("/search-jobs", [SearchController::class, "index"])->name("search-job
 Route::get("/favorite-jobs", [JobController::class, "index"])->name("user.favorites");
 Route::post("/view-job", [JobController::class, "viewJob"])->name("viewJob");
 Route::post("/apply-job", [JobController::class, "applyJob"])->name("applyJob");
+Route::get("/profile-page", [UserController::class, "index"])->name("user.profile");
