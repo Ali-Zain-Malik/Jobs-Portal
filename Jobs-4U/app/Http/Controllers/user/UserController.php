@@ -18,23 +18,6 @@ use function PHPSTORM_META\map;
 
 class UserController extends Controller
 {
-    public function index()
-    {
-        $user   =   auth()->user();
-        
-        $skills =   Skill::where("is_approved", 1)->get();
-        $user_skills    =   User_skill::where("user_id", Auth::id())
-                                    ->join("skills", "skills.id", "=", "user_skills.skill_id")
-                                    ->where("is_approved", 1)
-                                    ->get();
-        // return $user_skills;
-        return view("user.profile_page", [
-            "user"          =>  $user,
-            "skills"        =>  $skills,
-            "user_skills"   =>  $user_skills
-        ]);
-    }
-
     public function changeProfilePic(Request $request)
     {
         if($request->hasFile("new_profile_img"))

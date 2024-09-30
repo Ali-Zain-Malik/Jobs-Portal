@@ -4,6 +4,7 @@ use App\Http\Controllers\user\AuthController;
 use App\Http\Controllers\user\CategoryController;
 use App\Http\Controllers\user\HomeController;
 use App\Http\Controllers\user\JobController;
+use App\Http\Controllers\user\ProfileController;
 use App\Http\Controllers\user\SearchController;
 use App\Http\Controllers\user\UserController;
 use App\Http\Middleware\userRedirect;
@@ -30,9 +31,11 @@ Route::get("/favorite-jobs", [JobController::class, "index"])->name("user.favori
 Route::post("/view-job", [JobController::class, "viewJob"])->name("viewJob");
 Route::post("/apply-job", [JobController::class, "applyJob"])->name("applyJob");
 
+Route::get("/profile-page", [ProfileController::class, "index"])->name("user.profile");
+
+
 Route::controller(UserController::class)->group(function()
 {
-    Route::get("/profile-page", "index")->name("user.profile");
     Route::post("/profile/change-profile-pic", "changeProfilePic")->name("user.changeProfilePic");
     Route::post("/profile/change-name", "changeName")->name("user.changeName");
     Route::post("/profile/update-description", "updateDescription")->name("user.updateDescription");
