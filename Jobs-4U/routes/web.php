@@ -42,4 +42,6 @@ Route::controller(UserController::class)->group(function()
     Route::post("/profile/update-skills", "updateSkills")->name("user.updateSkills");
     Route::post("/profile/add-experience", "addExperience")->name("user.addExperience");
     Route::post("/profile/add-education", "addEducation")->name("user.addEducation");
+    Route::post("/profile/delete-experience", "deleteExperience")->name("user.deleteExperience");
+    Route::post("/profile/delete-education", "deleteEducation")->name("user.deleteEducation");
 });

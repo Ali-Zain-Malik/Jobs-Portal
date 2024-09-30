@@ -11,9 +11,9 @@
                         <div class="d-flex flex-column" style="width: 30%;">
                             <label for="program">Program</label>
                             <select name="program" id="program" class="form-select">
-                                <option value="fsc">Fsc</option>
                                 <option value="bachelors">Bachelors</option>
                                 <option value="masters">Masters</option>
+                                <option value="others">Others</option>
                             </select>
                         </div>
                         <div class="d-flex flex-column" style="width: 70%;">

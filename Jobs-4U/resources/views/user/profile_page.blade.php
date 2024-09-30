@@ -95,7 +95,7 @@
                 <div class="card col-lg-5">
                     <div class="d-flex justify-content-between align-items-center card-header pb-0">
                         <h5 class="fw-bold">{{$experience->designation}}</h5>
-                        <span class="pe-1 d-flex gap-3"><img id="delete-experience" src="img/trash.svg" role="button" alt=""></span>
+                        <span class="pe-1 d-flex gap-3"><img id="delete-experience" experience-id = "{{$experience->id}}" src="img/trash.svg" role="button" alt=""></span>
                     </div>
                     <div class="card-body mt-2">
                         <h5 class="card-title">{{$experience->company}}</h5>
@@ -139,7 +139,7 @@
                 <div class="card col-lg-5">
                     <div class="d-flex justify-content-between align-items-center card-header pb-0">
                         <h5 class="fw-bold">{{$education->major}}</h5>
-                        <span class="pe-1 d-flex gap-3"><img id="delete-education" src="img/trash.svg" role="button" alt=""></span>
+                        <span class="pe-1 d-flex gap-3"><img id="delete-education" education-id = "{{$education->id}}" src="img/trash.svg" role="button" alt=""></span>
                     </div>
                     <div class="card-body mt-2">
                         <h5 class="card-title my-0">{{$education->institute}}</h5>
@@ -545,11 +545,11 @@ document.addEventListener("DOMContentLoaded", function()
     {
         if(event.target.id === "delete-experience")
         {
-            confirmMsg("Experience")
+            confirmMsg("Experience", (this.getAttribute("experience-id")))
         }
         else if(event.target.id === "delete-education")
         {
-            confirmMsg("Education")
+            confirmMsg("Education", (this.getAttribute("education-id")))
         }
     });
 
@@ -567,10 +567,42 @@ document.addEventListener("DOMContentLoaded", function()
         }
     }
 
-    function confirmMsg(message)
+    function confirmMsg(message, id)
     {
         alertify.confirm(`Delete ${message}`, `Are you sure to delete ${message}`, 
-        function(){ alertify.success('Ok') },
+        function()
+        {
+            var url;
+            if(message == "Experience")
+            {
+                url =   "{{route("user.deleteExperience")}}";
+            }
+            else if(message == "Education")
+            {
+                url =  "{{route("user.deleteEducation")}}"; 
+            }
+            $.ajax(
+            {
+                url         :   url,
+                type        :   "post",
+                dataType    :   "json",
+                data        :
+                {
+                    _token  :   '{{ csrf_token() }}',
+                    id      :   id
+                },
+                success     :   function(response)
+                {
+                    if(response.success)
+                    {
+                        alertify.success(response.message) 
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1200);
+                    }
+                }
+            });
+        },
         function(){ alertify.error('Cancelled')});
     }
 

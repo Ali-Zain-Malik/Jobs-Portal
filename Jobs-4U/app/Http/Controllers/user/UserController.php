@@ -279,4 +279,45 @@ class UserController extends Controller
             "message"   =>  "Education added successfully"
         ]);
     }
+
+    public function deleteExperience(Request $request)
+    {
+        $validator  =   Validator::make($request->all(),[
+            "id"    =>  "required|integer"
+        ]);
+
+        if($validator->fails())
+        {
+            return response()->json([
+                "success"   =>  false,
+                "error"     =>  $validator->errors()
+            ]);
+        }
+
+        Experience::destroy($request->id);
+        return response()->json([
+            "success"   =>  true,
+            "message"   =>  "Experience deleted successfully"
+        ]);
+    }
+    public function deleteEducation(Request $request)
+    {
+        $validator  =   Validator::make($request->all(),[
+            "id"    =>  "required|integer"
+        ]);
+
+        if($validator->fails())
+        {
+            return response()->json([
+                "success"   =>  false,
+                "error"     =>  $validator->errors()
+            ]);
+        }
+
+        Education::destroy($request->id);
+        return response()->json([
+            "success"   =>  true,
+            "message"   =>  "Education deleted successfully"
+        ]);
+    }
 }
