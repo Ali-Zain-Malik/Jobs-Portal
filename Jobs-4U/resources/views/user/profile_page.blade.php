@@ -128,27 +128,33 @@
         <!-- Education cards start here -->
         <div class="container education row d-flex justify-content-around">
             
-            
-            <div class="card col-lg-5">
-                <div class="d-flex justify-content-between align-items-center card-header pb-0">
-                    <h5 class="fw-bold">Major</h5>
-                    <span class="pe-1 d-flex gap-3"><img id="delete-education" src="img/trash.svg" role="button" alt=""></span>
-                </div>
-                <div class="card-body mt-2">
-                    <h5 class="card-title my-0">Institute</h5>
-                    <h6 class="mt-0">Program</h6>
-                    <p class="card-text fs-6 d-flex align-items-center gap-2">
-                        <span><img src="img/calender.svg" alt=""></span>
-                        <span style="font-size: 14px;">20 August 2024</span> - 
-                        <span style="font-size: 14px;">Present</span>
-                    </p>
+            @foreach ($user_education as $education)
+                <div class="card col-lg-5">
+                    <div class="d-flex justify-content-between align-items-center card-header pb-0">
+                        <h5 class="fw-bold">{{$education->major}}</h5>
+                        <span class="pe-1 d-flex gap-3"><img id="delete-education" src="img/trash.svg" role="button" alt=""></span>
+                    </div>
+                    <div class="card-body mt-2">
+                        <h5 class="card-title my-0">{{$education->institute}}</h5>
+                        <h6 class="mt-0">{{$education->program}}</h6>
+                        <p class="card-text fs-6 d-flex align-items-center gap-2">
+                            <span><img src="img/calender.svg" alt=""></span>
+                            <span style="font-size: 14px;">{{\Carbon\Carbon::parse($education->start_date)->format('F Y')}}</span> - 
+                            <span style="font-size: 14px;">
+                                @if($education->end_date)
+                                    {{ \Carbon\Carbon::parse($education->end_date)->format('F Y') }}
+                                @else
+                                    Present
+                                @endif
+                            </span>
+                        </p>
 
-                    <p class="card-text">
-                        <span class="me-3 bg-info rounded-pill px-3 py-1 text-white fw-bold text-capitalize">Grade</span>
-                    </p> 
+                        <p class="card-text">
+                            <span class="me-3 bg-info rounded-pill px-3 py-1 text-white fw-bold text-capitalize">{{$education->grade}}</span>
+                        </p> 
+                    </div>
                 </div>
-            </div>
-
+            @endforeach
 
         </div>
         <!-- Education cards end here -->
