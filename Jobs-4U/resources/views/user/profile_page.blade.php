@@ -64,11 +64,13 @@
             <h5 class="fw-bold text-start ps-2">Skills</h5>
 
             <select name="skills" id="skills" multiple="multiple" class="col-lg-6 col-12">
-                <option value="">Skills 1</option>
-                <option value="">Skills 2</option>
-                <option value="">Skills 3</option>
+                @php
+                    $userSkillIds   =   $user_skills->pluck("skill_id")->toArray();
+                @endphp
+                @foreach ($skills as $sk)
+                    <option @selected(in_array($sk->id, $userSkillIds)) value="{{$sk->id}}">{{$sk->skill_name}}</option>
+                @endforeach
             </select>
-
             <div class="d-inline ms-3">
                 <button style="font-size: 14px;" type="button" id="skills-save-btn" class="bg-warning fw-semibold border-0 px-3 py-1 rounded-pill d-none save-btn">Save Skills</button>
             </div>
