@@ -91,26 +91,33 @@
         <!-- Experience cards start here -->
         <div class="container experience row d-flex justify-content-around">
            
+            @foreach ($user_experience as $experience)
+                <div class="card col-lg-5">
+                    <div class="d-flex justify-content-between align-items-center card-header pb-0">
+                        <h5 class="fw-bold">{{$experience->designation}}</h5>
+                        <span class="pe-1 d-flex gap-3"><img id="delete-experience" src="img/trash.svg" role="button" alt=""></span>
+                    </div>
+                    <div class="card-body mt-2">
+                        <h5 class="card-title">{{$experience->company}}</h5>
+                        <p class="card-text fs-6 d-flex align-items-center gap-2">
+                            <span><img src="img/calender.svg" alt=""></span>
+                            <span style="font-size: 14px;">{{\Carbon\Carbon::parse($experience->start_date)->format('F Y')}}</span> - 
+                            <span style="font-size: 14px;">
+                                @if($experience->end_date)
+                                    {{ \Carbon\Carbon::parse($education->end_date)->format('F Y') }}
+                                @else
+                                    Present
+                                @endif
+                            </span>
+                        </p>
 
-            <div class="card col-lg-5">
-                <div class="d-flex justify-content-between align-items-center card-header pb-0">
-                    <h5 class="fw-bold">Designation</h5>
-                    <span class="pe-1 d-flex gap-3"><img id="delete-experience" src="img/trash.svg" role="button" alt=""></span>
+                        <p class="card-text">
+                            <span class="me-3 bg-info rounded-pill px-3 py-1 text-white fw-bold text-capitalize">{{$experience->employment_type}}</span>
+                            <span class="bg-info rounded-pill px-3 py-1 text-white fw-bold text-capitalize">{{$experience->location_type}}</span>
+                        </p> 
+                    </div>
                 </div>
-                <div class="card-body mt-2">
-                    <h5 class="card-title">Company</h5>
-                    <p class="card-text fs-6 d-flex align-items-center gap-2">
-                        <span><img src="img/calender.svg" alt=""></span>
-                        <span style="font-size: 14px;">20 August 2024</span> - 
-                        <span style="font-size: 14px;">Present</span>
-                    </p>
-
-                    <p class="card-text">
-                        <span class="me-3 bg-info rounded-pill px-3 py-1 text-white fw-bold text-capitalize">Employment Type</span>
-                        <span class="bg-info rounded-pill px-3 py-1 text-white fw-bold text-capitalize">Location Type</span>
-                    </p> 
-                </div>
-            </div>
+            @endforeach
 
         </div>
         <!-- Experience cards ends here -->
