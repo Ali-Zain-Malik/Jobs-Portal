@@ -26,7 +26,7 @@
           <div class="dropdown text-end">
             <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
               aria-expanded="false">
-              <img src="img/demo_image.png" style="object-fit: cover;" alt="Profile Pic" width="45" height="45" class="rounded-circle">
+              <img src="{{asset($user->profile_pic ? "storage/".$user->profile_pic : "img/demo_image.png")}}" style="object-fit: cover;" alt="Profile Pic" width="45" height="45" class="rounded-circle">
             </a>
             <ul class="dropdown-menu text-small">
               <li><a class="dropdown-item" href="{{route("user.profile")}}">Profile</a></li>
@@ -56,7 +56,7 @@
         <div class="dropdown text-end profile">
           <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
             aria-expanded="false">
-            <img src="img/demo_image.png" style="object-fit: cover;" alt="Profiel Pic" width="45" height="45" class="rounded-circle">
+            <img src="{{asset($user->profile_pic ? "storage/".$user->profile_pic : "img/demo_image.png")}}" style="object-fit: cover;" alt="Profiel Pic" width="45" height="45" class="rounded-circle">
           </a>
           <ul class="dropdown-menu text-small">
             <li><a class="dropdown-item" href="{{route("user.profile")}}">Profile</a></li>

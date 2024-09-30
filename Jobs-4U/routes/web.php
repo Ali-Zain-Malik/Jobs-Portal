@@ -30,3 +30,5 @@ Route::get("/favorite-jobs", [JobController::class, "index"])->name("user.favori
 Route::post("/view-job", [JobController::class, "viewJob"])->name("viewJob");
 Route::post("/apply-job", [JobController::class, "applyJob"])->name("applyJob");
 Route::get("/profile-page", [UserController::class, "index"])->name("user.profile");
+Route::post("/profile/change-profile-pic", [UserController::class, "changeProfilePic"])->name("user.changeProfilePic");
+Route::post("/proifle/change-name", [UserController::class, "changeName"])->name("user.changeName");

@@ -9,12 +9,13 @@
 @endsection
 
 @section('main')
-<form style="margin-top:60px;" enctype="multipart/form-data">
+<form style="margin-top:60px;" enctype="multipart/form-data" id="form">
+    @csrf
     <!-- Main container containing everthing -->
     <div class="container  d-flex align-items-center flex-column bg-light pt-5">
         <!-- Profile Picture -->
         <div class="profile-image-div rounded-circle">
-            <img class="profile-image rounded-circle" src="img/demo_image.png" alt="">
+            <img class="profile-image rounded-circle" src="{{asset($user->profile_pic ? "storage/".$user->profile_pic : "img/demo_image.png")}}" alt="">
             <!-- Overlay appearing on hover -->
             <div class="overlay">
                 <img src="img/camera.svg" id="camera-icon" title="Upload Profile Pic" alt="">
@@ -33,7 +34,7 @@
 
         <!-- Name section -->
         <div class="name-div d-flex">
-            <p class="h5 fw-bolder mt-3 name text-center" id="name">Name</p><span><img id="name-edit" src="img/pencil.svg" role="button" title="Edit Name" alt=""></span>
+            <p class="h5 fw-bolder mt-3 name text-center" id="name">{{$user->name}}</p><span><img id="name-edit" src="img/pencil.svg" role="button" title="Edit Name" alt=""></span>
         </div>
         <p style="font-size: 14px;" class="name-msg my-0"></p>
         <!-- Name section ends here -->
@@ -46,18 +47,7 @@
         <div class="description w-100 px-5">
             <h5 class="text-start fw-bold ps-2 d-inline">Description</h5> <sup style="top:-1rem;"><img id="description-edit" src="img/pencil.svg" role="button" title="Edit Description" alt=""></sup>
             <p class="ps-2 mb-0 description-text" spellcheck="false" style="font-size: 14px; max-height:65px; overflow:hidden;">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem, voluptate? Veniam repudiandae animi rem ab unde aliquid pariatur ullam id, fugit eum enim, provident praesentium nulla qui voluptas corrupti tempora?
-                Ea voluptatibus laborum quia incidunt praesentium quod exercitationem omnis veritatis repellendus neque quam, blanditiis ex assumenda, sed ab harum illo quo minima? Pariatur illum maiores esse! Nobis molestias commodi reprehenderit?
-                Laudantium debitis iusto a nobis aut reiciendis totam alias? Explicabo, quis! Non dolor velit illo autem consequuntur enim sed distinctio, ut impedit nemo perspiciatis deleniti accusantium itaque aperiam laborum iste.
-                Molestiae, vitae obcaecati? Consectetur laboriosam nobis velit placeat natus officia quam at sit enim, hic blanditiis. Eveniet quibusdam temporibus laudantium saepe, laboriosam autem reprehenderit pariatur omnis ea aliquid, consectetur maxime?
-                Ab atque pariatur voluptates autem optio illo corporis quaerat unde dolore, iure facilis officiis iste quisquam eius obcaecati! Inventore beatae culpa doloribus rem officia sequi non perferendis dolorum deleniti exercitationem.
-                Earum sint labore, corrupti aut magni explicabo eius amet! Suscipit aspernatur corporis, tempore velit quos quod, necessitatibus laboriosam asperiores laborum iste fugit dolores! Consequatur aliquam qui deleniti et in corporis.
-                Quis mollitia soluta sit error pariatur, ipsa odio iure eaque rerum quaerat quae repellendus accusamus fugiat cupiditate et reiciendis eveniet, atque, sapiente saepe accusantium placeat veniam cumque aliquid delectus! Sit!
-                Quam iste minus modi sapiente in tempora placeat officia error molestias alias, similique ex ipsum maiores aspernatur suscipit non voluptas quas! Reiciendis, possimus. Incidunt magni, tempore quidem nisi accusantium sunt.
-                Earum esse asperiores iure tenetur soluta a libero reprehenderit facilis obcaecati fugit temporibus error vel illum labore ut voluptatem corporis, sint neque tempore ad laboriosam, fuga exercitationem itaque minima. Saepe!
-                Voluptatibus iure mollitia veniam ipsa consequatur repellat necessitatibus accusantium voluptate quae. Tempore totam quo, doloremque ducimus excepturi facilis recusandae officiis in incidunt at. Nemo adipisci voluptates delectus expedita dignissimos ad?
-                Nesciunt obcaecati dolores quam ex incidunt minima ab id eos enim omnis at rem quaerat asperiores quasi libero, reiciendis ut corporis itaque facilis atque! Tempora nihil voluptatum sint totam? Nam!
-                Modi accusantium odit sequi illo impedit minus suscipit, maiores eveniet excepturi voluptas odio quisquam eius! Aspernatur corrupti error amet adipisci fugiat suscipit commodi consequatur, assumenda deserunt! Modi nulla earum temporibus!
+                {{$user->description ? $user->description : "No description added yet"}}
             </p>
             <span class="ps-2 pointer seeMore d-none">...See More</span>
 
@@ -215,6 +205,46 @@ document.addEventListener("DOMContentLoaded", function()
         }
     });
 
+    $("#img-save-btn").on("click", function()
+    {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        const form              =   document.getElementById("form");
+        const formData          =   new FormData(form);
+        const new_profile_img   =   document.querySelector(".profile-image-input");
+        
+        // Ensuring that the file has been selected
+        if(new_profile_img.files.length > 0)
+        {
+            formData.append("new_profile_img",new_profile_img.files[0]);
+            
+            $.ajax(
+            {
+                url         :   "{{route("user.changeProfilePic")}}",
+                type        :   "post",
+                data        :   formData,
+                contentType :   false,
+                processData :   false,
+                success     :   function(response)
+                {
+                    if(response.success)
+                    {
+                        location.reload();
+                        // $('#upload-status').text(response.message);
+                    }
+                    else
+                    {
+                        $("#upload-status").text(response.error).addClass("text-danger");
+                    }
+                }
+            });
+        }
+        
+    });
 
     $("#name-edit").on("click", function()
     {
@@ -233,6 +263,25 @@ document.addEventListener("DOMContentLoaded", function()
             $(".name-msg").text("").removeClass("text-danger");
             $("#name").attr("contenteditable", "false").removeClass("editable");
             $("#name-edit").attr("src", "img/pencil.svg");
+            
+            $.ajax(
+            {
+                url         :   "{{route("user.changeName")}}",
+                type        :   "post",
+                dataType    :   "json",
+                data        :
+                {
+                    "name"  :   $("#name").text().trim();
+                },
+                headers     :   
+                {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success     :   function(response)
+                {
+                    
+                }
+            });
         }
         else
         {
