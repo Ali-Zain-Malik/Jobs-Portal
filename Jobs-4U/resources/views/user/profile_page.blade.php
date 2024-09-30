@@ -264,6 +264,13 @@ document.addEventListener("DOMContentLoaded", function()
             $("#name").attr("contenteditable", "false").removeClass("editable");
             $("#name-edit").attr("src", "img/pencil.svg");
             
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
             $.ajax(
             {
                 url         :   "{{route("user.changeName")}}",
@@ -271,15 +278,14 @@ document.addEventListener("DOMContentLoaded", function()
                 dataType    :   "json",
                 data        :
                 {
-                    "name"  :   $("#name").text().trim();
-                },
-                headers     :   
-                {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    "name"  :   $("#name").text().trim()
                 },
                 success     :   function(response)
                 {
-                    
+                    if(response.success)
+                    {
+                        location.reload();
+                    }
                 }
             });
         }

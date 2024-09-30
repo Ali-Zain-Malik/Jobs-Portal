@@ -72,8 +72,27 @@ class UserController extends Controller
                 "name"  =>  "required|min:3|max:30"
             ]);
             
-            
-            $name   =   $request->name;
+            if($validator->fails())
+            {
+                return response()->json([
+                    "success"   =>  false,
+                    "error"     =>  $validator->errors()
+                ]);
+            }
+
+            $name       =   $request->name;
+            $user       =   auth()->user();
+            $user->name =   $name;
+            $user->save();
+            return response()->json([
+                "success"   =>  true,
+                "message"   =>  "Name updated successfully"
+            ]);
         }
+
+        return response()->json([
+            "success"   =>  false,
+            "error"     =>  "Name cannot be empty"
+        ]);
     }
 }
