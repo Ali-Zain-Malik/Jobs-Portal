@@ -342,35 +342,27 @@ document.addEventListener("DOMContentLoaded", function()
 
     $("#desc-save-btn").on("click", function()
     {
-        if($(".description-text").text().trim() == "")
+        $.ajax(
         {
-            $(".description-text").attr("contenteditable", "false").removeClass("editable").text("No description added yet");
-            $("#desc-save-btn").addClass("d-none");
-        }
-        else
-        {
-            $.ajax(
+            url         :   "{{route("user.updateDescription")}}",
+            type        :   "post",
+            dataType    :   "json",
+            data        :
             {
-                url         :   "{{route("user.updateDescription")}}",
-                type        :   "post",
-                dataType    :   "json",
-                data        :
+                "description"   :   $(".description-text").text().trim()
+            },
+            headers     :
+            {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success     :   function(response)
+            {
+                if(response.success)
                 {
-                    "description"   :   $(".description-text").text().trim()
-                },
-                headers     :
-                {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success     :   function(response)
-                {
-                    if(response.success)
-                    {
-                        location.reload();
-                    }
+                    location.reload();
                 }
-            });
-        }
+            }
+        });
     });
 
     $("#skills").on("select2:select select2:unselect", function()
@@ -378,6 +370,31 @@ document.addEventListener("DOMContentLoaded", function()
         $("#skills-save-btn").removeClass("d-none");
     });
 
+
+    $("#skills-save-btn").on("click", function()
+    {
+        $.ajax(
+        {
+            url         :   "{{route("user.updateSkills")}}",
+            type        :   "post",
+            dataType    :   "json",
+            data        :
+            {
+                "skills"   :   $("#skills").val()
+            },
+            headers     :
+            {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success     :   function(response)
+            {
+                if(response.success)
+                {
+                    location.reload();
+                }
+            }
+        });
+    });
 
     $("#add-experience, #add-education").on("click", function(event)
     {

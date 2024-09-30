@@ -4,11 +4,14 @@ namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
 use App\Models\user\Skill;
+use App\Models\user\User;
 use App\Models\user\User_skill;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+
+use function PHPSTORM_META\map;
 
 class UserController extends Controller
 {
@@ -123,5 +126,31 @@ class UserController extends Controller
                 "message"   =>  "Description updated successfully"
             ]); 
         }
+
+        User::where("id", Auth::id())->update(["description" => NULL]);
+    }
+
+    public function updateSkills(Request $request)
+    {
+        if($request->has("skills"))
+        {
+            $new_user_skills    =   $request->skills;
+            User_skill::where("user_id", Auth::id())->delete();
+
+            foreach($new_user_skills as $skill_id)
+            {
+                User_skill::create([
+                    "user_id"   =>  Auth::id(),
+                    "skill_id"  =>  $skill_id
+                ]);      
+            }
+            return response()->json([
+                "success"   =>  true,
+                "message"   =>  "Skills updated successfully"
+            ]); 
+        }
+
+        User_skill::where("user_id", Auth::id())->delete();
+        return "No skill added";
     }
 }
