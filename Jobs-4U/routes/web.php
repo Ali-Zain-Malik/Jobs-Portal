@@ -36,6 +36,7 @@ Route::get("/profile-page", [ProfileController::class, "index"])->name("user.pro
 
 Route::controller(UserController::class)->group(function()
 {
+    // Route::get("user/profile", "index")->name("user.profile");
     Route::post("/profile/change-profile-pic", "changeProfilePic")->name("user.changeProfilePic");
     Route::post("/profile/change-name", "changeName")->name("user.changeName");
     Route::post("/profile/update-description", "updateDescription")->name("user.updateDescription");
