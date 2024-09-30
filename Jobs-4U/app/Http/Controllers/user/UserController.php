@@ -95,4 +95,19 @@ class UserController extends Controller
             "error"     =>  "Name cannot be empty"
         ]);
     }
+
+
+    public function updateDescription(Request $request)
+    {
+        if($request->has("description"))
+        {
+            $user   =   auth()->user();
+            $user->description  =   $request->description;
+            $user->save();
+            return response()->json([
+                "success"   =>  true,
+                "message"   =>  "Description updated successfully"
+            ]); 
+        }
+    }
 }

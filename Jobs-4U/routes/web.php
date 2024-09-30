@@ -32,3 +32,4 @@ Route::post("/apply-job", [JobController::class, "applyJob"])->name("applyJob");
 Route::get("/profile-page", [UserController::class, "index"])->name("user.profile");
 Route::post("/profile/change-profile-pic", [UserController::class, "changeProfilePic"])->name("user.changeProfilePic");
 Route::post("/proifle/change-name", [UserController::class, "changeName"])->name("user.changeName");
+Route::post("/proifle/update-description", [UserController::class, "updateDescription"])->name("user.updateDescription");

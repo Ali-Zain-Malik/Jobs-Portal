@@ -323,15 +323,53 @@ document.addEventListener("DOMContentLoaded", function()
 
     $("#description-edit").on("click", function()
     {
-            $(".description-text").attr("contenteditable", "true").addClass("editable");
-            $("#desc-save-btn").removeClass("d-none");
-            $(".seeMore").text("");
-            $(".description-text").css({
-                "maxHeight" : "none",
-                "overflow"  : "visible"
-            });   
+        $(".description-text").attr("contenteditable", "true").addClass("editable");
+        $("#desc-save-btn").removeClass("d-none");
+        $(".seeMore").text("");
+        $(".description-text").css({
+            "maxHeight" : "none",
+            "overflow"  : "visible"
+        });   
+
+        if($(".description-text").text().trim() == "No description added yet")
+        {
+            $(".description-text").text("");
+        } 
     });
 
+
+    $("#desc-save-btn").on("click", function()
+    {
+        if($(".description-text").text().trim() == "")
+        {
+            $(".description-text").attr("contenteditable", "false").removeClass("editable").text("No description added yet");
+            $("#desc-save-btn").addClass("d-none");
+        }
+        else
+        {
+            $.ajax(
+            {
+                url         :   "{{route("user.updateDescription")}}",
+                type        :   "post",
+                dataType    :   "json",
+                data        :
+                {
+                    "description"   :   $(".description-text").text().trim()
+                },
+                headers     :
+                {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success     :   function(response)
+                {
+                    if(response.success)
+                    {
+                        location.reload();
+                    }
+                }
+            });
+        }
+    });
 
     $("#skills").on("select2:select select2:unselect", function()
     {
