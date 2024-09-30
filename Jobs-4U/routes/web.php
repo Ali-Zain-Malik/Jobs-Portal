@@ -29,8 +29,13 @@ Route::get("/search-jobs", [SearchController::class, "index"])->name("search-job
 Route::get("/favorite-jobs", [JobController::class, "index"])->name("user.favorites");
 Route::post("/view-job", [JobController::class, "viewJob"])->name("viewJob");
 Route::post("/apply-job", [JobController::class, "applyJob"])->name("applyJob");
-Route::get("/profile-page", [UserController::class, "index"])->name("user.profile");
-Route::post("/profile/change-profile-pic", [UserController::class, "changeProfilePic"])->name("user.changeProfilePic");
-Route::post("/proifle/change-name", [UserController::class, "changeName"])->name("user.changeName");
-Route::post("/proifle/update-description", [UserController::class, "updateDescription"])->name("user.updateDescription");
-Route::post("/proifle/update-skills", [UserController::class, "updateSkills"])->name("user.updateSkills");
+
+Route::controller(UserController::class)->group(function()
+{
+    Route::get("/profile-page", "index")->name("user.profile");
+    Route::post("/profile/change-profile-pic", "changeProfilePic")->name("user.changeProfilePic");
+    Route::post("/profile/change-name", "changeName")->name("user.changeName");
+    Route::post("/profile/update-description", "updateDescription")->name("user.updateDescription");
+    Route::post("/profile/update-skills", "updateSkills")->name("user.updateSkills");
+    Route::post("/profile/add-experience", "addExperience")->name("user.addExperience");
+});

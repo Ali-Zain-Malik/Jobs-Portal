@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
+use App\Models\user\Experience;
 use App\Models\user\Skill;
 use App\Models\user\User;
 use App\Models\user\User_skill;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -151,6 +153,76 @@ class UserController extends Controller
         }
 
         User_skill::where("user_id", Auth::id())->delete();
-        return "No skill added";
+    }
+
+
+    public function addExperience(Request $request)
+    {
+        $start_month    =   $request->start_month ?? NULL;
+        $start_year     =   $request->start_year ?? NULL;
+        $end_month      =   $request->end_month ?? NULL;
+        $end_year       =   $request->end_year ?? NULL;
+        
+        $start_date     =   NULL;
+        if($start_month && $start_year)
+        {
+            $start_date     =   new DateTime("$start_year-$start_month-01");
+            $start_date     =   $start_date->format("Y-m-d");
+        }
+
+        $end_date       =   NULL;
+        if($end_month && $end_year)
+        {
+            $end_date   =   new DateTime("$end_year-$end_month-01");
+            $end_date   =   $end_date->format("Y-m-d");
+        }
+
+        $validator              =   Validator::make([
+            "designation"       =>  $request->designation,
+            "company"           =>  $request->company,
+            "employment_type"   =>  $request->employment_type,
+            "location_type"     =>  $request->location_type,
+            "start_date"        =>  $start_date,
+            "end_date"          =>  $end_date ?? NULL
+        ],
+        [
+            "designation"       =>  "required",
+            "company"           =>  "required",
+            "employment_type"   =>  "required",
+            "location_type"     =>  "required",
+            "start_date"        =>  "required|date",
+            "end_date"          =>  "nullable|date|" 
+        ]);
+
+        $validator->after(function ($validator) use ($start_date, $end_date) 
+        {
+            if ($end_date && strtotime($start_date) > strtotime($end_date)) 
+            {
+                $validator->errors()->add('end_date', "End date can't be earlier than the start date.");
+            }
+        });
+
+        if($validator->fails())
+        {
+            return response()->json([
+                "success"   =>  false,
+                "error"     =>  $validator->errors()
+            ]);
+        }
+
+        Experience::create([
+            "user_id"           =>  Auth::id(),
+            "designation"       =>  $request->designation,
+            "company"           =>  $request->company,
+            "employment_type"   =>  $request->employment_type,
+            "location_type"     =>  $request->location_type,
+            "start_date"        =>  $start_date,
+            "end_date"          =>  $end_date ?? NULL
+        ]);
+
+        return response()->json([
+            "success"   =>  true,
+            "message"   =>  "Experience added successfully"
+        ]);
     }
 }
