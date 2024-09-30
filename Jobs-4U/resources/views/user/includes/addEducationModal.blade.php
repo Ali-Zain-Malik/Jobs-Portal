@@ -15,48 +15,51 @@
                                 <option value="bachelors">Bachelors</option>
                                 <option value="masters">Masters</option>
                             </select>
-                            <small class="error-msg fw-light text-danger d-none">This field is required</small>
                         </div>
                         <div class="d-flex flex-column" style="width: 70%;">
                             <label for="major">Major</label>
                             <input type="text" name="major" id="major" class="form-control" placeholder="e.g Engineering">
-                            <small class="error-msg fw-light text-danger d-none">This field is required</small>
                         </div>
                     </div>
                     <div class="d-flex flex-column">
                         <label for="institute">Institute</label>
-                        <input id="institute" class="form-control" type="text" placeholder="e.g Oxford">
-                        <small class="error-msg fw-light text-danger d-none">This field is required</small>
+                        <input id="institute" name="institute" class="form-control" type="text" placeholder="e.g Oxford">
                     </div>
                     
                     <div class="d-flex gap-2 start-date-div">
                         <div class="d-flex flex-column w-50">
                             <label for="start-month">Start Month</label>
-                            <select name="start-month" class="form-select" id="start-month">
-                                
-                            </select>
-                            <small class="error-msg fw-light text-danger d-none">This field is required</small>
+                            <select name="start-month" class="form-select" id="start-month"></select>
                         </div>
                         <div class="d-flex-flex-column w-50">
                             <label for="start-year">Start Year</label>
                             <select name="start-year" class="form-select" id="start-year">
-                                <option value="">Year</option>
-                                
+                                <option value="">Year</option>     
                             </select>
-                            <small class="error-msg fw-light text-danger d-none">This field is required</small>
                         </div>
                     </div>
             
+                    <div class="d-flex flex-column gap-2">
+                        <label for="grade">Grade</label>
+                        <select name="grade" id="grade" class="form-select">
+                            <option value="a+">A+</option>
+                            <option value="a">A</option>
+                            <option value="a-">A-</option>
+                            <option value="b">B</option>
+                            <option value="b-">B-</option>
+                            <option value="c">C</option>
+                            <option value="d">D</option>
+                        </select>
+                    </div>
+
                     <div class="d-none gap-2 end-date-div">
                         <div class="d-flex flex-column w-50">
                             <label for="end-month">End Month</label>
                             <select name="end-month" class="form-select" id="end-month"></select>
-                            <small class="error-msg fw-light text-danger d-none">This field is required</small>
                         </div>
                         <div class="d-flex-flex-column w-50">
                             <label for="end-year">End Year</label>
                             <select name="end-year" class="form-select" id="end-year"></select>
-                            <small class="error-msg fw-light text-danger d-none">This field is required</small>
                         </div>
                     </div>
 

@@ -479,6 +479,55 @@ document.addEventListener("DOMContentLoaded", function()
             });
     });
 
+
+    $("#edu-save-btn").on("click", function(event)
+    {
+        event.preventDefault();
+        $.ajax(
+            {
+                url         :   "{{route("user.addEducation")}}",
+                type        :   "post",
+                dataType    :   "json",
+                data        :
+                {
+                    _token          :   '{{ csrf_token() }}',
+                    program         :   $("#program").val(),
+                    major           :   $("#major").val().trim(),
+                    institute       :   $("#institute").val(),
+                    location_type   :   $("#location-type").val(),
+                    grade           :   $("#grade").val(),
+                    start_month     :   $("#start-month").val(),
+                    start_year      :   $("#start-year").val(),
+                    end_month       :   $("#end-month").prop("disabled")    ? null : $("#end-month").val(),
+                    end_year        :   $("#end-year").prop("disabled")     ? null : $("#end-year").val(),
+                    currently_studying   :   $("#currently-studying").prop("checked") ? 1 : 0
+                },
+                success     :   function(response) 
+                {
+                    if(response.success)
+                    {
+                        location.reload();
+                    }
+                    else
+                    {
+                        let errors = response.error;
+                        $('.is-invalid').removeClass('is-invalid');
+                        $(".text-danger").remove();
+                        $.each(errors, function(field, messages) 
+                        {
+                            let input = $(`[name="${field}"]`);
+
+                            // Add invalid class to the input field
+                            input.addClass('is-invalid');
+
+                            // Add error message after the input field
+                            input.after(`<div class="text-danger fw-light">${messages[0]}</div>`);
+                        });
+                    }
+                }
+            });
+    });
+
     $("#delete-experience, #delete-education").on("click", function(event)
     {
         if(event.target.id === "delete-experience")
