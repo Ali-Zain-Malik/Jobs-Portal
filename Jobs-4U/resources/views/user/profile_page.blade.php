@@ -241,20 +241,37 @@ document.addEventListener("DOMContentLoaded", function()
             {
                 url         :   "{{route("user.changeProfilePic")}}",
                 type        :   "post",
+                timeout     :   10000,
                 data        :   formData,
                 contentType :   false,
                 processData :   false,
+                beforeSend  :   function()
+                {
+                    $(".loader").removeClass("d-none").addClass("d-flex");
+                },
+                complete    :   function()
+                {
+                    $(".loader").removeClass("d-flex").addClass("d-none");
+                },
                 success     :   function(response)
                 {
                     if(response.success)
                     {
                         location.reload();
-                        // $('#upload-status').text(response.message);
                     }
                     else
                     {
                         $("#upload-status").text(response.error).addClass("text-danger");
                     }
+                },
+                error       :   function()
+                {
+                    $("#toast-inner").text("Some thing went wrong");
+                    $("#myToast").fadeIn().addClass("d-block");
+                    setTimeout(() => 
+                    {
+                        $("#myToast").fadeOut().removeClass("d-block");
+                    }, 1500);
                 }
             });
         }
@@ -291,9 +308,18 @@ document.addEventListener("DOMContentLoaded", function()
                 url         :   "{{route("user.changeName")}}",
                 type        :   "post",
                 dataType    :   "json",
+                timeout     :   10000,
                 data        :
                 {
                     "name"  :   $("#name").text().trim()
+                },
+                beforeSend  :   function()
+                {
+                    $(".loader").removeClass("d-none").addClass("d-flex");
+                },
+                complete    :   function()
+                {
+                    $(".loader").removeClass("d-flex").addClass("d-none");
                 },
                 success     :   function(response)
                 {
@@ -301,6 +327,15 @@ document.addEventListener("DOMContentLoaded", function()
                     {
                         location.reload();
                     }
+                },
+                error       :   function()
+                {
+                    $("#toast-inner").text("Some thing went wrong");
+                    $("#myToast").fadeIn().addClass("d-block");
+                    setTimeout(() => 
+                    {
+                        $("#myToast").fadeOut().removeClass("d-block");
+                    }, 1500);
                 }
             });
         }
@@ -360,13 +395,19 @@ document.addEventListener("DOMContentLoaded", function()
             url         :   "{{route("user.updateDescription")}}",
             type        :   "post",
             dataType    :   "json",
+            timeout     :   10000,
             data        :
             {
+                _token          :   "{{ csrf_token() }}",
                 "description"   :   $(".description-text").text().trim()
             },
-            headers     :
+            beforeSend  :   function()
             {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                $(".loader").removeClass("d-none").addClass("d-flex");
+            },
+            complete    :   function()
+            {
+                $(".loader").removeClass("d-flex").addClass("d-none");
             },
             success     :   function(response)
             {
@@ -374,6 +415,15 @@ document.addEventListener("DOMContentLoaded", function()
                 {
                     location.reload();
                 }
+            },
+            error       :   function()
+            {
+                $("#toast-inner").text("Some thing went wrong");
+                $("#myToast").fadeIn().addClass("d-block");
+                setTimeout(() => 
+                {
+                    $("#myToast").fadeOut().removeClass("d-block");
+                }, 1500);
             }
         });
     });
@@ -393,11 +443,16 @@ document.addEventListener("DOMContentLoaded", function()
             dataType    :   "json",
             data        :
             {
-                "skills"   :   $("#skills").val()
+                _token      :   "{{ csrf_token() }}",
+                "skills"    :   $("#skills").val()
             },
-            headers     :
+            beforeSend  :   function()
             {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                $(".loader").removeClass("d-none").addClass("d-flex");
+            },
+            complete    :   function()
+            {
+                $(".loader").removeClass("d-flex").addClass("d-none");
             },
             success     :   function(response)
             {
@@ -405,6 +460,24 @@ document.addEventListener("DOMContentLoaded", function()
                 {
                     location.reload();
                 }
+                else
+                {
+                    $("#toast-inner").text(response.error);
+                    $("#myToast").fadeIn().addClass("d-block");
+                    setTimeout(() => 
+                    {
+                        $("#myToast").fadeOut().removeClass("d-block");
+                    }, 1500);
+                }
+            },
+            error       :   function()
+            {
+                $("#toast-inner").text("Some thing went wrong");
+                $("#myToast").fadeIn().addClass("d-block");
+                setTimeout(() => 
+                {
+                    $("#myToast").fadeOut().removeClass("d-block");
+                }, 1500);
             }
         });
     });
@@ -453,6 +526,7 @@ document.addEventListener("DOMContentLoaded", function()
                 url         :   "{{route("user.addExperience")}}",
                 type        :   "post",
                 dataType    :   "json",
+                timeout     :   10000,
                 data        :
                 {
                     _token          :   '{{ csrf_token() }}',
@@ -465,6 +539,14 @@ document.addEventListener("DOMContentLoaded", function()
                     end_month       :   $("#end-month").prop("disabled")    ? null : $("#end-month").val(),
                     end_year        :   $("#end-year").prop("disabled")     ? null : $("#end-year").val(),
                     currently_working   :   $("#currently-working").prop("checked") ? 1 : 0
+                },
+                beforeSend  :   function()
+                {
+                    $(".loader").removeClass("d-none").addClass("d-flex");
+                },
+                complete    :   function()
+                {
+                    $(".loader").removeClass("d-flex").addClass("d-none");
                 },
                 success     :   function(response) 
                 {
@@ -488,6 +570,15 @@ document.addEventListener("DOMContentLoaded", function()
                             input.after(`<div class="text-danger fw-light">${messages[0]}</div>`);
                         });
                     }
+                },
+                error       :   function()
+                {
+                    $("#toast-inner").text("Some thing went wrong");
+                    $("#myToast").fadeIn().addClass("d-block");
+                    setTimeout(() => 
+                    {
+                        $("#myToast").fadeOut().removeClass("d-block");
+                    }, 1500);
                 }
             });
     });
@@ -501,6 +592,7 @@ document.addEventListener("DOMContentLoaded", function()
                 url         :   "{{route("user.addEducation")}}",
                 type        :   "post",
                 dataType    :   "json",
+                timeout     :   10000,
                 data        :
                 {
                     _token          :   '{{ csrf_token() }}',
@@ -515,6 +607,14 @@ document.addEventListener("DOMContentLoaded", function()
                     end_year        :   $("#end-year").prop("disabled")     ? null : $("#end-year").val(),
                     currently_studying   :   $("#currently-studying").prop("checked") ? 1 : 0
                 },
+                beforeSend  :   function()
+                {
+                    $(".loader").removeClass("d-none").addClass("d-flex");
+                },
+                complete    :   function()
+                {
+                    $(".loader").removeClass("d-flex").addClass("d-none");
+                },
                 success     :   function(response) 
                 {
                     if(response.success)
@@ -537,6 +637,15 @@ document.addEventListener("DOMContentLoaded", function()
                             input.after(`<div class="text-danger fw-light">${messages[0]}</div>`);
                         });
                     }
+                },
+                error       :   function()
+                {
+                    $("#toast-inner").text("Some thing went wrong");
+                    $("#myToast").fadeIn().addClass("d-block");
+                    setTimeout(() => 
+                    {
+                        $("#myToast").fadeOut().removeClass("d-block");
+                    }, 1500);
                 }
             });
     });
@@ -586,10 +695,19 @@ document.addEventListener("DOMContentLoaded", function()
                 url         :   url,
                 type        :   "post",
                 dataType    :   "json",
+                timeout     :   10000,
                 data        :
                 {
                     _token  :   '{{ csrf_token() }}',
                     id      :   id
+                },
+                beforeSend  :   function()
+                {
+                    $(".loader").removeClass("d-none").addClass("d-flex");
+                },
+                complete    :   function()
+                {
+                    $(".loader").removeClass("d-flex").addClass("d-none");
                 },
                 success     :   function(response)
                 {
@@ -600,6 +718,19 @@ document.addEventListener("DOMContentLoaded", function()
                             location.reload();
                         }, 1200);
                     }
+                    else
+                    {
+                        alertify.error(response.error);
+                    }
+                },
+                error       :   function()
+                {
+                    $("#toast-inner").text("Some thing went wrong");
+                    $("#myToast").fadeIn().addClass("d-block");
+                    setTimeout(() => 
+                    {
+                        $("#myToast").fadeOut().removeClass("d-block");
+                    }, 1500);
                 }
             });
         },
