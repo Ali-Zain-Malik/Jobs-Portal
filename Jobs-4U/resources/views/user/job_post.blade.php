@@ -22,15 +22,36 @@
                     <input type="text" id="company" name="company" class="form-control">
                 </div>
                 <div class="d-flex flex-column col-lg-6 col-md-12 mt-3">
+                    <label for="required-skills" class="fw-semibold">Required Skills</label>
+                    <select name="required-skills" id="required-skills" multiple="multiple" class="form-select">
+                        @foreach($skills as $sk)
+                            <option value="{{$sk->id}}">{{$sk->skill_name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="d-flex flex-column col-lg-6 col-md-12 mt-3">
+                    <label for="category" class="fw-semibold">Job Category</label>
+                    <select name="category" id="category" multiple="multiple" class="form-select">
+                        @foreach($categories as $category)
+                            <option value="{{$category->id}}">{{$category->category_name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="d-flex flex-column col-lg-6 col-md-12 mt-3">
                     <label for="employment-type" class="fw-semibold">Employment-Type</label>
                     <select name="employment-type" id="employment-type" class="form-select">
-                        <option value="">opt 1</option>
+                        <option value="permanent">Permanent</option>
+                        <option value="temporary">Temporary</option>
+                        <option value="contract">Contract</option>
+                        <option value="part-time">Part Time</option>
                     </select>
                 </div>
                 <div class="d-flex flex-column col-lg-6 col-md-12 mt-3">
                     <label for="location-type" class="fw-semibold">Location-Type</label>
                     <select name="location-type" id="location-type" class="form-select">
-                        <option value="">opt 1</option>
+                        <option value="on-site">On-site</option>
+                        <option value="hybrid">Hybrid</option>
+                        <option value="remote">Remote</option>
                     </select>
                 </div>
                 <div class="d-flex flex-column col-lg-6 col-md-12 mt-3">
@@ -50,26 +71,26 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="d-flex gap-2 col-lg-6 col-md-12 mt-3">
-                    <div class="w-50 d-flex flex-column">
-                        <label for="salary" class="fw-semibold">Apprx. Salary</label>
-                        <input type="number" id="salary" name="salary" class="form-control">
-                    </div>
-                    <div class="w-50 d-flex flex-column">
-                        <label for="currency" class="fw-semibold">Currency</label>
-                        <select name="currency" id="currency" class="form-select">
-                            <option value="">curr</option>
-                        </select>
-                    </div>
+                <div class="d-flex flex-column col-lg-6 col-md-12 mt-3">
+                    <label for="salary" class="fw-semibold">Approx. Salary</label>
+                    <input type="number" id="salary" name="salary" class="form-control">
                 </div>
                 <div class="d-flex flex-column col-lg-6 col-md-12 mt-3">
-                    <label for="required-skills" class="fw-semibold">Required Skills</label>
-                    <select name="required-skills" id="required-skills" multiple="multiple" class="form-select">
-                        @foreach($skills as $sk)
-                            <option value="{{$sk->id}}">{{$sk->skill_name}}</option>
-                        @endforeach
+                    <label for="currency" class="fw-semibold">Salary Currency</label>
+                    <select name="currency" id="currency" class="form-select">
+                        <option value="pkr">PKR</option>
+                        <option value="usd">USD</option>
+                        <option value="aud">AUD</option>
                     </select>
                 </div>
+                <div class="d-flex flex-column col-lg-6 col-md-12 mt-3">
+                    <label for="per-period" class="fw-semibold">Per Period</label>
+                    <select name="per-period" id="per-period" class="form-select">
+                        <option value="month">Monthly</option>
+                        <option value="year">Yearly</option>
+                    </select>
+                </div>
+                
                 <div class="d-flex flex-column col-l2 mt-3">
                     <label for="description" class="fw-semibold">Description</label>
                     <textarea name="description" id="description" class="form-control" rows="7" style="resize: none;"></textarea>
@@ -100,6 +121,6 @@
             });
         });
 
-        $("#required-skills").select2();
+        $("#required-skills, #category").select2();
     });
 </script>
