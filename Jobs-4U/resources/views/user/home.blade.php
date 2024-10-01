@@ -106,3 +106,28 @@
 </div>
 
 @endsection
+
+{{-- @if(Session::has("success"))
+    <script>
+        let success =   "{{Session::get("success")}}"
+        alertify.success(success) 
+    </script>
+@elseif(Session::has("error"))
+    <script>
+        let error   =   "{{Session::get("error")}}"
+        alertify.error(error); 
+    </script>
+@endif --}}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function()
+    {
+        @if(Session::has("success"))
+            let success =   "{{Session::get("success")}}"
+            alertify.success(success) 
+        @elseif(Session::has("error"))
+            let error   =   "{{Session::get("error")}}"
+            alertify.error(error); 
+        @endif
+    });
+</script>

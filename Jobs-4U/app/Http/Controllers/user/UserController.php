@@ -320,4 +320,21 @@ class UserController extends Controller
             "message"   =>  "Education deleted successfully"
         ]);
     }
+
+    public function changeRole()
+    {
+        $user       =   auth()->user();
+        $role       =   $user->role;
+        $newRole    =   $role == "employer" ? "applicant" : "employer";
+        $user->role =   $newRole;
+        if($user->save())
+        {
+            return redirect()->route("user.home")->with("success", "Role Changed Successfully");
+        }
+        else
+        {
+            return redirect()->route("user.home")->with("error", "Couldn't change role. An error occured");
+        }
+
+    }
 }

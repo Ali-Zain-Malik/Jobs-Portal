@@ -36,7 +36,6 @@ Route::get("/profile-page", [ProfileController::class, "index"])->name("user.pro
 
 Route::controller(UserController::class)->group(function()
 {
-    // Route::get("user/profile", "index")->name("user.profile");
     Route::post("/profile/change-profile-pic", "changeProfilePic")->name("user.changeProfilePic");
     Route::post("/profile/change-name", "changeName")->name("user.changeName");
     Route::post("/profile/update-description", "updateDescription")->name("user.updateDescription");
@@ -45,4 +44,5 @@ Route::controller(UserController::class)->group(function()
     Route::post("/profile/add-education", "addEducation")->name("user.addEducation");
     Route::post("/profile/delete-experience", "deleteExperience")->name("user.deleteExperience");
     Route::post("/profile/delete-education", "deleteEducation")->name("user.deleteEducation");
+    Route::get("/user/change-role", "changeRole")->name("user.changeRole");
 });

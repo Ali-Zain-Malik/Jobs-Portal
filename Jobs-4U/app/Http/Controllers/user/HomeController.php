@@ -41,14 +41,12 @@ class HomeController extends Controller
                                 ->get();
                                 
         $all_locations  =   City::all();
-        $user           =   auth()->user();
-        // return $favJob;
+
         return view("user.home", [
             "categories"    =>  $categories,
             "jobs"          =>  $jobs,
             "top_employers" =>  $top_employers,
-            "locations"     =>  $all_locations,
-            "user"          =>  $user
+            "locations"     =>  $all_locations
         ]);
     }
 

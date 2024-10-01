@@ -26,7 +26,7 @@ use App\Models\user\Favorite_job;
                 </div>
                 <div class="d-flex flex-column">
                     <h4 style="font-size: 12px;" class="m-0">{{$job->emp_company}}</h4>
-                    <h3 style="font-size: 16px;" class="m-0 fw-bold">{{$job->job_title}}</h3>
+                    <h3 style="font-size: 16px;" id="job-title" data-job-id="{{$job->jobID}}" class="m-0 fw-bold">{{$job->job_title}}</h3>
                     <div class="d-flex align-items-center">
                         <img src="img/location.svg" style="width: 14px;" alt="">
                         <p style="font-size: 12px;">{{$job->city_name}}</p>
@@ -178,8 +178,9 @@ use App\Models\user\Favorite_job;
     {
         btn.addEventListener("click", function()
         {
-            job_id    =   this.getAttribute("job-id");
-            console.log(job_id)
+            job_id          =   this.getAttribute("job-id");
+            let jobTitle    =   document.querySelector(`h3#job-title[data-job-id="${job_id}"]`).textContent;
+            $("#applyheading").text("Applying for " + jobTitle);
         })
     });
 

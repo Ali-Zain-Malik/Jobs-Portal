@@ -15,7 +15,7 @@
     <div class="container  d-flex align-items-center flex-column bg-light pt-5">
         <!-- Profile Picture -->
         <div class="profile-image-div rounded-circle">
-            <img class="profile-image rounded-circle" src="{{asset($user->profile_pic ? "storage/".$user->profile_pic : "img/demo_image.png")}}" alt="">
+            <img class="profile-image rounded-circle" src="{{asset(Auth::user()->profile_pic ? "storage/".Auth::user()->profile_pic : "img/demo_image.png")}}" alt="">
             <!-- Overlay appearing on hover -->
             <div class="overlay">
                 <img src="img/camera.svg" id="camera-icon" title="Upload Profile Pic" alt="">
@@ -34,7 +34,7 @@
 
         <!-- Name section -->
         <div class="name-div d-flex">
-            <p class="h5 fw-bolder mt-3 name text-center" id="name">{{$user->name}}</p><span><img id="name-edit" src="img/pencil.svg" role="button" title="Edit Name" alt=""></span>
+            <p class="h5 fw-bolder mt-3 name text-center" id="name">{{Auth::user()->name}}</p><span><img id="name-edit" src="img/pencil.svg" role="button" title="Edit Name" alt=""></span>
         </div>
         <p style="font-size: 14px;" class="name-msg my-0"></p>
         <!-- Name section ends here -->
@@ -47,7 +47,7 @@
         <div class="description w-100 px-5">
             <h5 class="text-start fw-bold ps-2 d-inline">Description</h5> <sup style="top:-1rem;"><img id="description-edit" src="img/pencil.svg" role="button" title="Edit Description" alt=""></sup>
             <p class="ps-2 mb-0 description-text" spellcheck="false" style="font-size: 14px; max-height:65px; overflow:hidden;">
-                {{$user->description ? $user->description : "No description added yet"}}
+                {{Auth::user()->description ? Auth::user()->description : "No description added yet"}}
             </p>
             <span class="ps-2 pointer seeMore d-none">...See More</span>
 
