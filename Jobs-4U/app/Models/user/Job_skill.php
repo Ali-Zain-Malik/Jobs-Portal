@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Job_skill extends Model
 {
+    protected $guarded      =   [];
+    public $timestamps      =   false;
     use HasFactory;
 }

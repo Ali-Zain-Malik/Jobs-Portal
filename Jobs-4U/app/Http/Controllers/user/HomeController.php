@@ -24,12 +24,11 @@ class HomeController extends Controller
                                     ->limit(8)
                                     ->get();
 
-        $jobs           =   Job::join("users", "jobs.user_id", "=", "users.id")
-                                ->join("cities", "jobs.city_id", "=", "cities.id")
+        $jobs           =   Job::join("cities", "jobs.city_id", "=", "cities.id")
                                 ->where("jobs.is_approved", 1)
                                 ->where("jobs.is_featured", 1)
                                 ->where("jobs.expiry_date", ">=", date("Y-m-d"))
-                                ->select("jobs.*", "jobs.id as jobID", "cities.*", "users.*")
+                                ->select("jobs.*", "jobs.id as jobID", "cities.*")
                                 ->inRandomOrder()->limit(8)->get();
 
         

@@ -18,12 +18,11 @@ class JobController extends Controller
         foreach($favorite_job as $fav)
         {
             $jobs []  =   Job::where("jobs.id", $fav->job_id)
-                                ->join("users", "jobs.user_id", "=", "users.id")
                                 ->join("cities", "jobs.city_id", "=", "cities.id")
                                 ->where("jobs.is_approved", 1)
                                 ->where("jobs.is_featured", 1)
                                 ->where("jobs.expiry_date", ">=", date("Y-m-d"))
-                                ->select("jobs.*", "jobs.id as jobID", "cities.*", "users.*")
+                                ->select("jobs.*", "jobs.id as jobID", "cities.*")
                                 ->first();
         }
 
