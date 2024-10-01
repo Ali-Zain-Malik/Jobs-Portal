@@ -4,6 +4,7 @@ use App\Http\Controllers\user\AuthController;
 use App\Http\Controllers\user\CategoryController;
 use App\Http\Controllers\user\HomeController;
 use App\Http\Controllers\user\JobController;
+use App\Http\Controllers\user\JobPostController;
 use App\Http\Controllers\user\ProfileController;
 use App\Http\Controllers\user\SearchController;
 use App\Http\Controllers\user\UserController;
@@ -45,4 +46,10 @@ Route::controller(UserController::class)->group(function()
     Route::post("/profile/delete-experience", "deleteExperience")->name("user.deleteExperience");
     Route::post("/profile/delete-education", "deleteEducation")->name("user.deleteEducation");
     Route::get("/user/change-role", "changeRole")->name("user.changeRole");
+});
+
+Route::controller(JobPostController::class)->group(function()
+{
+    Route::get("/job-create", "index")->name("job.create");
+    Route::post("/job-post", "postJob")->name("job.post");
 });
