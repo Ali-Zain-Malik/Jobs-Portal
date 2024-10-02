@@ -48,10 +48,17 @@ use App\Models\user\Favorite_job;
                 <span class="px-2 py-1 rounded-pill text-white fw-semibold text-capitalize" style="font-size: 12px; background-color: orange;">{{$job->employment_type}}</span>
                 <span class="px-2 py-1 rounded-pill text-white fw-semibold text-capitalize" style="font-size: 12px; background-color: orange;">{{$job->location_type}}</span>
             </div>
-            @if (!Route::is("user.home")) {{-- Only show these buttons if it is not the home page --}}
+            @if (!Route::is("user.home") && !Route::is("user.myPosts")) {{-- Only show these buttons if it is not the home page --}}
                 <div class="view-apply d-flex gap-2">
                     <button type="button" class="view-btn px-3 py-1 rounded-pill text-white border-0" job-id="{{$job->jobID}}" data-bs-toggle="modal" data-bs-target="#viewModal">View</button>
                     <button type="button" class="apply-btn px-3 py-1 rounded-pill text-white border-0" job-id="{{$job->jobID}}" data-bs-target="#applyModal" data-bs-toggle="modal">Apply</button>
+                </div>
+            @endif
+
+            @if(Route::is("user.myPosts"))
+                <div class="view-apply d-flex gap-2">
+                    <button type="button" class="view-btn px-3 py-1 rounded-pill text-white border-0" job-id="{{$job->jobID}}" data-bs-toggle="modal" data-bs-target="#viewModal">View</button>
+                    <button type="button" class="mypost-delete-btn px-3 py-1 rounded-pill text-white border-0" job-id="{{$job->jobID}}">Delete</button>
                 </div>
             @endif
 
@@ -59,9 +66,29 @@ use App\Models\user\Favorite_job;
 
         <hr class="mt-2">
 
+        @php
+            $currentDate = \Carbon\Carbon::now()->format('Y-m-d');
+            $expiryDate = $job->expiry_date;
+            $daysLeft = \Carbon\Carbon::parse($currentDate)->diffInDays($expiryDate) + 1;
+            $isExpired = \Carbon\Carbon::parse($currentDate)->greaterThanOrEqualTo($expiryDate);
+        @endphp
+
         <div class="d-flex justify-content-between align-items-center">
             <span class="d-flex salary-span"><span class="currency me-1 text-uppercase">{{$job->currency}}</span><span class="fw-bold amount">{{$job->salary}}</span><p>/</p><span class="period">{{$job->per_period}}</span></span>
-            <span class="d-flex" style="font-size: 10px;"><span class="remaining-days me-1">{{ \Carbon\Carbon::parse(\Carbon\Carbon::now()->format('Y-m-d'))->diffInDays($job->expiry_date) +1 }}</span><span> day(s) left to apply</span></span>
+            @if(Route::is("user.myPosts"))
+                <span class="d-flex" style="font-size: 10px;">
+                    <span class="remaining-days me-1">
+                        {{ $isExpired ? "Expired" : $daysLeft }}
+                    </span>
+                </span>
+            @else
+                <span class="d-flex" style="font-size: 10px;">
+                    <span class="remaining-days me-1">
+                        {{ $daysLeft }}
+                    </span>
+                    <span> day(s) left to apply</span>
+                </span>
+            @endif
         </div>
     </div>
 </div>

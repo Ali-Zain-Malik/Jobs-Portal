@@ -32,7 +32,7 @@
             </a>
             <ul class="dropdown-menu text-small">
               <li><a class="dropdown-item" href="{{route("user.profile")}}">Profile</a></li>
-              <li><a class="dropdown-item" href="posts.php">My Posts</a></li>
+              <li><a class="dropdown-item" href="{{route("user.myPosts")}}">My Posts</a></li>
               <li><a class="dropdown-item" href="{{route("user.favorites")}}">Favorites</a></li>
               <li>
                 <hr class="dropdown-divider">
@@ -65,7 +65,7 @@
           <ul class="dropdown-menu text-small">
             <li><a class="dropdown-item" href="{{route("user.profile")}}">Profile</a></li>
             @if(Auth::user()->role === "employer")
-              <li><a class="dropdown-item" href="posts.php" target="_blank">My Posts</a></li>
+              <li><a class="dropdown-item" href="{{route("user.myPosts")}}">My Posts</a></li>
             @endif  
             <li><a class="dropdown-item" href="{{route("user.favorites")}}">Favorites</a></li>
             <li>

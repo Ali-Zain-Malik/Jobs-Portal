@@ -22,13 +22,13 @@
 }
 
 
-.view-btn, .apply-btn
+.view-btn, .apply-btn, .mypost-delete-btn
 {
     font-size: 14px; 
     background-color: #37393A;
     transition: all 0.4s ease;
 }
-.view-btn:hover, .apply-btn:hover
+.view-btn:hover, .apply-btn:hover, .mypost-delete-btn:hover
 {
     background-color: orange;
 }

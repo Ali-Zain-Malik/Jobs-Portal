@@ -47,6 +47,8 @@ Route::middleware([Authenticate::class])->group(function()
         Route::post("/profile/delete-experience", "deleteExperience")->name("user.deleteExperience");
         Route::post("/profile/delete-education", "deleteEducation")->name("user.deleteEducation");
         Route::get("/user/change-role", "changeRole")->name("user.changeRole");
+        Route::get("/my-posts", "myPosts")->name("user.myPosts");
+        Route::post("/my-post/delete", "deletePost")->name("user.deletePost");
     });
 
     Route::controller(JobPostController::class)->group(function()

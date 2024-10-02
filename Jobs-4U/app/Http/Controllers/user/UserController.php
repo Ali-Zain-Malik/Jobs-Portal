@@ -5,6 +5,7 @@ namespace App\Http\Controllers\user;
 use App\Http\Controllers\Controller;
 use App\Models\user\Education;
 use App\Models\user\Experience;
+use App\Models\user\Job;
 use App\Models\user\Skill;
 use App\Models\user\User;
 use App\Models\user\User_skill;
@@ -336,5 +337,16 @@ class UserController extends Controller
             return redirect()->route("user.home")->with("error", "Couldn't change role. An error occured");
         }
 
+    }
+
+
+    public function myPosts()
+    {
+        $jobs   =   Job::join("cities", "jobs.city_id", "=", "cities.id")
+                        ->where("user_id", Auth::id())
+                        ->select("jobs.*", "jobs.id as jobID", "cities.*")
+                        ->get();
+
+        return view("user.my_posts", compact("jobs"));
     }
 }

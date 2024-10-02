@@ -1,7 +1,7 @@
 @extends('user.layouts.masterLayout')
 @push('styles')
     <link rel="stylesheet" href="css/home.css">
-    {{-- <link rel="stylesheet" href="css/search_bar.css"> --}}
+    <link rel="stylesheet" href="css/search_bar.css">
     <link rel="stylesheet" href="css/job_card.css">
 @endpush
 
