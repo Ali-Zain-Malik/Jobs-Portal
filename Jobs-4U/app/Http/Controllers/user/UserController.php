@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\user\Education;
 use App\Models\user\Experience;
 use App\Models\user\Job;
+use App\Models\user\Job_applicant;
 use App\Models\user\Skill;
 use App\Models\user\User;
 use App\Models\user\User_skill;
@@ -380,5 +381,24 @@ class UserController extends Controller
                 'error' => 'Something went wrong. Post not found.',
             ]);
         }
+    }
+
+
+    public function applicantRequests()
+    {
+        $jobs           =   Job::where("user_id", Auth::id())->get();
+        $job_ids        =   $jobs->pluck("id");
+        $job_applicants =   Job_applicant::whereIn("job_id", $job_ids)
+                                        ->join("users", "users.id", "=", "job_applicants.applicant_id")
+                                        ->join("jobs", "jobs.id", "=", "job_applicants.job_id")
+                                        ->select("job_applicants.id as application_id",
+                                                "users.id as applicant_id", 
+                                                "users.name as name", 
+                                                "users.profile_pic as profile_pic", 
+                                                "jobs.job_title as job_title"
+                                            )
+                                        ->get();
+
+        return view("user.applicant_requests", compact("job_applicants"));
     }
 }
