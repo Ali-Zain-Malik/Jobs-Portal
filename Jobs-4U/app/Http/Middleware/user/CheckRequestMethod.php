@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\user;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Response;
 
-class userRedirect
+class CheckRequestMethod
 {
     /**
      * Handle an incoming request.
@@ -16,9 +16,9 @@ class userRedirect
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::check())
+        if ($request->isMethod('get') && (Route::is("user.authenticate") || Route::is("user.createAccount"))) 
         {
-            return redirect()->route("user.home");
+            return redirect()->back();
         }
         return $next($request);
     }

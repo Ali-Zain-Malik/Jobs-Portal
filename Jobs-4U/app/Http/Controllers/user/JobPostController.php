@@ -11,7 +11,6 @@ use App\Models\user\Skill;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use PhpParser\Node\Expr\FuncCall;
 
 class JobPostController extends Controller
 {
@@ -67,9 +66,6 @@ class JobPostController extends Controller
 
         if($job_skills)
         {
-            // if(is_array($job_skills))
-            // {
-            // }
             foreach($job_skills as $skill)
             {
                 Job_skill::create([
@@ -77,13 +73,7 @@ class JobPostController extends Controller
                     "skill_id"  =>  $skill
                 ]);
             }
-            // else
-            // {
-            //     Job_skill::create([
-            //         "job_id"    =>  $job->id,
-            //         "skill_id"  =>  $job_skills
-            //     ]);
-            // }
+
         }
         return redirect()->route("user.home")->with("success", "Your job has been posted");
     }

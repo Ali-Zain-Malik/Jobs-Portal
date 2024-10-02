@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Middleware\userRedirect;
+use App\Http\Middleware\user\userRedirect;
+use App\Http\Middleware\user\CheckRequestMethod;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -13,7 +14,8 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
 
-        $middleware->prepend(userRedirect::class);
+        // $middleware->prepend(userRedirect::class);
+        // $middleware->prepend(CheckRequestMethod::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
