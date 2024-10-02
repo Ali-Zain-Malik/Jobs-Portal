@@ -16,10 +16,9 @@ class SearchController extends Controller
         $city_id        =   $request->input("city-id")      ??  NULL;
         $category_id    =   $request->input("category")     ??  NULL;
 
-        $query          =   Job::join('users', 'users.id', '=', 'jobs.user_id')
-                                ->join('cities', 'cities.id', '=', 'jobs.city_id')
+        $query          =   Job::join('cities', 'cities.id', '=', 'jobs.city_id')
                                 ->join('categories', 'categories.id', '=', 'jobs.category_id')
-                                ->select("jobs.*", "jobs.id as jobID", "cities.*", "users.emp_company")
+                                ->select("jobs.*", "jobs.id as jobID", "cities.*")
                                 ->where('jobs.expiry_date', '>=', date('Y-m-d'));
 
         if(!empty($search_input))

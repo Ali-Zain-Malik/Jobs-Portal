@@ -349,4 +349,36 @@ class UserController extends Controller
 
         return view("user.my_posts", compact("jobs"));
     }
+
+    public function deletePost(Request $request)
+    {
+        $validator  =   Validator::make($request->all(),[
+            "post_id"   =>  "required|integer|exists:jobs,id"
+        ]);
+
+        if($validator->fails())
+        {
+            return response()->json([
+                "success"   =>  false,
+                "error"     =>  $validator->errors()
+            ]);
+        }
+
+        $post   =   Job::find($request->post_id);
+        if($post)
+        {
+            $post->delete();
+            return response()->json([
+                "success"   =>  true,
+                "message"   =>  "Post has been deleted"
+            ]);
+        }
+        else
+        {
+            return response()->json([
+                'success' => false,
+                'error' => 'Something went wrong. Post not found.',
+            ]);
+        }
+    }
 }

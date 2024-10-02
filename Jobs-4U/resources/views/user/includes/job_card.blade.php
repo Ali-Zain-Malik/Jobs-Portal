@@ -78,7 +78,7 @@ use App\Models\user\Favorite_job;
             @if(Route::is("user.myPosts"))
                 <span class="d-flex" style="font-size: 10px;">
                     <span class="remaining-days me-1">
-                        {{ $isExpired ? "Expired" : $daysLeft }}
+                        {{ $isExpired ? "Expired" : $daysLeft . " day(s) left to expire" }}
                     </span>
                 </span>
             @else

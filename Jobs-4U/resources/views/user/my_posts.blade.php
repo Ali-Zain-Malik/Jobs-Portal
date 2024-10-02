@@ -44,6 +44,7 @@
                             timeout     :   10000,
                             data        :
                             {
+                                _token  :   "{{ csrf_token() }}",
                                 post_id :   post_id
                             },
                             beforeSend  :   function()
