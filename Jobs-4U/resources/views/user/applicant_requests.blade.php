@@ -8,8 +8,12 @@
 @endsection
 
 @section("main")
-    <div class="main-holder d-grid">
-        <div class="container main-container">
+<div class="main-holder d-grid">
+    <div class="container main-container">
+        @if(Session::has("notFound"))
+        <div class="mx-auto mb-0 mt-2 w-50 alert alert-danger">{{Session::get("notFound")}}</div>
+        @endif 
+        {{Session::get("notFound")}}
             <p class="h5 pt-4 fw-bold text-center heading"></p>
             <table id="myTable" class="display text-center">
                 <thead>
@@ -26,7 +30,7 @@
                             <td class="text-center">{{$loop->index + 1}}</td>
                             <td class="text-center fw-semibold">{{$applicant->job_title}}</td>
                             <td>
-                                <a class="applicant text-decoration-none" href="#">
+                                <a class="applicant text-decoration-none" href="{{route("user.viewProfile", ["id" => $applicant->applicant_id, "name" => \Str::slug($applicant->name)])}}">
                                     <div class="image-div">
                                         <img src="{{asset($applicant->profile_pic ? "storage/". $applicant->profile_pic : "img/demo_image.png")}}" alt="Profile Pic">
                                     </div>
@@ -61,6 +65,5 @@
     document.addEventListener("DOMContentLoaded", function()
     {
         let table = new DataTable('#myTable');
-        console.log("helow")
     });
 </script>

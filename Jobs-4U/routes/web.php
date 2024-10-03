@@ -9,6 +9,7 @@ use App\Http\Controllers\user\ProfileController;
 use App\Http\Controllers\user\SearchController;
 use App\Http\Controllers\user\UserController;
 use App\Http\Middleware\user\Authenticate;
+use App\Http\Middleware\user\userRedirect;
 use Illuminate\Support\Facades\Route;
 
 // Using Laravel default guest middleware
@@ -27,6 +28,7 @@ Route::middleware([Authenticate::class])->group(function()
     Route::get("/all-categories", [CategoryController::class, "index"])->name("all-categories");
     Route::get("/search-jobs", [SearchController::class, "index"])->name("search-jobs");
     Route::get("/profile-page", [ProfileController::class, "index"])->name("user.profile");
+    Route::get("/view-profile/{id}/{name}", [ProfileController::class, "viewProfile"])->name("user.viewProfile");
 
     Route::controller(JobController::class)->group(function()
     {

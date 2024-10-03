@@ -3,6 +3,7 @@
 namespace App\Http\Middleware\user;
 
 use Closure;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +19,7 @@ class userRedirect
     {
         // if(Auth::check())
         // {
-        //     return redirect()->route("user.home");
+        //     return (route("user.home")."?return=".$request->getRequestUri());
         // }
         return $next($request);
     }
