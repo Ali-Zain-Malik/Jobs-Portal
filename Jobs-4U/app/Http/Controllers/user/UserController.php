@@ -401,4 +401,10 @@ class UserController extends Controller
 
         return view("user.applicant_requests", compact("job_applicants"));
     }
+
+
+    public function settingsView()
+    {
+        return view("user.settings");
+    }
 }

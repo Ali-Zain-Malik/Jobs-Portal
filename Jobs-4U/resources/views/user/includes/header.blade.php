@@ -37,7 +37,7 @@
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><a class="dropdown-item" href="#">Settings</a></li>
+              <li><a class="dropdown-item" href="{{route("user.settings")}}">Settings</a></li>
               <li><a class="dropdown-item" href="{{route("user.signout")}}">Sign out</a></li>
             </ul>
           </div>
@@ -71,7 +71,7 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" href="#">Settings</a></li>
+            <li><a class="dropdown-item" href="{{route("user.settings")}}">Settings</a></li>
             <li><a class="dropdown-item" href="{{route("user.signout")}}">Sign out</a></li>
           </ul>
         </div>
