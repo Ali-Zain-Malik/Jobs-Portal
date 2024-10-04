@@ -9,7 +9,7 @@
 @section("main")
     <div class="container bg-white" style="margin-top: 60px;">
         <h4 class="pt-4 fw-bold text-center">Settings</h4>
-        <form action="" class="container-fluid mt-3 pb-4">
+        <form class="container-fluid mt-3 pb-4">
             @csrf
             <div class="container row">
                 <div class="d-flex flex-column col-lg-6 col-md-12">
@@ -18,7 +18,7 @@
                     @error('date-of-birth')
                         <span class="text-danger">{{$message}}</span>
                     @enderror
-                    <button class="bg-warning rounded border-0 col-sm-2 col-4 mt-2 fw-semibold">Save</button>
+                    <button type="button" id="dob-save-btn" class="bg-warning rounded border-0 col-sm-2 col-4 mt-2 fw-semibold d-none">Save</button>
                 </div>
                 
                 <div class="d-flex col-12 mt-3 row">
@@ -53,5 +53,33 @@
         $("#date-of-birth").flatpickr({
                 dateFormat: "Y-m-d"
             });
+
+        $("#date-of-birth").on("change", function()
+        {
+            $("#dob-save-btn").removeClass("d-none");
+        });
+        
+        $("#dob-save-btn").on("click", function()
+        {
+            $.ajax(
+            {
+                url     :   "{{route('user.DOB')}}",
+                type    :   "post",
+                dateType    :   "json",
+                data        :   
+                {
+                    _token  :   "{{csrf_token()}}",
+                    dob     :   $("#date-of-birth").val()
+                },
+                success     :   function(response)
+                {
+                    if(response.success)
+                    {
+                        location.reload();
+                    }
+                }
+            });
+        }); 
+
     });
 </script>

@@ -408,4 +408,28 @@ class UserController extends Controller
         $user   =   Auth::user();
         return view("user.settings", compact("user"));
     }
+
+    public function DOB(Request $request)
+    {
+        $validator  =   Validator::make($request->all(),[
+            "dob"   =>  "required|date"
+        ]);
+
+        if($validator->fails())
+        {
+            return response()->json([
+                "success"   =>  false,
+                "error"     =>  $validator->errors()
+            ]);
+        }
+
+        $user   =   Auth::user();
+        $user->date_of_birth    =   $request->dob;
+        $user->save();
+
+        return response()->json([
+            "success"   =>  true,
+            "message"   =>  "Date of birth updated successfully"
+        ]);
+    }
 }

@@ -53,6 +53,7 @@ Route::middleware([Authenticate::class])->group(function()
         Route::post("/my-post/delete", "deletePost")->name("user.deletePost");
         Route::get("/applicant-requests", "applicantRequests")->name("job.applicantRequests");
         Route::get("/settings", "settingsView")->name("user.settings");
+        Route::post("/settings/dob", "DOB")->name("user.DOB");
     });
 
     Route::controller(JobPostController::class)->group(function()
