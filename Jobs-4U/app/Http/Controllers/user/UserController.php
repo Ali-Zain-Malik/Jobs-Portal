@@ -405,6 +405,7 @@ class UserController extends Controller
 
     public function settingsView()
     {
-        return view("user.settings");
+        $user   =   Auth::user();
+        return view("user.settings", compact("user"));
     }
 }
