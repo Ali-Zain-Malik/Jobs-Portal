@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 use function PHPSTORM_META\map;
 
@@ -431,5 +432,30 @@ class UserController extends Controller
             "success"   =>  true,
             "message"   =>  "Date of birth updated successfully"
         ]);
+    }
+
+
+    public function changePassword(Request $request)
+    {
+        $validator  =   Validator::make($request->all(),[
+            "old-password"  =>  "required",
+            "new-password"  =>  "required|min:8"
+        ]);
+
+        if($validator->fails())
+        {
+            return redirect()->route("user.settings")->withErrors($validator)->withInput();
+        }
+
+        if(Hash::check($request->input('old-password'), Auth::user()->password))
+        {
+            Auth::user()->password =  Hash::make($request->input("new-password"));
+            Auth::user()->save();
+            return redirect()->route("user.home");
+        }
+        else
+        {
+            return redirect()->route("user.settings")->with("error", "Old password doesnot match")->withInput();
+        }
     }
 }

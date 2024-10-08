@@ -54,6 +54,7 @@ Route::middleware([Authenticate::class])->group(function()
         Route::get("/applicant-requests", "applicantRequests")->name("job.applicantRequests");
         Route::get("/settings", "settingsView")->name("user.settings");
         Route::post("/settings/dob", "DOB")->name("user.DOB");
+        Route::post("/settings/change-password", "changePassword")->name("user.changePassword");
     });
 
     Route::controller(JobPostController::class)->group(function()
