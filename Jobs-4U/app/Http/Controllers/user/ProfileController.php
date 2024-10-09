@@ -86,11 +86,12 @@ class ProfileController extends Controller
             $user_experience    =   Experience::where("user_id", $id)->get();
             $user_education     =   Education::where("user_id", $id)->get();
             $data   =   [
-                "user"  =>  $user,
-                "user_skills"   =>  $user_skills,
+                "user"              =>  $user,
+                "user_skills"       =>  $user_skills,
                 "user_experience"   =>  $user_experience,
                 "user_education"    =>  $user_education
             ];
+
             $pdf    =   app(PDF::class)->loadview("user.profile_pdf", $data);   
             return $pdf->download("profile.pdf");         
         }

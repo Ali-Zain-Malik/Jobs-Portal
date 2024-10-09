@@ -65,4 +65,8 @@ Route::middleware([Authenticate::class])->group(function()
         Route::post("/job-post", "postJob")->name("job.post");
     });
 
+    // Route::get("/pdf", function()
+    // {
+    //     return view("user.profile_pdf");
+    // });
 });
