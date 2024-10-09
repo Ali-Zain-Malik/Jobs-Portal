@@ -48,7 +48,7 @@
 
                                         <ul class="dropdown-menu text-small">
                                             <li class="dropdown-item view-application" application-id="{{$applicant->application_id}}">View</li>
-                                            <li class="dropdown-item">Download</li>
+                                            <li><a href="{{ route("profile.pdfDownload", ["id" => $applicant->applicant_id]) }}" class="dropdown-item download-profile">Download</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -87,6 +87,8 @@
 {{-- End modal --}}
 
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function()
     {

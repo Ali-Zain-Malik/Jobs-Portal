@@ -399,7 +399,7 @@ class UserController extends Controller
                                                 "jobs.job_title as job_title"
                                             )
                                         ->get();
-
+                                        
         return view("user.applicant_requests", compact("job_applicants"));
     }
 

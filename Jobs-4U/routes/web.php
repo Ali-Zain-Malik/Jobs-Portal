@@ -28,7 +28,8 @@ Route::middleware([Authenticate::class])->group(function()
     Route::get("/all-categories", [CategoryController::class, "index"])->name("all-categories");
     Route::get("/search-jobs", [SearchController::class, "index"])->name("search-jobs");
     Route::get("/profile-page", [ProfileController::class, "index"])->name("user.profile");
-    Route::get("/view-profile/{id}/{name}", [ProfileController::class, "viewProfile"])->name("user.viewProfile");
+    Route::get("/view-profile/{id}/{name?}", [ProfileController::class, "viewProfile"])->name("user.viewProfile");
+    Route::get("/profile-pdf/{id}", [ProfileController::class, "downloadProfilePdf"])->name("profile.pdfDownload");
 
     Route::controller(JobController::class)->group(function()
     {
