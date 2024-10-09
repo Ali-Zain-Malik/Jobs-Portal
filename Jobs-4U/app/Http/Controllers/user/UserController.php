@@ -439,7 +439,14 @@ class UserController extends Controller
     {
         $validator  =   Validator::make($request->all(),[
             "old-password"  =>  "required",
-            "new-password"  =>  "required|min:8"
+            "new-password"  =>  [
+                'required',
+                'min:8', 
+                'regex:/[a-z]/', 
+                'regex:/[A-Z]/', 
+                'regex:/[0-9]/', 
+                'regex:/[@$!%*?&#]/'
+            ]
         ]);
 
         if($validator->fails())
@@ -451,7 +458,8 @@ class UserController extends Controller
         {
             Auth::user()->password =  Hash::make($request->input("new-password"));
             Auth::user()->save();
-            return redirect()->route("user.home");
+            Auth::logout();
+            return redirect()->route("user.signin")->with("success", "Password changed successfully. Please sign in again.");
         }
         else
         {
