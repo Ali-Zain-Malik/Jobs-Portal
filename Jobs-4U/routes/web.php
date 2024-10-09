@@ -52,6 +52,7 @@ Route::middleware([Authenticate::class])->group(function()
         Route::get("/my-posts", "myPosts")->name("user.myPosts");
         Route::post("/my-post/delete", "deletePost")->name("user.deletePost");
         Route::get("/applicant-requests", "applicantRequests")->name("job.applicantRequests");
+        Route::post("/applicant-details", "applicantDetails")->name("applicant.details");
         Route::get("/settings", "settingsView")->name("user.settings");
         Route::post("/settings/dob", "DOB")->name("user.DOB");
         Route::post("/settings/change-password", "changePassword")->name("user.changePassword");

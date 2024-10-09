@@ -404,6 +404,35 @@ class UserController extends Controller
     }
 
 
+    public function applicantDetails(Request $request)
+    {
+        $validator  =   Validator::make($request->all(),[
+            "application_id"   =>  "required|integer"
+        ]);
+
+        if($validator->fails())
+        {
+            return response()->json([
+                "success"   =>  false,
+                "error"     =>  $validator->errors()
+            ], 400);
+        }
+
+        $details    =   Job_applicant::find($request->application_id);
+        if(empty($details))
+        {
+            return response()->json([
+                "success"   =>  false,
+                "error"     =>  "No details found for this application"
+            ],404);
+        }
+
+        return response()->json([
+            "success"   =>  true,
+            "details"   =>  $details
+        ],200);
+    }
+
     public function settingsView()
     {
         $user   =   Auth::user();
