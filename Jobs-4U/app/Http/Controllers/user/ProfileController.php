@@ -91,13 +91,13 @@ class ProfileController extends Controller
                 "user_experience"   =>  $user_experience,
                 "user_education"    =>  $user_education
             ];
-            // return view("user.profile_pdf", $data);
+            
             $pdf    =   app(PDF::class)->loadview("user.profile_pdf", $data);  
             return $pdf->download("profile.pdf");         
         }
         else
         {
-            return redirect()->back()->with("", "User not found");
+            return redirect()->back()->with("error", "User not found");
         }
     }
 }
