@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\admin\AdminAuthController;
+use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\user\AuthController;
 use App\Http\Controllers\user\CategoryController;
 use App\Http\Controllers\user\HomeController;
@@ -9,7 +11,6 @@ use App\Http\Controllers\user\ProfileController;
 use App\Http\Controllers\user\SearchController;
 use App\Http\Controllers\user\UserController;
 use App\Http\Middleware\user\Authenticate;
-use App\Http\Middleware\user\userRedirect;
 use Illuminate\Support\Facades\Route;
 
 // Using Laravel default guest middleware
@@ -64,9 +65,19 @@ Route::middleware([Authenticate::class])->group(function()
         Route::get("/job-create", "index")->name("job.create");
         Route::post("/job-post", "postJob")->name("job.post");
     });
+});
 
-    // Route::get("/pdf", function()
-    // {
-    //     return view("user.profile_pdf");
-    // });
+
+Route::group(["prefix" => "admin"], function()
+{
+    Route::controller(AdminAuthController::class)->group(function()
+    {
+        Route::get("/signin", "index")->name("admin.signin");
+        Route::post("/authenticate", "adminAuthenticate")->name("admin.authenticate");
+    });
+
+    Route::controller(DashboardController::class)->group(function()
+    {
+        Route::get("/dashboard", "index")->name("admin.dashboard");
+    });
 });

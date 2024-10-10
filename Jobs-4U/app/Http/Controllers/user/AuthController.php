@@ -8,8 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use PhpParser\Node\Expr\FuncCall;
-use Psy\CodeCleaner\ReturnTypePass;
 
 class AuthController extends Controller
 {

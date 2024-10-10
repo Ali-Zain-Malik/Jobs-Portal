@@ -34,8 +34,8 @@ class AdminAuthController extends Controller
                 Auth::guard("admin")->logout();
                 return redirect()->route("admin.signin")->with("error", "You are not authorized to access this page.");
             }
-            
-            return view("admin.dashboard");
+
+            return redirect()->route("admin.dashboard");
         }
         else
         {
