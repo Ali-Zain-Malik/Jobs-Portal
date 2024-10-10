@@ -11,62 +11,27 @@
     {
         font-family: "calibri";
     }
-    .main-container
-    {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-    }
-    .name-div
-    {
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        padding-left: 30px;
-        gap: 20px;
-    }
-    .description
-    {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        padding-left: 30px;
-    }
-    .skills-div
-    {
-        width: 100%;
-        padding-left: 30px;
-    }
-    .experience-div, .education-div
-    {
-        width: 100%;
-        padding-left: 30px;
-    }
-    .experience, .education
-    {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-    .exp-details, .edu-details
-    {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        margin-top: 15px;
-        margin-bottom: 5px;
-        
-    }
 </style>
 
 <body>
     <!-- Main container containing everthing -->
-    <div class="main-container">
+    <div style=
+        "
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        ">
 
         <!-- Name section -->
-        <div class="name-div">
+        <div style=
+            "
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+                padding-left: 30px;
+                gap: 20px;
+            ">
             <h3>Name:</h3><p style="font-size: 18px;">{{$user->name}}</p>
         </div>
         <!-- Name section ends here -->
@@ -74,7 +39,14 @@
         <hr style="width: 100%;">
 
         <!-- Description Section starts here -->
-        <div class="description">
+        <div style=
+            "
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+                padding-left: 30px;
+            ">
             <h3 style="margin: 0;">Description</h3> 
             <p style="font-size: 16px;">
                 {{$user->description}}
@@ -87,7 +59,11 @@
 
 
         <!-- Skills section starts here -->
-        <div class="skills-div">
+        <div style=
+            "
+                width: 100%;
+                padding-left: 30px;
+            ">
             <h3 style="margin: 0;">Skills</h3>
             <ul>
                 @foreach($user_skills as $skill)
@@ -102,13 +78,29 @@
 
 
         <!-- Experience heading and plus icon -->
-        <div class="experience-div">
+        <div style=
+            "
+                width: 100%;
+                padding-left: 30px;
+            ">
             <h3 style="margin: 0; text-align:center;">Experience</h3>
-            <div class="experience">
+            <div style=
+                "
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                ">
                 @foreach($user_experience as $experience)
-                    <div class="exp-details">
+                    <div style=
+                        "
+                            display: flex;
+                            align-items: center;
+                            gap: 5px;
+                            margin-top: 15px;
+                            margin-bottom: 5px;
+                        ">
                         <h4>{{ $experience->company }}</h4>
-                        ({{ $experience->designation }})
+                        {{ $experience->designation }}
                     </div>
                 @endforeach
             </div>  
@@ -120,13 +112,29 @@
         <hr style="width: 100%;">
 
         <!-- Education heading starts here and plus icon -->
-        <div class="education-div">
+        <div style=
+            "
+                width: 100%;
+                padding-left: 30px;
+            ">
             <h3 style="margin: 0; text-align:center;">Education</h3>
-            <div class="education">
+            <div style=
+                "
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                ">
                 @foreach($user_education as $education)
-                    <div class="edu-details">
+                    <div style=
+                        "
+                            display: flex;
+                            align-items: center;
+                            gap: 5px;
+                            margin-top: 15px;
+                            margin-bottom: 5px;
+                        ">
                         <h4>{{ $education->program }}</h4>
-                        ({{ $education->institute }})
+                        {{ $education->institute }}
                     </div>
                 @endforeach
             </div>  

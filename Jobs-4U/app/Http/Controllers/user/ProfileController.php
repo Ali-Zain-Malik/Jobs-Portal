@@ -91,8 +91,8 @@ class ProfileController extends Controller
                 "user_experience"   =>  $user_experience,
                 "user_education"    =>  $user_education
             ];
-
-            $pdf    =   app(PDF::class)->loadview("user.profile_pdf", $data);   
+            // return view("user.profile_pdf", $data);
+            $pdf    =   app(PDF::class)->loadview("user.profile_pdf", $data);  
             return $pdf->download("profile.pdf");         
         }
         else
