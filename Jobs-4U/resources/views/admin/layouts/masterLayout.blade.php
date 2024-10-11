@@ -25,10 +25,21 @@
     <title> @yield('title') </title>
 </head>
 <body>
+    @include("user.includes.loader")
     @include("admin.includes.header")
     @include("admin.includes.sidebar")
     
     @yield('main')
+
+    {{-- This is the bootstrap toast --}}
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="toast-body text-center" id="toast-inner">
+            {{-- Message will be shown here --}}
+          </div>
+        </div>
+    </div>
+    {{-- Toast ends here --}}
 
     {{-- Jquery --}}
     <script src="{{asset("js/jquery.js")}}"></script>

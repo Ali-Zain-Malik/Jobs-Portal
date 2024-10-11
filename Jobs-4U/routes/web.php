@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\admin\AdminAuthController;
 use App\Http\Controllers\admin\DashboardController;
+use App\Http\Controllers\FeedbacksController;
 use App\Http\Controllers\user\AuthController;
 use App\Http\Controllers\user\CategoryController;
 use App\Http\Controllers\user\HomeController;
@@ -79,5 +80,13 @@ Route::group(["prefix" => "admin"], function()
     Route::controller(DashboardController::class)->group(function()
     {
         Route::get("/dashboard", "index")->name("admin.dashboard");
+    });
+
+    Route::controller(FeedbacksController::class)->group(function()
+    {
+        Route::get("/user-feedbacks", "index")->name("user.feedbacks");
+        Route::put("/toggle-feedbackDisplay", "toggle")->name("feedbackDisplay.toggle");
+        Route::post("/feedback-details", "viewDetails")->name("feedback.viewDetails");
+        Route::get("/feedback-delete", "delete")->name("feedback.delete");
     });
 });

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\user\User;
 use App\Models\user\Job;
-use App\Models\admin\Feedbacks;
+use App\Models\Feedbacks;
 
 
 class DashboardController extends Controller
@@ -28,7 +28,7 @@ class DashboardController extends Controller
         $byDateJobs         =   Job::selectRaw("created_at, COUNT(*) as job_count")
                                     ->groupBy("created_at")
                                     ->get();
-
+        $user_feedbacks          =   Feedbacks::getFeedbacks();
         $data   =   [
             "total_users"   =>  $total_users,
             "employers"     =>  $employers,
@@ -40,10 +40,10 @@ class DashboardController extends Controller
             "expired_jobs"  =>  $expired_jobs,
             "feedbacks"     =>  $feedbacks,
             "byDateUsers"   =>  $byDateUsers,
-            "byDateJobs"    =>  $byDateJobs
+            "byDateJobs"    =>  $byDateJobs,
+            "user_feedbacks"     =>  $user_feedbacks
         ];
 
-        // return $byDateUsers;
         return view("admin.dashboard", $data);
     }
 }

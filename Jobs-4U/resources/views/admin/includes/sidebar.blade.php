@@ -67,7 +67,7 @@
 
         {{-- Feedbacks nav --}}
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#">
+            <a class="nav-link collapsed" href="{{ route("user.feedbacks") }}">
                 <i class="bi bi-chat-quote"></i>
                 <span>Feedbacks</span>
             </a>

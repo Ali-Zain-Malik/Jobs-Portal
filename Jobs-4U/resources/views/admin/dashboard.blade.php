@@ -208,7 +208,7 @@
                 <div class="col-12">
         
                   <div class="col-12">
-                    {{-- feedback inner --}}
+                    @include("admin.includes.feedbacks")
                   </div>
         
         
