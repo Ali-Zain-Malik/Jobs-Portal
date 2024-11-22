@@ -79,7 +79,7 @@
         
                           <div class="d-flex align-items-center">
                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                              <i class="bx bxs-briefcase-alt-2"></i>
+                              <i class="bi bi-briefcase-fill"></i>
                             </div>
                             <div class="ps-3">
                               <h6>{{ $total_jobs }}</h6>

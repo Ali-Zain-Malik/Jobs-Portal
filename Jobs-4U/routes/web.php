@@ -11,6 +11,7 @@ use App\Http\Controllers\user\JobPostController;
 use App\Http\Controllers\user\ProfileController;
 use App\Http\Controllers\user\SearchController;
 use App\Http\Controllers\user\UserController;
+use App\Http\Controllers\admin\UsersManagementController;
 use App\Http\Middleware\user\Authenticate;
 use Illuminate\Support\Facades\Route;
 
@@ -88,5 +89,10 @@ Route::group(["prefix" => "admin"], function()
         Route::put("/toggle-feedbackDisplay", "toggle")->name("feedbackDisplay.toggle");
         Route::post("/feedback-details", "viewDetails")->name("feedback.viewDetails");
         Route::get("/feedback-delete", "delete")->name("feedback.delete");
+    });
+    
+    Route::controller(UsersManagementController::class)->group(function()
+    {
+        Route::get("/users-management", "index")->name("users.management");
     });
 });

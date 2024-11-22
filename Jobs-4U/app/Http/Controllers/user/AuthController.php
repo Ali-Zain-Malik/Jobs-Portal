@@ -81,6 +81,8 @@ class AuthController extends Controller
                 
                 if(Auth::attempt($credentials))
                 {
+                    $user = User::where("email", $request->email)->first();
+                    Auth::login($user);
                     return redirect()->route("user.home");
                 }
                 else

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\user\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -34,7 +35,8 @@ class AdminAuthController extends Controller
                 Auth::guard("admin")->logout();
                 return redirect()->route("admin.signin")->with("error", "You are not authorized to access this page.");
             }
-
+            $user = User::where("email", $request->email)->first();
+            Auth::login($user);
             return redirect()->route("admin.dashboard");
         }
         else
