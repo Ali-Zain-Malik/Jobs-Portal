@@ -94,5 +94,7 @@ Route::group(["prefix" => "admin"], function()
     Route::controller(UsersManagementController::class)->group(function()
     {
         Route::get("/users-management", "index")->name("users.management");
+        Route::get("/add-user-form", "addUserView")->name("userAdd.view");
+        Route::post("/add-user", "add")->name("user.add");
     });
 });
