@@ -96,5 +96,6 @@ Route::group(["prefix" => "admin"], function()
         Route::get("/users-management", "index")->name("users.management");
         Route::get("/add-user-form", "addUserView")->name("userAdd.view");
         Route::post("/add-user", "add")->name("user.add");
+        Route::get("/user-profile/{id}", "profile")->name("user.profile");
     });
 });
