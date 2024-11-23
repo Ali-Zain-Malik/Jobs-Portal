@@ -53,7 +53,7 @@
                                                 <img src='{{ asset("img/card-list.svg") }}'>
                                             </a>
                                             <ul class='dropdown-menu text-small'>
-                                                <li role="button"> <a href="{{ route("user.profile") }}" class='dropdown-item view'>View</a> </li>
+                                                <li role="button"> <a href="{{ route("profile.view", $user->id ) }}" class='dropdown-item view'>View</a> </li>
                                                 <li role="button"> <span class='dropdown-item delete'>Delete</span> </li>
                                             </ul>
                                         </td>
