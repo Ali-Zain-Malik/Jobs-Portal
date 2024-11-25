@@ -191,4 +191,17 @@ class UsersManagementController extends Controller
        
     }
 
+    public function getExperience(string $id)
+    {
+        $experience = Experience::find($id);
+        if(empty($experience))
+        {
+            return response()->json([
+                "message" => "Not Found",
+            ], 404);
+        }
+
+        return response()->json($experience, 200);
+    }
+
 }

@@ -2,7 +2,7 @@
 
 <!-- loader -->
 <div class="loader d-none justify-content-center align-items-center">
-    <img src="img/loader.gif" alt="" style="object-fit: cover; width: 50px;">
+    <img src="{{asset("img/loader.gif")}}" alt="" style="object-fit: cover; width: 50px;">
 </div>
 
 

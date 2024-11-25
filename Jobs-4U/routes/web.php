@@ -99,5 +99,6 @@ Route::group(["prefix" => "admin"], function()
         Route::get("/user-profile/{id}", "profile")->name("profile.view");
         Route::post("/user-edit/{id}", "editProfile")->name("profile.edit");
         Route::post("/remove-profile-photo/{id}", "removeProfilePhoto")->name("profile_photo.remove");
+        Route::get("/user-experience/{id}", "getExperience")->name("get_experience");
     });
 });

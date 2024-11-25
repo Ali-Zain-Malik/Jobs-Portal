@@ -199,9 +199,6 @@
 
 
                 <div class="tab-pane fade experience" id="experience">
-                  <div class="add-experience-icon d-flex justify-content-end">
-                    <i role="button" class="bi bi-plus fs-1 pointer plus-icon" title="Add Experience" data-bs-toggle="modal" data-bs-target="#staticBackdrop"></i>
-                  </div>
                   <div class="experience container px-0 mt-2">
                     @include('admin.includes.user_experience', ["experiences" => $experiences])
                   </div>
@@ -209,9 +206,6 @@
 
 
                 <div class="tab-pane fade education" id="education">
-                  <div class="add-education-icon d-flex justify-content-end">
-                    <i role="button" class="bi bi-plus fs-1 pointer education-plus-icon" title="Add Education" data-bs-toggle="modal" data-bs-target="#addEducation"></i>
-                  </div>
                   <div class="education container px-0 mt-2">
                     @include('admin.includes.user_education', ["education" => $education])
                   </div>

@@ -218,7 +218,6 @@ h6 {
 
 /* Card */
 .card {
-  margin-bottom: 30px;
   border: none;
   border-radius: 5px;
   box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
@@ -1229,4 +1228,10 @@ h6 {
   text-align: center;
   font-size: 13px;
   color: #012970;
+}
+
+/* Custom class for cursor pointer */
+.pointer
+{
+  cursor: pointer;
 }
