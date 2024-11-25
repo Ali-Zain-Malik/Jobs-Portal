@@ -4,6 +4,8 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\user\City;
+use App\Models\user\Education;
+use App\Models\user\Experience;
 use App\Models\user\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -85,7 +87,9 @@ class UsersManagementController extends Controller
         }
 
         $cities = City::all();
-        return view("admin.user_profile", compact("user", "cities"));
+        $experiences = Experience::where("user_id", $id)->get();
+        $education = Education::where("user_id", $id)->get();
+        return view("admin.user_profile", compact("user", "cities", "experiences", "education"));
     }
 
     public function editProfile(string $id, Request $request)
@@ -186,4 +190,5 @@ class UsersManagementController extends Controller
         }
        
     }
+
 }
