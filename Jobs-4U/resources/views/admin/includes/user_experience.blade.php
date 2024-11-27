@@ -11,7 +11,7 @@
     <div class="card">
         <div class="d-flex justify-content-between align-items-center card-header pb-0">
             <h5 class="fw-bold">{{$exp->designation}}</h5>
-            <span class="pe-1 d-flex gap-2 align-items-center"><i role="button" class="bx bxs-pencil fs-5 pointer pencil-icon" exp-id="{{ $exp->id }}" data-bs-toggle="modal" data-bs-target="#editExperienceModal"></i> <i role="button" class="ri ri-delete-bin-5-line basket-icon fs-5 pointer"></i></span>
+            <span class="pe-1 d-flex gap-2 align-items-center"><i role="button" class="bx bxs-pencil fs-5 pointer pencil-icon" exp-id="{{ $exp->id }}" data-bs-toggle="modal" data-bs-target="#editExperienceModal"></i> <i role="button" class="ri ri-delete-bin-5-line basket-icon fs-5 pointer" exp-id="{{ $exp->id }}" data-bs-target="#confirmDeleteModal" data-bs-toggle="modal"></i></span>
         </div>
         <div class="card-body mt-3">
             <h5 class="card-title">{{$exp->company}}</h5>
@@ -128,7 +128,23 @@
         </div>
     </div>
 </div>
+{{-- Edit/Update Modal ends --}}
 
+{{-- Modal for delete confirmation --}}
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <strong class="h6 fw-bold">Are you sure you want to delete this experience?</strong>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-secondary px-2 py-1" data-bs-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary px-2 py-1" id="confirm-delete">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- Modal ends --}}
 @push("scripts")
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js"
@@ -258,5 +274,43 @@
                 $(".end-date-div").removeClass("d-flex").addClass("d-none");
             }
         }
+
+        //Delete functionality
+        let deleteExperienceId;
+        const deleteIcons = document.querySelectorAll(".basket-icon");
+        deleteIcons.forEach(function(btn)
+        {
+            btn.addEventListener("click", function()
+            {
+                deleteExperienceId = this.getAttribute("exp-id");
+            });
+        });
+
+        const confirmDelete = document.querySelector("#confirm-delete");
+        confirmDelete.addEventListener("click", function()
+        {
+            $.ajax(
+            {
+                url: "{{route("deleteExperience", '__id__')}}".replace('__id__', deleteExperienceId),
+                type: "delete",
+                timeout: 10000,
+                data: {
+                    _token : "{{ csrf_token() }}",
+                },
+                beforeSend: function()
+                {
+                    $(".loader").removeClass("d-none").addClass("d-flex");
+                },
+                complete: function()
+                {
+                    $(".loader").removeClass("d-flex").addClass("d-none");
+                },
+                success: function()
+                {
+                    window.location.reload(); //For simplicity right now.
+                }
+            });
+        });
+
     });
 </script>

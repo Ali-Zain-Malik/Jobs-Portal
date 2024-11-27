@@ -204,4 +204,32 @@ class UsersManagementController extends Controller
         return response()->json($experience, 200);
     }
 
+
+    public function deleteExperience(string $id)
+    {
+        $experience = Experience::find($id);
+        if(empty($experience))
+        {
+            return response()->json([
+                "message" => "Invalid id"
+            ], 400);
+        }
+
+        DB::beginTransaction();
+        try
+        {
+            $experience->delete();
+            DB::commit();
+            return response()->json([
+                "message" => "Experience deleted successfully"
+            ]);
+        }
+        catch(\Exception $ex)
+        {
+            DB::rollback();
+            return response()->json([
+                "message" => "Something went wrong"
+            ]);
+        }
+    }
 }
