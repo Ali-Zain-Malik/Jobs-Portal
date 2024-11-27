@@ -232,4 +232,17 @@ class UsersManagementController extends Controller
             ]);
         }
     }
+
+    public function getEducation(string $id)
+    {
+        $education = Education::find($id);
+        if(empty($education))
+        {
+            return response()->json([
+                "message" => "Not Found",
+            ], 404);
+        }
+
+        return response()->json($education, 200);
+    }
 }

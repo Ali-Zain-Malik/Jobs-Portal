@@ -252,15 +252,7 @@
 
             const startNumeric = startYear * 100 + startMonth;
             const endNumeric = endYear * 100 + endMonth;
-
-            if (startNumeric > endNumeric) 
-            {
-                return true;
-            } 
-            else
-            {
-                return false;
-            }
+            return startNumeric > endNumeric;
         }
     
         function toggleEndDate()
