@@ -12,6 +12,7 @@ use App\Http\Controllers\user\ProfileController;
 use App\Http\Controllers\user\SearchController;
 use App\Http\Controllers\user\UserController;
 use App\Http\Controllers\admin\UsersManagementController;
+use App\Http\Controllers\admin\SkillsController;
 use App\Http\Middleware\user\Authenticate;
 use Illuminate\Support\Facades\Route;
 
@@ -105,5 +106,10 @@ Route::group(["prefix" => "admin"], function()
         Route::get("/user-education/{id}", "getEducation")->name("get_education");
         Route::post("/education-edit/{id}", "editEducation")->name("edit_education");
         Route::post("/delete-education/{id}", "deleteEducation")->name("delete_education");
+    });
+
+    Route::controller(SkillsController::class)->group(function()
+    {
+        Route::get("/skill", "index")->name("skills");
     });
 });

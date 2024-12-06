@@ -13,7 +13,7 @@
                 <li class="breadcrumb-item active">Dashboard</li>
               </ol>
             </nav>
-          </div>
+        </div>
           {{-- End page title --}}
 
           {{-- section starts --}}

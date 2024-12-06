@@ -57,7 +57,7 @@
             </a>
             <ul id="skillsManagement-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="#">
+                    <a href="{{ route("skills") }}">
                         <i class="bi bi-circle"></i><span>Skills</span>
                     </a>
                 </li>
