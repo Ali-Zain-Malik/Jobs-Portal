@@ -52,10 +52,12 @@
                             </select>
                             <input type="text" name="major" id="major" class="form-control" placeholder="Major e.g Engineering">
                         </div>
+                        <span class="text-danger fs-6 major-error d-none">Major can't be empty</span>
                     </div>
                     <div class="d-flex flex-column fw-semibold fs-6 mb-3">
                         <label for="institute">Institute <span style="color: red; font-size: 10px;">*</span></label>
                         <input type="text" name="institute" class="form-control" id="institute">
+                        <span class="text-danger fs-6 institute-error d-none">Institute can't be empty</span>
                     </div>
 
                     <div class="my-3">
@@ -82,6 +84,7 @@
                             </select>
                             <select name="start_year" id="edu_start_year" class="w-50"></select>
                         </div>
+                        <span class="text-danger fs-6 d-none date-error">End date can't be earlier than start date</span>
                     </div>
 
                     <div class="flex-column fw-semibold fs-6 mb-3 edu-end-date-div">
@@ -105,20 +108,19 @@
                         </div>
                     </div>
 
-                    <div class="d-none flex-column fw-semibold fs-6 mb-3 grade-div">
+                    <div class="d-flex flex-column fw-semibold fs-6 mb-3 grade-div">
                         <label for="grade">Grade <span style="color: red; font-size: 10px;">*</span></label>
                         <select name="grade" id="grade">
-                            <option value="">Grade</option>
-                            <option value="a+">A+</option>
-                            <option value="a-">A-</option>
-                            <option value="b">B</option>
-                            <option value="c">C</option>
-                            <option value="d">D</option>
+                            <option @selected($edu->grade == 'a+') value="a+">A+</option>
+                            <option @selected($edu->grade == 'a-') value="a-">A-</option>
+                            <option @selected($edu->grade == 'b') value="b">B</option>
+                            <option @selected($edu->grade == 'c') value="c">C</option>
+                            <option @selected($edu->grade == 'd') value="d">D</option>
                         </select>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary w-100 education-save-btn">Save</button>
+                    <button type="button" edu-id="{{ $edu->id }}" class="btn btn-primary w-100" id="education-save-btn">Save</button>
                 </div>
             </form>
         </div>
@@ -205,7 +207,7 @@
         });
         
 
-        $("#edu_start_month, #edu_end_month, #program").selectize();
+        $("#edu_start_month, #edu_end_month, #program, #grade").selectize();
         const currentYear = new Date().getFullYear();
         const leastYear = 1947;
         let options = [];
@@ -237,15 +239,81 @@
 
         function isDateValid()
         {
-            const startMonth = parseInt($("#start_month").val());
-            const startYear = parseInt($("#start_year").val());
-            const endMonth = parseInt($("#end_month").val());
-            const endYear = parseInt($("#end_year").val());  
+            const startMonth = parseInt($("#edu_start_month").val());
+            const startYear = parseInt($("#edu_start_year").val());
+            const endMonth = parseInt($("#edu_end_month").val());
+            const endYear = parseInt($("#edu_end_year").val());  
 
             const startNumeric = startYear * 100 + startMonth;
             const endNumeric = endYear * 100 + endMonth;
 
-            return startNumeric > endNumeric;
+            return startNumeric < endNumeric;
         }
+
+        function isInputValid()
+        {
+            if($("#major").val().trim() === "")
+            {
+                $(".major-error").removeClass("d-none");
+            }
+
+            if($("#institute").val().trim() === "")
+            {
+                $(".institute-error").removeClass("d-none");
+            }
+
+            if($("#major").val().trim() === "" || $("#institute").val().trim() === "")
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        // Saving edited education Info
+        $("#education-save-btn").on("click", function()
+        {
+            const education_id = $(this).attr("edu-id");
+            if(!isDateValid())
+            {
+                $(".date-error").removeClass("d-none");
+                return;
+            }
+            if(!isInputValid())
+            {
+                return;
+            }
+
+            $.ajax(
+            {
+                url: "{{ route("edit_education", '__id__') }}".replace("__id__", education_id),
+                type: "post",
+                timeout: 10000,
+                data:
+                {
+                    _token: "{{ csrf_token() }}",
+                    program: $("#program").val(),
+                    major: $("#major").val().trim(),
+                    institute: $("#institute").val().trim(),
+                    grade: $("#grade").val(),
+                    start_date: `${$("#edu_start_year").val()}-${$("#edu_start_month").val()}-01`,
+                    end_date: `${$("#edu_end_year").val()}-${$("#edu_end_month").val()}-01`,
+                    is_currently_studying: $("#is_currently_studying").prop("checked") ? 1 : 0,
+                },
+                beforeSend: function()
+                {
+                    $(".loader").removeClass("d-none").addClass("d-flex");
+                },
+                complete: function()
+                {
+                    $(".loader").removeClass("d-flex").addClass("d-none");
+                },
+                success: function(response)
+                {
+                    location.reload();
+                }
+            });
+
+        });
     });
 </script>

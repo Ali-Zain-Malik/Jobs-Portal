@@ -245,4 +245,42 @@ class UsersManagementController extends Controller
 
         return response()->json($education, 200);
     }
+
+    public function editEducation(string $id, Request $request)
+    {
+        $education = Education::find($id);
+        if(empty($education))
+        {
+            return response()->json([
+                "message" => "Not found",
+            ], 404);
+        }
+
+        DB::beginTransaction();
+        try
+        {
+            $education->fill([
+                "program"   =>  $request->input("program", "others"),
+                "major"     =>  $request->input("major"),
+                "institute" =>  $request->input("institute"),
+                "grade"     =>  $request->input("grade"),
+                "start_date" => $request->input("start_date"),
+                "end_date"  =>  $request->input("end_date", NULL),
+                "is_currently_studying" =>  $request->input("currently_studying", 1),
+            ]);
+    
+            $education->save();
+            DB::commit();
+            return response()->json([
+                "success" => true,
+            ]);
+        }
+        catch(\Exception $ex)
+        {
+            DB::rollback();
+            return response()->json([
+                "success" => false,
+            ]);
+        }
+    }
 }
