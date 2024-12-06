@@ -59,7 +59,7 @@
                     </div>
 
                     <div class="my-3">
-                        <input type="checkbox" name="currently_studying" id="currently_studying" checked class="pointer form-check-input">
+                        <input type="checkbox" name="currently_studying" id="currently_studying" @checked($edu->is_currently_studying) class="pointer form-check-input">
                         <label for="currently_studying" class="pointer">Currently Studying here</label>
                     </div>
         
@@ -84,7 +84,7 @@
                         </div>
                     </div>
 
-                    <div class="d-none flex-column fw-semibold fs-6 mb-3 edu-end-date-div">
+                    <div class="flex-column fw-semibold fs-6 mb-3 edu-end-date-div">
                         <label for="end_month">End Date <span style="color: red; font-size: 10px;">*</span></label>
                         <div class="d-flex w-100 gap-1">
                             <select name="end_month" id="edu_end_month" class="w-50">
@@ -174,8 +174,8 @@
                         let end_month, end_year;
                         if(response.end_date != null)
                         {
-                            end_month = response.end_date.getMonth() + 1;
-                            end_year = response.end_date.getFullYear();
+                            end_month = new Date(response.end_date).getMonth() + 1;
+                            end_year = new Date(response.end_date).getFullYear();
                         }
                         else
                         {
