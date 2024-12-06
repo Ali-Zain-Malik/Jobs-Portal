@@ -205,6 +205,48 @@ class UsersManagementController extends Controller
     }
 
 
+    public function editExperience(string $id, Request $request)
+    {
+        $experience = Experience::find($id);
+        if(empty($experience))
+        {
+            return response()->json([
+                "success" => false,
+                "message" => "Not found",
+            ], 404);
+        }
+
+        DB::beginTransaction();
+        try
+        {
+            $experience->fill([
+                "designation"   =>  $request->input("designation"),
+                "company"       =>  $request->input("company"),
+                "employment_type"   => $request->input("employment_type"),
+                "location_type"     => $request->input("location_type"),
+                "is_currently_working" => $request->input("currently_working"),
+                "start_date"    =>  $request->input("start_date"),
+                "end_date"      =>  $request->input("end_date", NULL),
+            ]);
+
+            $experience->save();
+            DB::commit();
+
+            return response()->json([
+                "success" => true,
+                "message" => "Experience updated",
+            ]);
+        }
+        catch(\Exception $ex)
+        {
+            DB::rollback();
+            return response()->json([
+                "success" => false,
+                "message" => "Something went wrong",
+            ]);
+        }
+    }
+
     public function deleteExperience(string $id)
     {
         $experience = Experience::find($id);

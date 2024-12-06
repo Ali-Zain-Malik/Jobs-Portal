@@ -100,6 +100,7 @@ Route::group(["prefix" => "admin"], function()
         Route::post("/user-edit/{id}", "editProfile")->name("profile.edit");
         Route::post("/remove-profile-photo/{id}", "removeProfilePhoto")->name("profile_photo.remove");
         Route::get("/user-experience/{id}", "getExperience")->name("get_experience");
+        Route::post("/experience-edit/{id}", "editExperience")->name("edit_experience");
         Route::delete("/experience-delete/{id}", "deleteExperience")->name("deleteExperience");
         Route::get("/user-education/{id}", "getEducation")->name("get_education");
         Route::post("/education-edit/{id}", "editEducation")->name("edit_education");

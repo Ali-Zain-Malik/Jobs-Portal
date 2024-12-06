@@ -207,7 +207,7 @@
                             selected: response.grade,
                         });
                         
-                        $(this).attr("edu-id", response.id);
+                        $("#education-save-btn").attr("edu-id", response.id);
                     },
                     error: function(xhr, status, error)
                     {

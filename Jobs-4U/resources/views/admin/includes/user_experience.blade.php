@@ -45,10 +45,12 @@
                     <div class="d-flex flex-column fw-semibold fs-6 mb-3">
                         <label for="company">Compnay <span style="color: red; font-size: 10px;">*</span></label>
                         <input type="text" name="company" class="form-control" id="company">
+                        <span class="text-danger fs-6 company-error d-none">Company can't be empty</span>
                     </div>
                     <div class="d-flex flex-column fw-semibold fs-6 mb-3">
                         <label for="designation">Designation <span style="color: red; font-size: 10px;">*</span></label>
                         <input type="text" name="designation" class="form-control" id="designation">
+                        <span class="text-danger fs-6 designation-error d-none">Designation can't be empty</span>
                     </div>
 
                     <div class="d-flex flex-column fw-semibold fs-6 mb-3 start-date-div">
@@ -95,6 +97,7 @@
   
                             <select name="start_year" id="start_year" class="w-50"></select>
                         </div>
+                        <span class="text-danger fs-6 date-error d-none">End date can't be earlier than start date</span>
                     </div>
   
   
@@ -122,7 +125,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary w-100" id="submit-btn">Save Changes</button>
+                    <button type="button" exp-id="" class="btn btn-primary w-100" id="exp-save-btn">Save Changes</button>
                 </div>
             </form>
         </div>
@@ -186,8 +189,8 @@
                         let end_month, end_year;
                         if(response.end_date != null)
                         {
-                            end_month = response.end_date.getMonth() + 1;
-                            end_year = response.end_date.getFullYear();
+                            end_month = new Date(response.end_date).getMonth() + 1;
+                            end_year = new Date(response.end_date).getFullYear();
                         }
                         else
                         {
@@ -209,6 +212,7 @@
                         endMonth.setValue(end_month);
                         endYear.setValue(end_year);
                         
+                        $("#exp-save-btn").attr("exp-id", response.id);
                     },
                     error: function(xhr, status, error)
                     {
@@ -252,7 +256,7 @@
 
             const startNumeric = startYear * 100 + startMonth;
             const endNumeric = endYear * 100 + endMonth;
-            return startNumeric > endNumeric;
+            return startNumeric < endNumeric;
         }
     
         function toggleEndDate()
@@ -302,6 +306,73 @@
                     window.location.reload(); //For simplicity right now.
                 }
             });
+        });
+
+        function isInputValid()
+        {
+            if($("#company").val().trim() === "")
+            {
+                $(".company-error").removeClass("d-none");
+            }
+
+            if($("#designation").val().trim() === "")
+            {
+                $(".designation-error").removeClass("d-none");
+            }
+
+            if($("#company").val().trim() === "" || $("#designation").val().trim() === "")
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
+        // Edit Experience
+        $("#exp-save-btn").on("click", function()
+        {
+            const experience_id = $(this).attr("exp-id");
+            if(!isDateValid())
+            {
+                $(".date-error").removeClass("d-none");
+                return;
+            }
+            if(!isInputValid())
+            {
+                return;
+            }
+
+            $.ajax(
+            {
+                url: "{{ route("edit_experience", '__id__') }}".replace("__id__", experience_id),
+                type: "post",
+                timeout: 10000,
+                data:
+                {
+                    _token: "{{ csrf_token() }}",
+                    company: $("#company").val().trim(),
+                    designation: $("#designation").val().trim(),
+                    employment_type: $("#employment_type").val(),
+                    location_type: $("#location_type").val(),
+                    start_date: `${$("#start_year").val()}-${$("#start_month").val()}-01`,
+                    end_date: `${$("#end_year").val()}-${$("#end_month").val()}-01`,
+                    currently_working: $("#is_currently_working").prop("checked") ? 1 : 0,
+                },
+                beforeSend: function()
+                {
+                    $(".loader").removeClass("d-none").addClass("d-flex");
+                },
+                complete: function()
+                {
+                    $(".loader").removeClass("d-flex").addClass("d-none");
+                },
+                success: function(response)
+                {
+                    location.reload();
+                }
+            });
+
         });
 
     });
