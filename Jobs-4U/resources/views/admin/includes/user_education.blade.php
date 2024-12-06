@@ -11,7 +11,7 @@
 <div class="card">
     <div class="d-flex justify-content-between align-items-center card-header pb-0">
         <h5 class="fw-bold">{{ $edu->major }}</h5>
-        <span class="pe-1 d-flex gap-2 align-items-center"><i role="button" class="bx bxs-pencil fs-5 pointer edu-pencil-icon" edu-id="{{ $edu->id }}" data-bs-toggle="modal" data-bs-target="#editEducation"></i> <i role="button" class="ri ri-delete-bin-5-line edu-basket-icon fs-5 pointer"></i></span>
+        <span class="pe-1 d-flex gap-2 align-items-center"><i role="button" class="bx bxs-pencil fs-5 pointer edu-pencil-icon" edu-id="{{ $edu->id }}" data-bs-toggle="modal" data-bs-target="#editEducation"></i> <i role="button" edu-id="{{ $edu->id }}" class="ri ri-delete-bin-5-line edu-basket-icon fs-5 pointer"></i></span>
     </div>
     <div class="card-body mt-3">
       <h5 class="card-title mb-0">{{ $edu->institute }}</h5>
@@ -61,7 +61,7 @@
                     </div>
 
                     <div class="my-3">
-                        <input type="checkbox" name="currently_studying" id="currently_studying" @checked($edu->is_currently_studying) class="pointer form-check-input">
+                        <input type="checkbox" name="currently_studying" id="currently_studying" class="pointer form-check-input">
                         <label for="currently_studying" class="pointer">Currently Studying here</label>
                     </div>
         
@@ -111,16 +111,16 @@
                     <div class="d-flex flex-column fw-semibold fs-6 mb-3 grade-div">
                         <label for="grade">Grade <span style="color: red; font-size: 10px;">*</span></label>
                         <select name="grade" id="grade">
-                            <option @selected($edu->grade == 'a+') value="a+">A+</option>
-                            <option @selected($edu->grade == 'a-') value="a-">A-</option>
-                            <option @selected($edu->grade == 'b') value="b">B</option>
-                            <option @selected($edu->grade == 'c') value="c">C</option>
-                            <option @selected($edu->grade == 'd') value="d">D</option>
+                            <option value="a+">A+</option>
+                            <option value="a-">A-</option>
+                            <option value="b">B</option>
+                            <option value="c">C</option>
+                            <option value="d">D</option>
                         </select>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" edu-id="{{ $edu->id }}" class="btn btn-primary w-100" id="education-save-btn">Save</button>
+                    <button type="button" edu-id="" class="btn btn-primary w-100" id="education-save-btn">Save</button>
                 </div>
             </form>
         </div>
@@ -196,7 +196,18 @@
                         startYear.setValue(start_year);
                         endMonth.setValue(end_month);
                         endYear.setValue(end_year);
+
+                        let grades = ["a+", "a-", "b", "c", "d"];
+                        let text = ["A+", "A-", "B", "C", "D"];
+                        $("#grade").selectize({
+                            options: grades,
+                            labelField: "text",
+                            valueField: "value",
+                            create: false,
+                            selected: response.grade,
+                        });
                         
+                        $(this).attr("edu-id", response.id);
                     },
                     error: function(xhr, status, error)
                     {
@@ -207,7 +218,7 @@
         });
         
 
-        $("#edu_start_month, #edu_end_month, #program, #grade").selectize();
+        $("#edu_start_month, #edu_end_month, #program").selectize();
         const currentYear = new Date().getFullYear();
         const leastYear = 1947;
         let options = [];
@@ -315,5 +326,38 @@
             });
 
         });
+
+        // Delete Education
+        $(".edu-basket-icon").each(function()
+        {
+            $(this).on("click", function()
+            {
+                const education_id = $(this).attr("edu-id");
+                $.ajax(
+                {
+                    url: "{{ route("delete_education", '__id__' ) }}".replace("__id__", education_id),
+                    type: "post",
+                    timeout: 10000,
+                    data:
+                    {
+                        _token: "{{ csrf_token() }}"
+                    },
+                    beforeSend: function()
+                    {
+                        $(".loader").removeClass("d-none").addClass("d-flex");
+                    },
+                    complete: function()
+                    {
+                        $(".loader").removeClass("d-flex").addClass("d-none");
+                    },
+                    success: function(response)
+                    {
+                        location.reload();
+                    }
+
+                });
+            });
+        }); 
+
     });
 </script>

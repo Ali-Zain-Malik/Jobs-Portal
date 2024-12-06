@@ -103,5 +103,6 @@ Route::group(["prefix" => "admin"], function()
         Route::delete("/experience-delete/{id}", "deleteExperience")->name("deleteExperience");
         Route::get("/user-education/{id}", "getEducation")->name("get_education");
         Route::post("/education-edit/{id}", "editEducation")->name("edit_education");
+        Route::post("/delete-education/{id}", "deleteEducation")->name("delete_education");
     });
 });

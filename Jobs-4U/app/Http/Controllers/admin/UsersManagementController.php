@@ -283,4 +283,22 @@ class UsersManagementController extends Controller
             ]);
         }
     }
+
+    public function deleteEducation(string $id)
+    {
+        $education = Education::find($id);
+        if(empty($education))
+        {
+            return response()->json([
+                "success" => false,
+                "message" => "Not found",
+            ], 404);
+        }
+
+        $education->delete();
+        return response()->json([
+            "success" => true,
+            "message" => "Education Deleted",
+        ], 200);
+    }
 }
