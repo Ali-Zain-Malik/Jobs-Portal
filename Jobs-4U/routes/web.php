@@ -111,5 +111,6 @@ Route::group(["prefix" => "admin"], function()
     Route::controller(SkillsController::class)->group(function()
     {
         Route::get("/skill", "index")->name("skills");
+        Route::post("/add-skill", "addSkill")->name("add_skill");
     });
 });

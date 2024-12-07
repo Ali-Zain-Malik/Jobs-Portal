@@ -41,7 +41,7 @@
                                     @foreach($skills as $skill)
                                         <tr>
                                             <td class="text-capitalize skill-name">{{$skill->skill_name}}</td>
-                                            <td class="status">{{$skill->is_active ? "Active" : "Inactive"}}</td>
+                                            <td class="status">{{$skill->is_approved ? "Active" : "Inactive"}}</td>
                                             <td class="d-flex justify-content-center">
                                                 <div class="action-div d-flex justify-content-center">
                                                 <div class="dropdown text-start">
@@ -77,15 +77,16 @@
 
                         <div class="mb-3">
                             <input type="text" class="form-control text-capitalize" id="skill-input" placeholder="Enter a skill" value="">
+                            <span class="skill-error text-danger fs-6 d-none">Skill can't empty</span>
                         </div>
                         <div class="mb-3">
                             <div class="d-flex align-items-center gap-2">
-                                <input type="radio" name="radio" id="active" value="1">
+                                <input type="radio" name="skill-status" id="active" value="1">
                                 <label for="active" class="pointer">Activate</label>
                             </div>
 
                             <div class="d-flex align-items-center gap-2 mt-2">
-                                <input type="radio" name="radio" id="deactive" value="0">
+                                <input type="radio" name="skill-status" id="deactive" value="0">
                                 <label for="deactive" class="pointer">Deactivate</label>
                             </div>
                         </div>
@@ -93,7 +94,7 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" id="edits-save-btn">Save Changes</button>
+                        <button type="button" class="btn btn-primary" id="skill-save-btn">Save</button>
                         <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Back</button>
 
                     </div>
@@ -117,6 +118,52 @@
                     {
                         $("#modal-title").text("Edit Skill");
                     });
+                });
+
+                $("#skill-save-btn").on("click", function(event)
+                {
+                    event.preventDefault();
+                    const skill = $("#skill-input").val().trim();
+                    const status = $("[name = 'skill-status']:checked").val();
+
+                    if(skill == "")
+                    {
+                        $(".skill-error").removeClass("d-none");
+                        return;
+                    }
+
+                    $.ajax(
+                    {
+                        url: "{{route('add_skill')}}",
+                        type: "post",
+                        timeout: 10000,
+                        beforeSend: function()
+                        {
+                            $(".loader").addClass("d-flex").removeClass("d-none");
+                        },
+                        complete: function()
+                        {
+                            $(".loader").addClass("d-none").removeClass("d-flex");
+                        },
+                        data:
+                        {
+                            _token: "{{csrf_token()}}",
+                            skill: skill,
+                            status: status,
+                        },
+                        success: function(response)
+                        {
+                            if(!response.success)
+                            {
+                                $(".skill-error").text(response.message).removeClass("d-none");
+                            }
+                            else
+                            {
+                                location.reload();
+                            }
+                        }
+                    });
+
                 });
             });
         </script>
