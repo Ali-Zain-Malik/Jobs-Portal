@@ -107,9 +107,11 @@
         <script>
             document.addEventListener("DOMContentLoaded", function()
             {
+                let route;
                 $("#add-skill-btn").on("click", function()
                 {
                     $("#modal-title").text("Add Skill");
+                    route = "{{route('add_skill')}}";
                 });
 
                 $(".edit-skill").each(function()
@@ -117,6 +119,28 @@
                     $(this).on("click", function()
                     {
                         $("#modal-title").text("Edit Skill");
+                        const skill_id = $(this).attr("skill-id");
+                        route = "{{route('edit_skill', '__id__')}}".replace("__id__", skill_id);
+
+                        $.ajax(
+                        {
+                            url: "{{route('get_skill', '__id__')}}".replace("__id__", skill_id),
+                            type: "get",
+                            timeout: 10000,
+                            beforeSend: function()
+                            {
+                                $(".loader").addClass("d-flex").removeClass("d-none");
+                            },
+                            complete: function()
+                            {
+                                $(".loader").addClass("d-none").removeClass("d-flex");
+                            },
+                            success: function(response)
+                            {
+                                $("#skill-input").val(response.skill_name);
+                                response.is_approved ? $("#active").prop("checked", true) : $("#deactive").prop("checked", true);
+                            }
+                        });
                     });
                 });
 
@@ -134,7 +158,7 @@
 
                     $.ajax(
                     {
-                        url: "{{route('add_skill')}}",
+                        url: route,
                         type: "post",
                         timeout: 10000,
                         beforeSend: function()
