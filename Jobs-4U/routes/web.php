@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\admin\AdminAuthController;
 use App\Http\Controllers\admin\DashboardController;
+use App\Http\Controllers\admin\JobsController;
 use App\Http\Controllers\FeedbacksController;
 use App\Http\Controllers\user\AuthController;
 use App\Http\Controllers\user\CategoryController;
@@ -115,5 +116,10 @@ Route::group(["prefix" => "admin"], function()
         Route::get("get-skill/{id}", "getSkill")->name("get_skill");
         Route::post("edit-skill/{id}", "editSkill")->name("edit_skill");
         Route::post("delete-skill/{id}", "deleteSkill")->name("delete_skill");
+    });
+
+    Route::controller(JobsController::class)->group(function()
+    {
+        Route::get("jobs","index")->name("jobs");
     });
 });

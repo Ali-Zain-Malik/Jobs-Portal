@@ -37,7 +37,7 @@
             </a>
             <ul id="jobsManagement-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="#">
+                    <a href="{{route("jobs")}}">
                         <i class="bi bi-circle"></i><span>Jobs</span>
                     </a>
                 </li>
