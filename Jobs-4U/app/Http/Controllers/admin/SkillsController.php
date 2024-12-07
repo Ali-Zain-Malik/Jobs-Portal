@@ -114,4 +114,37 @@ class SkillsController extends Controller
         }
 
     }
+
+
+    public function deleteSkill(string $id)
+    {
+        $skill = Skill::findOrFail($id);
+        if(empty($skill))
+        {
+            return response()->json([
+                "success"=> false,
+                "message"=> "Skill not found",
+            ], 404);
+        }
+
+        DB::beginTransaction();
+        try
+        {
+            $skill->delete();
+            DB::commit();
+            
+            return response()->json([
+                "success"=> true,
+                "message"=> "Skill deleted",
+            ], 200);
+        }
+        catch (\Exception $e)
+        {
+            DB::rollBack();
+            return response()->json([
+                "success"=> false,
+                "message"=> $e->getMessage(),
+            ], 500);
+        }
+    }
 }

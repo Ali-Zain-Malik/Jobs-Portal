@@ -114,5 +114,6 @@ Route::group(["prefix" => "admin"], function()
         Route::post("/add-skill", "addSkill")->name("add_skill");
         Route::get("get-skill/{id}", "getSkill")->name("get_skill");
         Route::post("edit-skill/{id}", "editSkill")->name("edit_skill");
+        Route::post("delete-skill/{id}", "deleteSkill")->name("delete_skill");
     });
 });

@@ -189,6 +189,37 @@
                     });
 
                 });
+
+                $(".delete-skill").each(function()
+                {
+                    $(this).on("click", function()
+                    {
+                        const skill_id = $(this).attr("skill-id");
+                        $.ajax(
+                        {
+                            url: "{{route('delete_skill', '__id__')}}".replace("__id__", skill_id),
+                            type: "post",
+                            timeout: 10000,
+                            data: { _token: "{{csrf_token()}}"},
+                            beforeSend: function()
+                            {
+                                $(".loader").removeClass("d-none").addClass("d-flex")
+                            },
+                            complete: function()
+                            {
+                                $(".loader").removeClass("d-flex").addClass("d-none")
+                            },
+                            success: function(response)
+                            {
+                                if(response.success)
+                                {
+                                    location.reload();
+                                }
+                            }
+                        });
+                    });
+
+                });
             });
         </script>
     {{-- End script --}}
