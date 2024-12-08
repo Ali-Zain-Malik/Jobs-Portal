@@ -121,5 +121,8 @@ Route::group(["prefix" => "admin"], function()
     Route::controller(JobsController::class)->group(function()
     {
         Route::get("jobs","index")->name("jobs");
+        Route::get("/job-details/{id}", "getJob")->name("get_job");
+        Route::post("toggle-approve/{id}", "toggleApprove")->name("toggle_approve");
+        Route::post("/toggle-feature/{id}", "toggleFeature")->name("toggle_feature");
     });
 });

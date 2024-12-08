@@ -37,17 +37,17 @@
                                 <tbody>
                                     @foreach($jobs as $job)
                                         <tr>
-                                            <td class="pointer" data-bs-toggle="modal" data-bs-target="#jobsDetailModal" job-id="$job->id" data-bs-toggle="modal" data-bs-target="#exampleModal">{{$job->job_title}}</td>
+                                            <td class="pointer viewJob" data-bs-toggle="modal" data-bs-target="#jobsDetailModal" job-id="{{$job->id}}" data-bs-toggle="modal" data-bs-target="#jobsDetailModal">{{$job->job_title}}</td>
                                             <td class="pointer"><a class="employer-name" style="color:black;" href="{{route('profile.view', $job->user_id)}}">{{$job->employer}}</a></td>
                                             <td class="d-flex justify-content-center">
                                                 <div class="form-check form-switch">
-                                                    <input class="form-check-input approve-toggle pointer" @checked($job->is_approved) job-id="$job->id" type="checkbox" role="switch">
+                                                    <input class="form-check-input approve-toggle pointer" @disabled($job->expiry_date < date("Y-m-d")) @checked($job->is_approved) job-id={{$job->id}} type="checkbox" role="switch">
                                                     <label class="form-check-label" for="approve-toggle"></label>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="form-check form-switch">
-                                                    <input class="form-check-input feature-toggle pointer" @checked($job->is_featured) job-id="$job->id" type="checkbox" role="switch">
+                                                    <input class="form-check-input feature-toggle pointer" @disabled($job->expiry_date < date("Y-m-d")) @checked($job->is_featured) job-id={{$job->id}} type="checkbox" role="switch">
                                                     <label class="form-check-label" for="approve-toggle"></label>
                                                 </div>
                                             </td>
@@ -61,7 +61,7 @@
                                                     </a>
                                 
                                                     <ul class="dropdown-menu text-small">
-                                                        <li><a class="dropdown-item pointer viewJob" data-bs-toggle="modal" data-bs-target="#jobsDetailModal" job-id="$job->id">View</a></li>
+                                                        <li><a class="dropdown-item pointer viewJob" data-bs-toggle="modal" data-bs-target="#jobsDetailModal" job-id="{{$job->id}}">View</a></li>
                                                         <li><span class="dropdown-item pointer deleteJob" job-id="$job->id">Delete</span></li>
                                                     </ul>
                                                 </div>
@@ -93,7 +93,7 @@
             <div class="modal-body">
                 <h5 class="fw-bold company-name text-capitalize"></h5>
                 <p class="m-0 d-flex gap-3"><span class="start-date"></span> - <span class="expiry-date"></span></p>
-                <p class="m-0 d-flex gap-3"><span class="employement-type text-capitalize"></span> <span class="location-type text-capitalize"></span></p>
+                <p class="m-0 d-flex gap-3"><span class="employment-type text-capitalize"></span> <span class="location-type text-capitalize"></span></p>
                 <h6 class="mt-3 fw-bold">Description</h6>
                 <p class="description-text"></p>
             </div>
@@ -101,3 +101,128 @@
     </div>
 </div>
 {{-- End Modal --}}
+
+
+{{-- script --}}
+    <script>
+        document.addEventListener("DOMContentLoaded", function()
+        {
+            $(".viewJob").each(function()
+            {
+                $(this).on("click", function()
+                {
+                    const job_id = $(this).attr("job-id")
+                    if(job_id == null)
+                    {
+                        return;
+                    }
+                    let route = "{{route('get_job', '__id__')}}".replace("__id__", job_id)
+                    let data = { _token: "{{csrf_token()}}"}
+                    AjaxCall(route, data, "get")
+                        .then(function(response)
+                        {
+                            if(response.success)
+                            {
+                                let job = response.job;
+                                $(".modal-title").text(job.job_title)
+                                $(".salary-amount").text(job.salary)
+                                $(".salary-currency").text(job.currency)
+                                $(".per-period").text(job.per_period)
+                                $(".company-name").text(job.company)
+                                $(".start-date").text(job.start_date)
+                                $(".expiry-date").text(job.expiry_date)
+                                $(".employment-type").text(job.employment_type)
+                                $(".location-type").text(job.location_type)
+                                $(".description-text").text(job.job_description)
+
+                            }
+                        })
+                        .catch(function(error)
+                        {
+                            error = error.responseJSON
+                            console.log(error)
+                        })
+                })
+            })
+
+
+            $(".approve-toggle").each(function()
+            {
+                $(this).on("click", function()
+                {
+                    const job_id = $(this).attr("job-id")
+                    if(job_id == null)
+                    {
+                        return
+                    }
+
+                    const is_approved = $(this).prop("checked") == true ? 1 : 0
+                    let route = "{{route('toggle_approve', '__id__')}}".replace('__id__', job_id)
+                    let data = {
+                        _token: "{{csrf_token()}}",
+                        is_approved: is_approved,
+                    }
+                    AjaxCall(route, data)
+                        .then(function(response)
+                        {
+                            console.log(response)
+                        })
+                        .catch(function(error)
+                        {
+                            error = error.responseJSON
+                            console.log(error)
+                        })
+                })
+            })
+
+
+            $(".feature-toggle").each(function()
+            {
+                $(this).on("click", function()
+                {
+                    const job_id = $(this).attr("job-id")
+                    if(job_id == null)
+                    {
+                        return
+                    }
+
+                    const is_featured = $(this).prop("checked") == true ? 1 : 0
+                    let route = "{{route('toggle_feature', '__id__')}}".replace('__id__', job_id)
+                    let data = {
+                        _token: "{{csrf_token()}}",
+                        is_featured: is_featured,
+                    }
+
+                    AjaxCall(route, data)
+                        .then(function(response)
+                        {
+                            console.log(response)
+                        })
+                        .catch(function(error)
+                        {
+                            error = error.responseJSON
+                            console.log(error)
+                        })
+                })
+            })
+            
+            function AjaxCall(route, data, type = "post")
+            {
+                return $.ajax({
+                        url: route,
+                        type: type,
+                        timeout: 10000,
+                        data: data,
+                        beforeSend: function()
+                        {
+                            $(".loader").addClass("d-flex").removeClass("d-none")
+                        },
+                        complete: function()
+                        {
+                            $(".loader").addClass("d-none").removeClass("d-flex")
+                        }
+                    })
+            }
+        })
+    </script>
+{{-- end script --}}
