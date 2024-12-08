@@ -124,5 +124,6 @@ Route::group(["prefix" => "admin"], function()
         Route::get("/job-details/{id}", "getJob")->name("get_job");
         Route::post("toggle-approve/{id}", "toggleApprove")->name("toggle_approve");
         Route::post("/toggle-feature/{id}", "toggleFeature")->name("toggle_feature");
+        Route::post("/delete-job/{id}", "deleteJob")->name("delete_job");
     });
 });

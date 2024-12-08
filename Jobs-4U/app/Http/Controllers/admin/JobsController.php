@@ -100,4 +100,35 @@ class JobsController extends Controller
             ],500);
         }
     }
+
+    public function deleteJob(string $id)
+    {
+        $job = Job::find($id);
+        if (!$job)
+        {
+            return response()->json([
+                "success"=> false,
+                "message"=> "Job not found",
+            ],404);
+        }
+        
+        DB::beginTransaction();
+        try
+        {
+            $job->delete();
+            DB::commit();
+            return response()->json([
+                "success"=> true,
+                "message"=> "Job deleted",
+            ],200);
+        }
+        catch (\Exception $e)
+        {
+            DB::rollBack();
+            return response()->json([
+                "success"=> false,
+                "message"=> $e->getMessage(),
+            ],500);
+        }
+    }
 }

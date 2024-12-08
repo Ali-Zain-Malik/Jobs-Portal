@@ -62,7 +62,7 @@
                                 
                                                     <ul class="dropdown-menu text-small">
                                                         <li><a class="dropdown-item pointer viewJob" data-bs-toggle="modal" data-bs-target="#jobsDetailModal" job-id="{{$job->id}}">View</a></li>
-                                                        <li><span class="dropdown-item pointer deleteJob" job-id="$job->id">Delete</span></li>
+                                                        <li><span class="dropdown-item pointer deleteJob" job-id={{$job->id}}>Delete</span></li>
                                                     </ul>
                                                 </div>
                                             </td>
@@ -203,6 +203,37 @@
                             error = error.responseJSON
                             console.log(error)
                         })
+                })
+            })
+
+
+            $(".deleteJob").each(function()
+            {
+                $(this).on("click", function()
+                {
+                    const job_id = $(this).attr("job-id")
+                    if(job_id == null)
+                    {
+                        return;
+                    }
+
+                    let route = "{{route('delete_job', '__id__')}}".replace("__id__", job_id)
+                    let data = { _token: "{{csrf_token()}}"}
+
+                    AjaxCall(route, data)
+                        .then(function(response)
+                        {
+                            if(response.success)
+                            {
+                                location.reload()
+                            }
+                        })
+                        .catch(function(error)
+                        {
+                            error = error.responseJSON
+                            console.log(error)
+                        })
+
                 })
             })
             

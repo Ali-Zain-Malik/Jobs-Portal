@@ -10,4 +10,13 @@ class Job extends Model
     protected $guarded      =   [];
     public $timestamps      =   false;
     use HasFactory;
+
+    public function delete()
+    {
+        Favorite_job::where("job_id", $this->id)->delete();
+        Job_applicant::where("job_id", $this->id)->delete();
+        Job_skill::where("job_id", $this->id)->delete();
+
+        parent::delete();
+    }
 }
