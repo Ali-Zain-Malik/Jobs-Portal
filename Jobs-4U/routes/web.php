@@ -129,5 +129,6 @@ Route::group(["prefix" => "admin"], function()
         Route::get("/get-category/{id}", "getCategory")->name("get_category");
         Route::post("/edit-category/{id}", "editCategory")->name("edit_category");
         Route::post("/add-category", "addCategory")->name("add_category");
+        Route::post("/delete-category/{id}", "deleteCategory")->name("delete_category");
     });
 });
