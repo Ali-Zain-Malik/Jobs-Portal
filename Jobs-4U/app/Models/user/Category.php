@@ -15,4 +15,10 @@ class Category extends Model
     public $timestamps = false;
     protected $guarded = [];
     use HasFactory;
+
+    public function delete()
+    {
+        Job::where("category_id", $this->id)->update(["category_id" => NULL]);
+        parent::delete();
+    }
 }

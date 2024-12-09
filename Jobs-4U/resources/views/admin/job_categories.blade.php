@@ -52,7 +52,7 @@
                                                     </a>
                                                     <ul class="dropdown-menu text-small">
                                                         <li><span class="dropdown-item pointer viewCategory" data-bs-toggle="modal" data-bs-target="#categoryModal" category-id="{{$category->id}}">Edit</span></li>
-                                                        <li><span class="dropdown-item pointer" category-id="{{$category->id}}">Delete</span></li>
+                                                        <li><span class="dropdown-item pointer deleteCategory" category-id="{{$category->id}}">Delete</span></li>
                                                     </ul>
                                                 </div>
                                             </td>
@@ -186,35 +186,35 @@
             })
 
 
-            // $(".deleteJob").each(function()
-            // {
-            //     $(this).on("click", function()
-            //     {
-            //         const job_id = $(this).attr("job-id")
-            //         if(job_id == null)
-            //         {
-            //             return;
-            //         }
+            $(".deleteCategory").each(function()
+            {
+                $(this).on("click", function()
+                {
+                    const category_id = $(this).attr("category-id")
+                    if(category_id == null)
+                    {
+                        return;
+                    }
 
-            //         let route = "{{route('delete_job', '__id__')}}".replace("__id__", job_id)
-            //         let data = { _token: "{{csrf_token()}}"}
+                    let route = "{{route('delete_category', '__id__')}}".replace("__id__", category_id)
+                    let data = { _token: "{{csrf_token()}}"}
 
-            //         AjaxCall(route, data)
-            //             .then(function(response)
-            //             {
-            //                 if(response.success)
-            //                 {
-            //                     location.reload()
-            //                 }
-            //             })
-            //             .catch(function(error)
-            //             {
-            //                 error = error.responseJSON
-            //                 console.log(error)
-            //             })
+                    AjaxCall(route, data)
+                        .then(function(response)
+                        {
+                            if(response.success)
+                            {
+                                location.reload()
+                            }
+                        })
+                        .catch(function(error)
+                        {
+                            error = error.responseJSON
+                            console.log(error)
+                        })
 
-            //     })
-            // })
+                })
+            })
             
             function AjaxCall(route, data, type = "post")
             {

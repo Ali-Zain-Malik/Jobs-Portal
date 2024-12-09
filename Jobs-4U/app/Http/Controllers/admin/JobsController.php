@@ -248,4 +248,35 @@ class JobsController extends Controller
             ]);
         }
     }
+
+    public function deleteCategory(string $id)
+    {
+        $category = Category::find($id);
+        if(empty($category))
+        {
+            return response()->json([
+                "success" => false,
+                "message" => "Category not found",
+            ]);
+        }
+
+        DB::beginTransaction();
+        try
+        {
+            $category->delete();
+            DB::commit();
+            return response()->json([
+                "success" => true,
+                "message" => "Category deleted",
+            ]);
+        }
+        catch(\Exception $e)
+        {
+            DB::rollback();
+            return response()->json([
+                "success" => false,
+                "message" => $e->getMessage()
+            ]);
+        }
+    }
 }
