@@ -42,7 +42,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{route("categories")}}">
                         <i class="bi bi-circle"></i><span>Categories</span>
                     </a>
                 </li>

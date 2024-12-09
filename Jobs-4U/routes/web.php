@@ -125,5 +125,9 @@ Route::group(["prefix" => "admin"], function()
         Route::post("toggle-approve/{id}", "toggleApprove")->name("toggle_approve");
         Route::post("/toggle-feature/{id}", "toggleFeature")->name("toggle_feature");
         Route::post("/delete-job/{id}", "deleteJob")->name("delete_job");
+        Route::get("/categories", "getCategories")->name("categories");
+        Route::get("/get-category/{id}", "getCategory")->name("get_category");
+        Route::post("/edit-category/{id}", "editCategory")->name("edit_category");
+        Route::post("/add-category", "addCategory")->name("add_category");
     });
 });
