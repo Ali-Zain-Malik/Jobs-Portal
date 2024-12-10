@@ -76,7 +76,7 @@
 
         {{-- My profile nav --}}
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#">
+            <a class="nav-link collapsed" href="{{ route("profile.view", Auth::id()) }}">
                 <i class="bi bi-person"></i>
                 <span>My Profile</span>
             </a>

@@ -495,4 +495,28 @@ class UserController extends Controller
             return redirect()->route("user.settings")->with("error", "Old password doesnot match")->withInput();
         }
     }
+
+    public function adminPasswordChange(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            "current_password"  =>  "required|current_password",
+            "password"          =>  "required|confirmed|min:8",
+            "password_confirmation" => "required",
+        ]);
+
+        if($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $user = Auth::user();
+        if($user->role != "admin")
+        {
+            return redirect()->route("user.signin")->with("error", "Unauthorized");
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return redirect()->back()->with("success", "Password updated successfully");
+    }
 }

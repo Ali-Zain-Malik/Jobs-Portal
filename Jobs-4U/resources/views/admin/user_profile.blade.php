@@ -61,10 +61,15 @@
                 <li class="nav-item">
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#education">Education</button>
                 </li>
+                @if(Auth::id() == $user->id)
+                  <li class="nav-item">
+                    <button class="nav-link @error('password') active @enderror" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
+                  </li>
+                @endif
               </ul>
               <div class="tab-content pt-2">
 
-                <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                <div class="tab-pane fade @if(!$errors->has("password"))  show active @endif profile-overview" id="profile-overview">
                   <h5 class="card-title">About</h5>
                   <p class="small fst-italic">{{$user->description ?? "N/A"}}</p>
 
@@ -210,6 +215,55 @@
                     @include('admin.includes.user_education', ["education" => $education])
                   </div>
                 </div>
+
+                @if(Auth::id() == $user->id)
+                  <div class="tab-pane fade password @error('password') show active @enderror" id="profile-change-password">
+                    {{-- Change Password Form --}}
+                    <form method="POST" action="{{ route("admdin.change_password") }}">
+                      @csrf
+                      <div class="row mb-3">
+                        <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                        <div class="col-md-8 col-lg-9">
+                          <input name="current_password" type="password" class="form-control" id="current_password" required>
+                          @error("current_password")
+                            <div class="text-danger">
+                              {{ $message }}
+                            </div>
+                          @enderror
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                        <div class="col-md-8 col-lg-9">
+                          <input name="password" type="password" class="form-control" id="password" required>
+                          @error("password")
+                            <div class="text-danger">
+                              {{ $message }}
+                            </div>
+                          @enderror
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+                        <div class="col-md-8 col-lg-9">
+                          <input name="password_confirmation" type="password" class="form-control" id="password_confirmation" required>
+                          @error("password_confirmation")
+                            <div class="text-danger">
+                              {{ $message }}
+                            </div>
+                          @enderror
+                        </div>
+                      </div>
+
+                      <div class="text-center">
+                        <button type="submit" class="btn btn-primary" id="save-pass-chng-btn">Change Password</button>
+                      </div>
+                    </form>
+                    {{-- End Change Password Form --}}
+                  </div>
+                @endif
 
               </div>
 

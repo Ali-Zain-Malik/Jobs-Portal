@@ -20,15 +20,15 @@
             
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                     <li class="dropdown-header">
-                        <h6>Admin Name</h6>
-                        <span>Designation</span>
+                        <h6 class="text-capitalize">{{ Auth::user()->name }}</h6>
+                        <span class="text-capitalize">{{ Auth::user()->role }}</span>
                     </li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
             
                     <li>
-                        <a class="dropdown-item d-flex align-items-center" href="profile.php">
+                        <a class="dropdown-item d-flex align-items-center" href="{{ route("profile.view", Auth::id()) }}">
                             <i class="bi bi-person"></i>
                             <span>My Profile</span>
                         </a>
@@ -42,7 +42,7 @@
                     </li>
             
                     <li>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
+                        <a class="dropdown-item d-flex align-items-center" href="{{ route("user.signout") }}">
                             <i class="bi bi-box-arrow-right"></i>
                             <span class="sign-out">Sign Out</span>
                         </a>
