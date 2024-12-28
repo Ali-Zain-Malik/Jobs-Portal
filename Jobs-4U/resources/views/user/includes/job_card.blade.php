@@ -1,22 +1,4 @@
-@php
-use App\Models\user\Favorite_job;
-@endphp
-@if (isset($empty))
-    <strong>No Results Found</strong>
-@else
-
-@foreach ($jobs as $job)
-@php
-    $is_favorite    =   Favorite_job::where("user_id", auth()->id())->where("job_id", $job->jobID)->first();
-    if($is_favorite)
-    {
-        $favorite   =   "heart-solid.svg";
-    }
-    else 
-    {
-        $favorite   =   "heart-regular.svg";
-    }
-@endphp
+@forelse($jobs as $job)
 <div class="col-lg-6 col-md-12 col-11">
     <div class="job-card mx-2 shadow-lg">
         <div class="d-flex justify-content-between w-100">
@@ -26,7 +8,7 @@ use App\Models\user\Favorite_job;
                 </div>
                 <div class="d-flex flex-column">
                     <h4 style="font-size: 12px;" class="m-0">{{$job->company}}</h4>
-                    <h3 style="font-size: 16px;" id="job-title" data-job-id="{{$job->jobID}}" class="m-0 fw-bold">{{$job->job_title}}</h3>
+                    <h3 style="font-size: 16px;" id="job-title" data-job-id="{{$job->id}}" class="m-0 fw-bold">{{$job->job_title}}</h3>
                     <div class="d-flex align-items-center">
                         <img src="img/location.svg" style="width: 14px;" alt="">
                         <p style="font-size: 12px;">{{$job->city_name}}</p>
@@ -39,7 +21,7 @@ use App\Models\user\Favorite_job;
                 </div>
             </div>
             <div style="width: 25px; height: 25px;">
-                <img class="w-100 heart-btn" role="button" job-id = "{{$job->jobID}}" src="img/{{$favorite}}" alt="favorite">
+                <img class="w-100 heart-btn" role="button" job-id = "{{$job->id}}" src="{{ asset('img/' . ($job->isFavorite() ? 'heart-solid.svg' : 'heart-regular.svg')) }}" alt="favorite">
             </div>
         </div>
 
@@ -50,15 +32,17 @@ use App\Models\user\Favorite_job;
             </div>
             @if (!Route::is("user.home") && !Route::is("user.myPosts")) {{-- Only show these buttons if it is not the home page --}}
                 <div class="view-apply d-flex gap-2">
-                    <button type="button" class="view-btn px-3 py-1 rounded-pill text-white border-0" job-id="{{$job->jobID}}" data-bs-toggle="modal" data-bs-target="#viewModal">View</button>
-                    <button type="button" class="apply-btn px-3 py-1 rounded-pill text-white border-0" job-id="{{$job->jobID}}" data-bs-target="#applyModal" data-bs-toggle="modal">Apply</button>
+                    <button type="button" class="view-btn px-3 py-1 rounded-pill text-white border-0" job-id="{{$job->id}}" data-bs-toggle="modal" data-bs-target="#viewModal">View</button>
+                    @if(!$job->isExpired())
+                        <button type="button" class="apply-btn px-3 py-1 rounded-pill text-white border-0" job-id="{{$job->id}}" data-bs-target="#applyModal" data-bs-toggle="modal">Apply</button>
+                    @endif
                 </div>
             @endif
 
             @if(Route::is("user.myPosts"))
                 <div class="view-apply d-flex gap-2">
-                    <button type="button" class="view-btn px-3 py-1 rounded-pill text-white border-0" job-id="{{$job->jobID}}" data-bs-toggle="modal" data-bs-target="#viewModal">View</button>
-                    <button type="button" class="mypost-delete-btn px-3 py-1 rounded-pill text-white border-0" job-id="{{$job->jobID}}">Delete</button>
+                    <button type="button" class="view-btn px-3 py-1 rounded-pill text-white border-0" job-id="{{$job->id}}" data-bs-toggle="modal" data-bs-target="#viewModal">View</button>
+                    <button type="button" class="mypost-delete-btn px-3 py-1 rounded-pill text-white border-0" job-id="{{$job->id}}">Delete</button>
                 </div>
             @endif
 
@@ -66,33 +50,27 @@ use App\Models\user\Favorite_job;
 
         <hr class="mt-2">
 
-        @php
-            $currentDate = \Carbon\Carbon::now()->format('Y-m-d');
-            $expiryDate = $job->expiry_date;
-            $daysLeft = \Carbon\Carbon::parse($currentDate)->diffInDays($expiryDate) + 1;
-            $isExpired = \Carbon\Carbon::parse($currentDate)->greaterThanOrEqualTo($expiryDate);
-        @endphp
-
         <div class="d-flex justify-content-between align-items-center">
             <span class="d-flex salary-span"><span class="currency me-1 text-uppercase">{{$job->currency}}</span><span class="fw-bold amount">{{$job->salary}}</span><p>/</p><span class="period">{{$job->per_period}}</span></span>
             @if(Route::is("user.myPosts"))
                 <span class="d-flex" style="font-size: 10px;">
                     <span class="remaining-days me-1">
-                        {{ $isExpired ? "Expired" : $daysLeft . " day(s) left to expire" }}
+                        {{ $job->isExpired() ? "Expired" : $job->remainingDays() . " day(s) left to expire" }}
                     </span>
                 </span>
             @else
                 <span class="d-flex" style="font-size: 10px;">
                     <span class="remaining-days me-1">
-                        {{ $daysLeft }}
+                        {{ $job->isExpired() ? "Expired" : $job->remainingDays() . " day(s) left to apply" }}
                     </span>
-                    <span> day(s) left to apply</span>
                 </span>
             @endif
         </div>
     </div>
 </div>
-@endforeach
+@empty
+    <strong>No Jobs Added</strong>
+@endforelse
 
 
 
@@ -265,4 +243,3 @@ use App\Models\user\Favorite_job;
 });
     // Apply for jobs ends here
 </script>
-@endif

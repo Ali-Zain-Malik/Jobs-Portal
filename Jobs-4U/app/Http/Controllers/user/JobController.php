@@ -12,28 +12,16 @@ use Illuminate\Http\Request;
 
 class JobController extends Controller
 {
-    public function index()
+    public function favoriteJobs()
     {
-        $favorite_job   =   Favorite_job::where("user_id", Auth::id())->get();
-        foreach($favorite_job as $fav)
-        {
-            $jobs []  =   Job::where("jobs.id", $fav->job_id)
-                                ->join("cities", "jobs.city_id", "=", "cities.id")
-                                ->where("jobs.is_approved", 1)
-                                ->where("jobs.is_featured", 1)
-                                ->where("jobs.expiry_date", ">=", date("Y-m-d"))
-                                ->select("jobs.*", "jobs.id as jobID", "cities.*")
-                                ->first();
-        }
+        $favorite_jobs = Job::join("favorite_jobs", "favorite_jobs.job_id", "=", "jobs.id")
+                            ->join("cities", "jobs.city_id", "=", "cities.id")
+                            ->where("favorite_jobs.user_id", Auth::id())
+                            ->where("jobs.is_approved", 1)
+                            ->select("jobs.*", "cities.city_name")
+                            ->get();
 
-        if(empty($jobs))
-        {
-            return view("user.favorites", ["empty" => "empty"]);
-        }
-        else
-        {
-            return view("user.favorites", compact("jobs"));
-        }
+        return view("user.favorites", ["jobs" => $favorite_jobs]);
     }
 
     public function favorite(Request $request)

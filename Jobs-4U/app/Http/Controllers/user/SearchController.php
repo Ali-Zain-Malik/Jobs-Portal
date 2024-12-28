@@ -19,7 +19,7 @@ class SearchController extends Controller
 
         $query          =   Job::join('cities', 'cities.id', '=', 'jobs.city_id')
                                 ->join('categories', 'categories.id', '=', 'jobs.category_id')
-                                ->select("jobs.*", "jobs.id as jobID", "cities.*")
+                                ->select("jobs.*", "cities.city_name")
                                 ->where('jobs.expiry_date', '>=', date('Y-m-d'))
                                 ->where("jobs.user_id", "!=", Auth::id()); // Don't show user's own posted jobs
 

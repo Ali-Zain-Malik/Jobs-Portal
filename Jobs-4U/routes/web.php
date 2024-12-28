@@ -39,7 +39,7 @@ Route::middleware([Authenticate::class])->group(function()
     Route::controller(JobController::class)->group(function()
     {
         Route::post("/toggle-favorite", "favorite")->name("toggleFavorite");
-        Route::get("/favorite-jobs", "index")->name("user.favorites");
+        Route::get("/favorite-jobs", "favoriteJobs")->name("user.favorites");
         Route::post("/view-job", "viewJob")->name("viewJob");
         Route::post("/apply-job", "applyJob")->name("applyJob");
     });

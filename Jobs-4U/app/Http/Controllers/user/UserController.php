@@ -344,10 +344,11 @@ class UserController extends Controller
 
     public function myPosts()
     {
-        $jobs   =   Job::join("cities", "jobs.city_id", "=", "cities.id")
-                        ->where("user_id", Auth::id())
-                        ->select("jobs.*", "jobs.id as jobID", "cities.*")
-                        ->get();
+        $jobs = Job::join("cities", "jobs.city_id", "=", "cities.id")
+                    ->where("jobs.user_id", Auth::id())
+                    ->where("jobs.is_approved", 1)
+                    ->select("jobs.*", "cities.city_name")
+                    ->get();
 
         return view("user.my_posts", compact("jobs"));
     }

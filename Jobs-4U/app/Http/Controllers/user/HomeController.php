@@ -28,7 +28,7 @@ class HomeController extends Controller
                                 ->where("jobs.is_approved", 1)
                                 ->where("jobs.is_featured", 1)
                                 ->where("jobs.expiry_date", ">=", date("Y-m-d"))
-                                ->select("jobs.*", "jobs.id as jobID", "cities.*")
+                                ->select("jobs.*", "cities.city_name")
                                 ->inRandomOrder()->limit(8)->get();
 
         
