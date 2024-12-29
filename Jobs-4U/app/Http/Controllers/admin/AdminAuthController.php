@@ -44,4 +44,10 @@ class AdminAuthController extends Controller
             return redirect()->route("admin.signin")->with("error", "Either email or password is incorrect!");
         }
     }
+
+    public function signOut()
+    {
+        Auth::logout();  
+        return redirect()->route('admin.signin'); 
+    }
 }

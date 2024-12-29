@@ -42,7 +42,7 @@
                     </li>
             
                     <li>
-                        <a class="dropdown-item d-flex align-items-center" href="{{ route("user.signout") }}">
+                        <a class="dropdown-item d-flex align-items-center" href="{{ route("admin.signout") }}">
                             <i class="bi bi-box-arrow-right"></i>
                             <span class="sign-out">Sign Out</span>
                         </a>

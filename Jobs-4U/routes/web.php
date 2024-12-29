@@ -78,6 +78,7 @@ Route::group(["prefix" => "admin"], function()
     {
         Route::get("/signin", "index")->name("admin.signin");
         Route::post("/authenticate", "adminAuthenticate")->name("admin.authenticate");
+        Route::get("/signout", "signOut")->name("admin.signout");
     });
 
     Route::controller(DashboardController::class)->group(function()
@@ -131,4 +132,6 @@ Route::group(["prefix" => "admin"], function()
         Route::post("/add-category", "addCategory")->name("add_category");
         Route::post("/delete-category/{id}", "deleteCategory")->name("delete_category");
     });
+
+    Route::post("/change-password", [UserController::class, "adminPasswordChange"])->name("admin.change_password");
 });

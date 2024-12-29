@@ -219,7 +219,7 @@
                 @if(Auth::id() == $user->id)
                   <div class="tab-pane fade password @error('password') show active @enderror" id="profile-change-password">
                     {{-- Change Password Form --}}
-                    <form method="POST" action="{{ route("admdin.change_password") }}">
+                    <form method="POST" action="{{ route("admin.change_password") }}">
                       @csrf
                       <div class="row mb-3">
                         <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
