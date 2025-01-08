@@ -156,6 +156,7 @@
     width: 100%;
     position: relative;
     top: 60px;
+    margin-bottom: 60px;
     padding-top: 50px;
     display: flex;
     justify-content: center;

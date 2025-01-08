@@ -110,6 +110,9 @@ body
 /* Footer CSS starts here */
 .footer
 {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
     background-color: rgb(235, 235, 229);
 }
 

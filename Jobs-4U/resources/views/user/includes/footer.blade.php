@@ -1,7 +1,7 @@
 
 
-<div class="container-fluid footer border-top border-dark-subtle py-4 shadow-lg"style="margin-top: 60px;">
-    <footer class="pt-3 mt-4 d-flex flex-column align-items-center">
+<div class="container-fluid border-top border-dark-subtle py-4 shadow-lg">
+    <div class="pt-3 mt-4 d-flex flex-column align-items-center">
       <ul class="nav justify-content-center border-bottom pb-3 mb-3">
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
@@ -21,5 +21,5 @@
       <hr>
 
       <p class="text-center text-muted">© 2021 Company, Inc</p>
-    </footer>
+    </div>
   </div>
