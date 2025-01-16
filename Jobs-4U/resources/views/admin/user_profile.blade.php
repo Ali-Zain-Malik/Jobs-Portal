@@ -1,6 +1,6 @@
 @extends('admin.layouts.masterLayout')
 @section("title")
-    {{$user->name}} - Profile 
+    {{$user->name}} - Profile
 @endsection
 
 @push("styles")
@@ -169,26 +169,26 @@
                         @enderror
                       </div>
                     </div>
-
+                      @if($user->role != "admin")
                     <div class="row mb-3 d-flex align-items-center">
                       <label for="Role" class="col-md-4 col-lg-3 col-form-label">Role</label>
                       <div class="col-md-8 col-lg-9">
                           <input name="role" class="form-check-input" @checked($user->role == "employer") type="radio" id="role-employer" value="employer" role="button">
                           <label for="role-employer" class="text-dark pointer me-3" role="button">Employer</label>
-                          
+
                           <input name="role" class="form-check-input" @checked($user->role == "applicant") type="radio" id="role-applicant" value="applicant" role="button">
                           <label for="role-applicant" class="text-dark pointer me-3" role="button">Applicant</label>
 
                       </div>
                     </div>
-                  
+                      @endif
                     <div class="row mb-3> align-items-center">
                       <label for="top-employer" class="col-md-4 col-lg-3 col-form-label">Top Employer</label>
                       <div class="col-md-8 col-lg-9">
 
                           <input name="top-emp" @checked($user->is_top_employer == 1) class="form-check-input" id="top-yes" type="radio" value="1" role="button">
                           <label for="top-yes" class="text-dark pointer me-3" role="button">Yes</label>
-                          
+
                           <input name="top-emp" @checked($user->is_top_employer == 0) class="form-check-input" id='top-no' type="radio" value="0" role="button">
                           <label for="top-no" class="text-dark pointer me-3" role="button">No</label>
 
@@ -315,7 +315,7 @@
           url : "{{ route("profile_photo.remove", '__id__') }}".replace("__id__", user_id),
           type : "POST",
           data : {
-            _token : "{{ csrf_token() }}",           
+            _token : "{{ csrf_token() }}",
           },
           success : function(response)
           {
@@ -324,4 +324,4 @@
         });
       });
   })
-</script>  
+</script>

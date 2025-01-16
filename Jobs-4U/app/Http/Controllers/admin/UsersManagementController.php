@@ -102,13 +102,13 @@ class UsersManagementController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            "profile_pic"   =>  "nullable|image|mimes:jpg, jpeg, png",
+            "profile_pic"   =>  "nullable|image|mimes:jpg,jpeg,png",
             "name"          =>  "required|min:3|max:32",
             "about"         =>  "nullable|max:255",
             "email"         =>  "required|email|unique:users,email," . $user->id,
             "date_of_birth" =>  "nullable|date",
             "city"          =>  "nullable",
-            "role"          =>  "required|in:applicant,employer",
+            "role"          =>  "nullable|in:applicant,employer",
             "top-emp"       =>  "required|boolean",
         ]);
 
@@ -120,18 +120,18 @@ class UsersManagementController extends Controller
         DB::beginTransaction();
         try
         {
+            $userRole = $user->role ?? "applicant";
             $user->fill([
                 "name"              =>  $request->input("name"),
                 "email"             =>  $request->input("email"),
-                "role"              =>  $request->input("role"),
+                "role"              =>  $request->input("role", $userRole),
                 "city_id"           =>  $request->input("city", NULL),
                 "is_top_employer"   =>  $request->input("top-emp"),
                 "date_of_birth"     =>  $request->input("date_of_birth", NULL),
                 "description"       =>  $request->input("about", NULL),
             ]);
             $user->save();
-    
-            if(!empty($_FILES["profile_pic"]["tmp_name"]))
+            if($request->profile_pic)
             {
                 $oldImage = public_path("storage/" . $user->profile_pic);
                 if(file_exists($oldImage))
