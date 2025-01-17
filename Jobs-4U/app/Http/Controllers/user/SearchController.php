@@ -57,17 +57,6 @@ class SearchController extends Controller
             $category_name  =   Category::where("id", $category_id)->select("categories.category_name")->first();
         }
 
-
-        if($jobs->isEmpty())
-        {
-            // return $jobs;
-            return view("user.search_page", [
-                "empty" => "empty",
-                "locations"     =>  $all_locations,
-                "categories"    =>  $all_categories
-            ]);
-        }
-
         return view("user.search_page", [
             "jobs"          =>  $jobs,
             "search_input"  =>  $search_input,
