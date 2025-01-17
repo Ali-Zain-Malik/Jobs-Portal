@@ -7,7 +7,7 @@
 @endsection
 
 @section("main")
-    <div class="container bg-white" style="margin-top: 60px;">
+    <div class="container bg-white" style="margin-top: 80px; margin-bottom: 20px;">
         <h4 class="pt-4 fw-bold text-center">Settings</h4>
         <form method="post" action="{{route("user.changePassword")}}" class="container-fluid mt-3 pb-4">
             @csrf
