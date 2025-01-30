@@ -10,7 +10,7 @@
 @endsection
 
 @section('main')
-<div class="featured-jobs-div">
+<div class="featured-jobs-div" style="margin-bottom: 60px;">
     <div class="container-lg mt-5">
         <h3 class="heading text-center">Favorite Jobs</h3>
 

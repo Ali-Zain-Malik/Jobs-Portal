@@ -17,7 +17,7 @@
 @include('user.includes.search_bar')
 </div>
 {{-- <div class="text-center mt-5">Search Results</div> --}}
-<div class="featured-jobs-div pt-0">
+<div class="featured-jobs-div pt-0" style="margin-bottom: 60px;">
     <div class="container-lg mt-5">
         <h3 class="heading text-center"></h3>
 

@@ -33,12 +33,19 @@ class HomeController extends Controller
 
         
         $top_employers  =   User::where("is_top_employer", 1)
-                                ->where("role", "employer")
-                                ->join("cities", "users.city_id", "=", "cities.id")
-                                ->select('users.*', 'city_name') // In eloquoent when we define join we need to tell that which column is required. 
+                                ->select('users.id', 'users.name', 'users.city_id', 'users.profile_pic', 'users.emp_company')
                                 ->withCount("jobs")
                                 ->get();
-                                
+
+        if($top_employers->isNotEmpty())
+        {
+            // Add city_name and re-construct $top_employers
+            $top_employers = $top_employers->map(function ($top) {
+                $top["city_name"] = $top->getCity();
+                return $top;
+            });
+        }
+
         $all_locations  =   City::all();
 
         return view("user.home", [

@@ -48,4 +48,18 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Get city
+     * @return string
+     */
+    public function getCity()
+    {
+        if(empty($this->city_id))
+        {
+            return "N/A";
+        }
+
+        return City::where("id", $this->city_id)->select("city_name")->first()->city_name;
+    }
 }

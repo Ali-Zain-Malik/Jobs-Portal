@@ -87,7 +87,7 @@
                                 <img src="img/demo_image.png" class="w-100 h-100 object-fit-cover" alt="">
                             </div>
                             <div class="d-flex flex-column">
-                                <h3 style="font-size: 14px;" class="m-0 fw-bold">{{$top->emp_company}}</h3>
+                                <h3 style="font-size: 14px;" class="m-0 fw-bold">{{$top->emp_company ?? $top->name}}</h3>
                                 <p style="font-size: 12px;">{{$top->jobs_count}} Job(s) Posted</p>
                                 <div class="d-flex align-items-center">
                                     <img src="img/location.svg" style="width: 14px;" alt="">

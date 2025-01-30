@@ -39,7 +39,7 @@
 
     @include("user.includes.viewJobModal")
     @include("user.includes.applyJobModal")
-    <footer class="footer" @if(Route::is("user.home") || Route::is("user.profile")) style="position: relative;" @elseif(Route::is("user.favorites") || Route::is("search-jobs")) style="position: absolute;" @endif>
+    <footer class="footer" @if(Route::is("user.home") || Route::is("user.profile")) style="position: relative;" @endif>
       @include('user.includes.footer')
     </footer>
     <script src="{{asset("js/jquery.js")}}"></script>
