@@ -348,6 +348,7 @@ class UserController extends Controller
                     ->where("jobs.user_id", Auth::id())
                     ->where("jobs.is_approved", 1)
                     ->select("jobs.*", "cities.city_name")
+                    ->orderBy("jobs.id", "DESC")
                     ->get();
 
         return view("user.my_posts", compact("jobs"));
@@ -388,8 +389,7 @@ class UserController extends Controller
 
     public function applicantRequests()
     {
-        $jobs           =   Job::where("user_id", Auth::id())->get();
-        $job_ids        =   $jobs->pluck("id");
+        $job_ids           =   Job::where("user_id", Auth::id())->get()->pluck("id");
         $job_applicants =   Job_applicant::whereIn("job_id", $job_ids)
                                         ->join("users", "users.id", "=", "job_applicants.applicant_id")
                                         ->join("jobs", "jobs.id", "=", "job_applicants.job_id")
@@ -399,6 +399,7 @@ class UserController extends Controller
                                                 "users.profile_pic as profile_pic", 
                                                 "jobs.job_title as job_title"
                                             )
+                                        ->orderBy("job_applicants.id", "DESC")
                                         ->get();
                                         
         return view("user.applicant_requests", compact("job_applicants"));

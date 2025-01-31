@@ -30,22 +30,16 @@
                 <span class="px-2 py-1 rounded-pill text-white fw-semibold text-capitalize" style="font-size: 12px; background-color: orange;">{{$job->employment_type}}</span>
                 <span class="px-2 py-1 rounded-pill text-white fw-semibold text-capitalize" style="font-size: 12px; background-color: orange;">{{$job->location_type}}</span>
             </div>
-            @if (!Route::is("user.home") && !Route::is("user.myPosts")) {{-- Only show these buttons if it is not the home page --}}
+            @if (!Route::is("user.home"))
                 <div class="view-apply d-flex gap-2">
                     <button type="button" class="view-btn px-3 py-1 rounded-pill text-white border-0" job-id="{{$job->id}}" data-bs-toggle="modal" data-bs-target="#viewModal">View</button>
-                    @if(!$job->isExpired())
+                    @if($job->isOwner(auth()->user()))
+                        <button type="button" class="mypost-delete-btn px-3 py-1 rounded-pill text-white border-0" job-id="{{$job->id}}">Delete</button>
+                    @elseif(!$job->isExpired())
                         <button type="button" class="apply-btn px-3 py-1 rounded-pill text-white border-0" job-id="{{$job->id}}" data-bs-target="#applyModal" data-bs-toggle="modal">Apply</button>
                     @endif
                 </div>
             @endif
-
-            @if(Route::is("user.myPosts"))
-                <div class="view-apply d-flex gap-2">
-                    <button type="button" class="view-btn px-3 py-1 rounded-pill text-white border-0" job-id="{{$job->id}}" data-bs-toggle="modal" data-bs-target="#viewModal">View</button>
-                    <button type="button" class="mypost-delete-btn px-3 py-1 rounded-pill text-white border-0" job-id="{{$job->id}}">Delete</button>
-                </div>
-            @endif
-
         </div>
 
         <hr class="mt-2">
@@ -240,6 +234,68 @@
             }
         });
     });
-});
+
     // Apply for jobs ends here
+
+    // Delete a job
+    $(".mypost-delete-btn").each(function(index, btn){
+        $(btn).on("click", function()
+        {
+            const job_id = $(this).attr("job-id");
+            alertify.confirm("Deleting Your Post !!", "Are you sure you want to delete?",
+                function() 
+                {
+                    $.ajax(
+                    {
+                        url         :   "{{route("user.deletePost")}}",
+                        type        :   "post",
+                        dataType    :   "json",
+                        timeout     :   10000,
+                        data        :
+                        {
+                            _token  :   "{{ csrf_token() }}",
+                            post_id :   job_id,
+                        },
+                        beforeSend  :   function()
+                        {
+                            $(".loader").removeClass("d-none").addClass("d-flex");
+                        },
+                        complete    :   function()
+                        {
+                            $(".loader").removeClass("d-flex").addClass("d-none");
+                        },
+                        success     :   function(response)
+                        {
+                            if(response.success)
+                            {
+                                alertify.success(response.message) 
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 800);
+                            }
+                            else
+                            {
+                                alertify.error(response.error);
+                            }
+                        },
+                        error       :   function()
+                        {
+                            $("#toast-inner").text("Some thing went wrong");
+                            $("#myToast").fadeIn().addClass("d-block");
+                            setTimeout(() => 
+                            {
+                                $("#myToast").fadeOut().removeClass("d-block");
+                            }, 1500);
+                        }
+                    });
+                },
+                function() 
+                {
+                    console.log("Cancelled deletion");
+                }
+            );
+        });
+    });
+    // Delete post ends here.
+});
 </script>

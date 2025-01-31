@@ -36,4 +36,17 @@ class Job extends Model
     {
         return ceil(now()->diffInDays($this->expiry_date));
     }
+
+    public function isOwner($user)
+    {
+        if(empty($user))
+        {
+            return false;
+        }
+        if($user->id != $this->user_id)
+        {
+            return false;
+        }
+        return true;
+    }
 }
