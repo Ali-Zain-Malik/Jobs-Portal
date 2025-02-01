@@ -7,9 +7,9 @@
         <span style="font-size: 14px;">
             {{$category->jobs_count}} Job(s) Available
         </span>
-        <button class="explore-btn" category-id = "1">
+        <a href="{{ route("explore_category", $category->id) }}" class="explore-btn">
             Explore
-        </button>
+        </a>
     </div>
 </div>
 @endforeach

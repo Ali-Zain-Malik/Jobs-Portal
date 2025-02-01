@@ -4,7 +4,7 @@
         <div class="d-flex justify-content-between w-100">
             <div class="d-flex gap-1">
                 <div class="image-div" style="width: 50px; height: 50px;">
-                    <img src="img/demo_image.png" class="w-100 h-100 object-fit-cover" alt="">
+                    <img src={{ asset("img/demo_image.png") }} class="w-100 h-100 object-fit-cover" alt="">
                 </div>
                 <div class="d-flex flex-column">
                     <h4 style="font-size: 12px;" class="m-0">{{$job->company}}</h4>

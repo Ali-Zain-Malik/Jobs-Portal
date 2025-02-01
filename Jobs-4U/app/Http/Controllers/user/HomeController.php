@@ -17,7 +17,6 @@ class HomeController extends Controller
                                     ->withCount(['jobs' => function($query) 
                                     {
                                         $query->where('is_approved', 1)
-                                            ->where('is_featured', 1)
                                             ->where('expiry_date', '>=', date('Y-m-d'));
                                     }])
                                     ->inRandomOrder()
@@ -57,4 +56,21 @@ class HomeController extends Controller
     }
 
 
+    public function exploreCategory(string $id)
+    {
+        $category = Category::where("id", $id)->first();
+        if(empty($category))
+        {
+            return redirect()->back();
+        }
+
+        $jobs = Job::join("cities", "jobs.city_id", "=", "cities.id")
+                    ->where("jobs.is_approved", 1)
+                    ->where("jobs.expiry_date", ">=", date("Y-m-d"))
+                    ->where("category_id", $id)
+                    ->select("jobs.*", "cities.city_name")
+                    ->get();
+        
+        return view("user.explore_category", compact("jobs","category"));
+    }
    }
