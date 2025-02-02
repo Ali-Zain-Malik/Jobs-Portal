@@ -14,7 +14,8 @@ class Feedbacks extends Model
     public static function getFeedbacks()
     {
         return self::join("users", "users.id", "=", "feedbacks.user_id")
-                    ->select("feedbacks.*", "users.name as user_name")
+                    ->leftJoin("cities", "cities.id", "=", "users.city_id")
+                    ->select("feedbacks.*", "users.name as user_name", "users.profile_pic", "cities.city_name")
                     ->get();
     }
 }

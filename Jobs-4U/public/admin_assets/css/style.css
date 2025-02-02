@@ -1235,3 +1235,8 @@ h6 {
 {
   cursor: pointer;
 }
+
+.h-100
+{
+  height: 100%;
+}

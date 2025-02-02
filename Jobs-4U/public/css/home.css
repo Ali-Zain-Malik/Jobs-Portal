@@ -273,6 +273,16 @@ p
     margin: 0;
 }
 
+/*--------------------------------------------------------------
+# Slider
+--------------------------------------------------------------*/
+.slider
+{
+  display: flex;
+  will-change: transform;
+  transition: transform 0.5s ease-in-out;
+}
+
 @media screen and (max-width:884px)
 {
     .search-div

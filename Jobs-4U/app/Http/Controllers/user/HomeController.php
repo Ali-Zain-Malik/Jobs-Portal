@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
+use App\Models\Feedbacks;
 use App\Models\user\Category;
 use App\Models\user\City;
 use App\Models\user\Job;
@@ -47,11 +48,22 @@ class HomeController extends Controller
 
         $all_locations  =   City::all();
 
+        $getFeedbacks = Feedbacks::getFeedbacks(); 
+        $feedbacks = [];
+        foreach($getFeedbacks as $feedback)
+        {
+            if($feedback->is_displayed)
+            {
+                $feedbacks[] = $feedback;
+            }
+        }
+        
         return view("user.home", [
             "categories"    =>  $categories,
             "jobs"          =>  $jobs,
             "top_employers" =>  $top_employers,
-            "locations"     =>  $all_locations
+            "locations"     =>  $all_locations,
+            "feedbacks"     =>  $feedbacks,
         ]);
     }
 

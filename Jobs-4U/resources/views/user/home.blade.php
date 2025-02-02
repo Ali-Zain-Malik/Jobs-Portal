@@ -105,6 +105,22 @@
     </div>
 </div>
 
+{{-- Feedbacks --}}
+<div class="feedbacks container-lg" style="margin-top: 150px;">
+    <div class="d-flex justify-content-center align-items-center flex-column">
+        <h3 class="heading text-center">Feedbacks</h3>
+        <p class="text-center text-capitalize">What Our Clients Say</p>
+    </div>
+
+    <div class="cards-div overflow-hidden">
+        <div class="slider d-flex justify-content-between row-gap-3 px-2">
+            @include("user.includes.feedbacks")
+        </div>
+    </div>
+    
+</div>
+{{-- Feedbacks --}}
+
 @endsection
 
 {{-- @if(Session::has("success"))
