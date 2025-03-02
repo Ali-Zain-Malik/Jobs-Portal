@@ -121,6 +121,18 @@
 </div>
 {{-- Feedbacks --}}
 
+{{-- Leave a feedback/Comment div --}}
+<div class="container-lg mt-5">
+    <div class="d-flex justify-content-center align-items-center flex-column">
+        <h3 class="heading text-center">Leave a Feedback</h3>
+    </div>
+    <div class="cards-div">
+        <textarea name="feedback" class="p-3" id="feedback-textarea" placeholder="It is a great platform" cols="10" rows="5">{{ auth()->user()->getFeedback() ?? NULL }}</textarea>
+        <button class="btn send-feedback shadow-lg bg-warning fw-bold text-white">Send</button>
+        <span class="text-end" style="font-size: 12px;">270 Characters Max</span>
+    </div>
+</div>
+{{-- Leave a feedback/Comment div --}}
 @endsection
 
 @push("scripts")
@@ -163,6 +175,61 @@
                 768: { items: 3 },
                 992: { items: 4 }
             }
+        });
+
+        // Add | Update feedback.
+        $(".send-feedback").on("click", function() {
+            const textarea = $(this).siblings("#feedback-textarea");
+            const feedback = textarea.val().trim();
+            
+            if(feedback === undefined || feedback === null || feedback == "")
+            {
+                return;
+            }
+            else if(feedback.length < 10)
+            {
+                alertify.error("Feedback must not be less than 10 characters");
+                return;
+            }
+            else if(feedback.length > 270)
+            {
+                alertify.error("Feedback must not be greater than 270 characters");
+                return;
+            }
+
+            $.ajax(
+            {
+                url         :   "{{route('leave_a_feedback')}}",
+                type        :   "post",
+                dateType    :   "json",
+                timeout: 10000,
+                data        :   
+                {
+                    _token  :   "{{csrf_token()}}",
+                    feedback:   feedback,
+                },
+                beforeSend  :   function()
+                {
+                    $(".loader").removeClass("d-none").addClass("d-flex");
+                },
+                complete    :   function()
+                {
+                    $(".loader").removeClass("d-flex").addClass("d-none");
+                },
+                success     :   function(response)
+                {
+                    if(response.success)
+                    {
+                        alertify.success(response.message);
+                        textarea.text(feedback);
+                    }
+                },
+                error       :   function(xhr, status, error)
+                {
+                    const response = xhr.responseJSON;
+                    alertify.error(response.message);
+                }
+            });
         });
     });
 </script>

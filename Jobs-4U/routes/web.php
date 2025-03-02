@@ -30,6 +30,7 @@ Route::middleware([Authenticate::class])->group(function()
 {
     Route::get("/home", [HomeController::class, "index"])->name("user.home");
     Route::get("/categories/explore/{id}", [HomeController::class, "exploreCategory"])->name("explore_category");
+    Route::post("/leave-feedback", [HomeController::class, "feedback"])->name("leave_a_feedback");
     Route::get("/signout", [AuthController::class, "signout"])->name("user.signout");
     Route::get("/all-categories", [CategoryController::class, "index"])->name("all-categories");
     Route::get("/search-jobs", [SearchController::class, "index"])->name("search-jobs");

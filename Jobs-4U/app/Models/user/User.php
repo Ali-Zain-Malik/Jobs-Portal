@@ -3,6 +3,8 @@
 namespace App\Models\user;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Models\Feedbacks;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -61,5 +63,16 @@ class User extends Authenticatable
         }
 
         return City::where("id", $this->city_id)->select("city_name")->first()->city_name;
+    }
+
+    public function getFeedback()
+    {
+        $feedback = Feedbacks::where("user_id", $this->id)->first();
+        if(empty($feedback))
+        {
+            return false;
+        }
+
+        return $feedback->feedback;
     }
 }

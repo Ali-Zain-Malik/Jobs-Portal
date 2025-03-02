@@ -9,6 +9,10 @@ use App\Models\user\City;
 use App\Models\user\Job;
 use App\Models\user\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
 {
@@ -86,4 +90,67 @@ class HomeController extends Controller
         
         return view("user.explore_category", compact("jobs","category"));
     }
-   }
+
+    public function feedback(Request $request)
+    {
+        $user = Auth::user();
+        if(empty($user))
+        {
+            return response()->json([
+                "success"   =>  false,
+                "message"   =>  "You need to login to perform this action",
+            ], 401);
+        }
+
+        $validtor = Validator::make($request->all(), [
+            "feedback"  =>  "required|min:10|max:270",
+        ]);
+
+        if($validtor->fails())
+        {
+            return response()->json([
+                "success"   =>  false,
+                "message"   =>  $validtor->errors()->first(), // Because there will be just error
+            ], 400);
+        }
+
+        DB::beginTransaction();
+        try
+        {
+            $feedback = Feedbacks::where("user_id", $user->id)->first();
+            if(empty($feedback)) // If the current user has no previous feedback
+            {
+                $feedback = new Feedbacks();
+                $feedback->fill([
+                    "user_id"   =>  $user->id,
+                    "feedback"  =>  $request->feedback,
+                    "feedback_date" =>  Date("Y-m-d"),
+                ]);
+            }
+            else // If the user is updating feedback.
+            {
+                $feedback->fill([
+                    "feedback"      =>  $request->feedback,
+                    "feedback_date" =>  Date("Y-m-d"),
+                    "is_displayed"  =>  0, // Reset the feedback status
+                ]);
+            }
+
+            $feedback->save();
+            DB::commit();
+
+            return response()->json([
+                "success"   =>  true,
+                "message"   =>  "Feedback added successfully",
+            ], 200);
+        }
+        catch(\Exception $e)
+        {
+            DB::rollBack();
+            return response()->json([
+                "success"   =>  false,
+                "message"   =>  "Something went wrong 😥",
+            ], 500);
+        }
+    }
+}
