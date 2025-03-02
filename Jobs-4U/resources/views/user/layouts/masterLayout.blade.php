@@ -49,5 +49,6 @@
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/alertify.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
+@stack("scripts")
 </body>
 </html>

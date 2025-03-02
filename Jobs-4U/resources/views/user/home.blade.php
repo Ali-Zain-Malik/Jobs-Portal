@@ -113,7 +113,7 @@
     </div>
 
     <div class="cards-div overflow-hidden">
-        <div class="slider d-flex justify-content-between row-gap-3 px-2">
+        <div class="owl-carousel">
             @include("user.includes.feedbacks")
         </div>
     </div>
@@ -123,6 +123,9 @@
 
 @endsection
 
+@push("scripts")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+@endpush
 {{-- @if(Session::has("success"))
     <script>
         let success =   "{{Session::get("success")}}"
@@ -145,5 +148,21 @@
             let error   =   "{{Session::get("error")}}"
             alertify.error(error); 
         @endif
+
+        $(".owl-carousel").owlCarousel({
+            loop: true, // Infinite loop
+            margin: 10, // Space between slides
+            nav: false, // Hide navigation arrows
+            dots: false, // Show dots for navigation
+            autoplay: true, // Enable autoplay
+            autoplayTimeout: 2000, // 3 seconds per slide
+            autoplayHoverPause: true, // Pause on hover
+            responsive: {
+                0: { items: 1 },
+                576: { items: 2 },
+                768: { items: 3 },
+                992: { items: 4 }
+            }
+        });
     });
 </script>

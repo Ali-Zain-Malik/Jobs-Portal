@@ -273,16 +273,17 @@ p
     margin: 0;
 }
 
-/*--------------------------------------------------------------
-# Slider
---------------------------------------------------------------*/
-.slider
+.slide
 {
-  display: flex;
-  will-change: transform;
-  transition: transform 0.5s ease-in-out;
+    height: 350px;
+    max-height: 350px;
 }
 
+.slide .child
+{
+    background-color: rgba(244, 244, 226, 0.744);
+    height: 98%;
+}
 @media screen and (max-width:884px)
 {
     .search-div

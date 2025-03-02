@@ -54,6 +54,7 @@ class HomeController extends Controller
         {
             if($feedback->is_displayed)
             {
+                $feedback->feedback = strlen($feedback->feedback) > 270 ? substr($feedback->feedback, 0, 270) . " . . ." : $feedback->feedback;
                 $feedbacks[] = $feedback;
             }
         }
