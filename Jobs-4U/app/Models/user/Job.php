@@ -34,7 +34,12 @@ class Job extends Model
 
     public function remainingDays()
     {
-        return ceil(now()->diffInDays($this->expiry_date));
+        $diff = ceil(now()->diffInDays($this->expiry_date));
+        if($diff <= 0)
+        {
+            $diff = 1;
+        }
+        return $diff;
     }
 
     public function isOwner($user)
